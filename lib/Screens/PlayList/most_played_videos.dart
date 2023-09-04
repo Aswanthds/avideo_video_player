@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class RecentlyPlayedVideos extends StatefulWidget {
-  const RecentlyPlayedVideos({super.key});
+class MostPlayedVideos extends StatefulWidget {
+  const MostPlayedVideos({super.key});
 
   @override
-  State<RecentlyPlayedVideos> createState() => _RecentlyPlayedVideosState();
+  State<MostPlayedVideos> createState() => _MostPlayedVideosState();
 }
 
-class _RecentlyPlayedVideosState extends State<RecentlyPlayedVideos> {
+class _MostPlayedVideosState extends State<MostPlayedVideos> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +25,7 @@ class _RecentlyPlayedVideosState extends State<RecentlyPlayedVideos> {
             ),
             backgroundColor: const Color(0xF1003554),
             title: const Text(
-              'Recently Played Videos',
+              'Most Played Videos',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             actions: [
