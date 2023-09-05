@@ -9,7 +9,7 @@ A simple Flutter application for playing video files. This application demonstra
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
-- [Screenshots](#screenshots)
+- [Screenshots](#Screenshots)
 - [Contributing](#contributing)
 - [License](#license)
 
