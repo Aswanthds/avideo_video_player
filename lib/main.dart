@@ -5,6 +5,7 @@ import 'package:video_player_app/Screens/splash_screen.dart';
 void main() async {
   await Hive.initFlutter();
   await Hive.openBox<List<String>>('videos');
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -24,6 +25,6 @@ class MyApp extends StatelessWidget {
               actionsIconTheme: IconThemeData(color: Colors.white)),
           useMaterial3: true,
         ),
-        home: SplashScreenPage());
+        home: const SplashScreenPage());
   }
 }

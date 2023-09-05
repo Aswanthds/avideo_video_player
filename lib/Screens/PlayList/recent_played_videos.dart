@@ -40,7 +40,7 @@ class _RecentlyPlayedVideosState extends State<RecentlyPlayedVideos> {
             padding: const EdgeInsets.all(10.0),
             child: Container(
               decoration: BoxDecoration(
-                color: Color.fromARGB(85, 0, 53, 84),
+                color: const Color.fromARGB(85, 0, 53, 84),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
@@ -58,7 +58,7 @@ class _RecentlyPlayedVideosState extends State<RecentlyPlayedVideos> {
                       ],
                       color: Colors.grey.withOpacity(0.4),
                       borderRadius: BorderRadius.circular(20),
-                      image: DecorationImage(
+                      image: const DecorationImage(
                         image: AssetImage('images/logo_full.png'),
                       ),
                     ),
@@ -81,13 +81,13 @@ class _RecentlyPlayedVideosState extends State<RecentlyPlayedVideos> {
                         children: [
                           IconButton(
                               onPressed: () {},
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.play_arrow,
                                 color: Colors.white,
                               )),
                           IconButton(
                               onPressed: () {},
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.shuffle,
                                 color: Colors.white,
                               )),
@@ -102,8 +102,8 @@ class _RecentlyPlayedVideosState extends State<RecentlyPlayedVideos> {
           ListTile(
             leading: Container(
                 decoration: BoxDecoration(
-                    boxShadow: [
-                      const BoxShadow(
+                    boxShadow: const [
+                       BoxShadow(
                           color: Color(0xF1003554),
                           blurRadius: 10,
                           blurStyle: BlurStyle.outer),
@@ -121,7 +121,7 @@ class _RecentlyPlayedVideosState extends State<RecentlyPlayedVideos> {
                       'images/logo.png',
                       color: Colors.white,
                     ))),
-            title: Text('Video'),
+            title: const Text('Video'),
             trailing: const Icon(
               Icons.arrow_forward_ios,
               color: Color(0xF1003554),

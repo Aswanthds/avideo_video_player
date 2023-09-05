@@ -88,13 +88,13 @@ class _MainPageScreenState extends State<MainPageScreen>
           filesV: widget.filesV,
         );
       case 1:
-        return PlaylistPageScreen(); 
+        return const PlaylistPageScreen();
       case 2:
         return const FavouritesPageScreen();
       case 3:
         return const SettingsPage();
       default:
-        return Container(); 
+        return Container();
     }
   }
 }

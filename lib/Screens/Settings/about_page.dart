@@ -29,14 +29,14 @@ class _AboutPageState extends State<AboutPage> {
     return ListTile(
       title: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 18,
         ),
       ),
       subtitle: Text(
         subtitle.isEmpty ? 'Not set' : subtitle,
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.normal,
           fontSize: 15,
         ),

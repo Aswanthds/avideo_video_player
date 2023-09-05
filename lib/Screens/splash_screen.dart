@@ -6,27 +6,26 @@ import 'package:video_player_app/Screens/mainpage.dart';
 import 'package:video_player_app/functions/db_functions.dart';
 import 'package:page_transition/page_transition.dart';
 
+
 class SplashScreenPage extends StatefulWidget {
+  const SplashScreenPage({super.key});
+
   @override
-  _SplashScreenPageState createState() => _SplashScreenPageState();
+  State<SplashScreenPage> createState() => _SplashScreenPageState();
 }
 
 class _SplashScreenPageState extends State<SplashScreenPage> {
   List<File> videoFiles = [];
   List<dynamic> videoData = [];
   List<Uint8List> thumbnails = [];
-  
+  File? file;
 
   @override
   void initState() {
     super.initState();
     fetchAndShowVideos();
+   
   }
-
-  //Version
-
-  
-  //video path fetch and show
 
   void fetchAndShowVideos() async {
     final fetchedVideos = await getPath();
@@ -51,7 +50,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
             pageTransitionType: PageTransitionType.fade,
             duration: 3000,
             splash: const Image(image: AssetImage('images/logo_full.png')),
-            nextScreen: MainPageScreen(filesV:videoFiles),
+            nextScreen: MainPageScreen(filesV: videoFiles),
             splashTransition: SplashTransition.scaleTransition,
             backgroundColor: Colors.white),
         const Positioned(

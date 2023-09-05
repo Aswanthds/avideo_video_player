@@ -146,7 +146,7 @@ class EmailHyperlinkWidget extends StatelessWidget {
   final String email;
   final String displayText;
 
-  const EmailHyperlinkWidget({required this.email, required this.displayText});
+  const EmailHyperlinkWidget({super.key, required this.email, required this.displayText});
 
   @override
   Widget build(BuildContext context) {

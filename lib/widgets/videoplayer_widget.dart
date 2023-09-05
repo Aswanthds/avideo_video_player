@@ -33,7 +33,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.transparent,
         title: Text(filename),
-        actions: [const Icon(Icons.more_vert)],
+        actions: const [ Icon(Icons.more_vert)],
       ),
       backgroundColor: Colors.black, // Set the background color to black
       body: Center(

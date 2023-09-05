@@ -10,7 +10,7 @@ class FavouritesPageScreen extends StatefulWidget {
 class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
   @override
   Widget build(BuildContext context) {
-    _showPopupMenu(Offset offset) async {
+    showPopupMenu(Offset offset) async {
       double left = offset.dx;
       double top = offset.dy;
       await showMenu(
@@ -75,7 +75,7 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
             ),
             trailing: GestureDetector(
               onTapDown: (TapDownDetails details) {
-                _showPopupMenu(details.globalPosition);
+                showPopupMenu(details.globalPosition);
               },
               child: const Icon(Icons.more_vert),
             ),

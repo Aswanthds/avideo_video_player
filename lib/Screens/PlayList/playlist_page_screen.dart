@@ -38,8 +38,8 @@ class _PlaylistPageScreenState extends State<PlaylistPageScreen> {
             InkWell(
                 onTap: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const RecentlyPlayedVideos())),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: VideoListTileWidget(
                     title: 'Recently Played Videos ',
                   ),
@@ -47,8 +47,8 @@ class _PlaylistPageScreenState extends State<PlaylistPageScreen> {
             InkWell(
                 onTap: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const MostPlayedVideos())),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: VideoListTileWidget(
                     title: 'Most Played Videos ',
                   ),
@@ -70,26 +70,28 @@ class VideoListTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Container(
-          decoration: BoxDecoration(
-              boxShadow: [
-                const BoxShadow(
-                    color: Color(0xF1003554),
-                    blurRadius: 10,
-                    blurStyle: BlurStyle.outer),
-              ],
+        decoration: BoxDecoration(
+            boxShadow: const [
+              BoxShadow(
+                  color: Color(0xF1003554),
+                  blurRadius: 10,
+                  blurStyle: BlurStyle.outer),
+            ],
+            color: const Color(0xF1003554),
+            border: Border.all(
+              style: BorderStyle.solid,
               color: const Color(0xF1003554),
-              border: Border.all(
-                style: BorderStyle.solid,
-                color: const Color(0xF1003554),
-                width: 2,
-              ),
-              borderRadius: BorderRadius.circular(20)),
-          child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset(
-                'images/logo.png',
-                color: Colors.white,
-              ))),
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(20)),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset(
+            'images/logo.png',
+            color: Colors.white,
+          ),
+        ),
+      ),
       title: Text(title),
       trailing: const Icon(
         Icons.arrow_forward_ios,
