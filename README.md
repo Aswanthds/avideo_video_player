@@ -33,50 +33,11 @@ A simple Flutter application for playing video files. This application demonstra
    `git clone https://github.com/yourusername/your-video-app.git`
    `cd your-video-app`
 
-Creating a README.md file for your Flutter application is a good practice to provide information about your project to other developers or users. Here's a basic README.md template that you can use as a starting point for your application:
+    `Install dependencies:`
 
-markdown
+    `bash`
 
-# Flutter Video Player App
-
-A simple Flutter application for playing video files. This application demonstrates how to use Flutter to build a video player app with permission handling.
-
-## Table of Contents
-
-- [Features](#features)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Usage](#usage)
-- [Screenshots](#screenshots)
-- [Contributing](#contributing)
-- [License](#license)
-
-## Features
-
-- **Video Playback:** Play video files on your device.
-- **Permission Handling:** Request and handle storage permissions.
-- **Simple UI:** A straightforward user interface for video selection and playback.
-
-## Getting Started
-
-### Prerequisites
-
-- [Flutter](https://flutter.dev/) must be installed on your system.
-
-### Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/yourusername/your-video-app.git
-   cd your-video-app
-
-    Install dependencies:
-
-    bash
-
-    flutter pub get
+    `flutter pub get`
 
 Usage
 
