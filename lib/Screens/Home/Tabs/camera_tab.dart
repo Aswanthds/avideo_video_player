@@ -1,8 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:video_compress/video_compress.dart';
-import 'package:video_player_app/Screens/Home/Tabs/video_tile_widget.dart';
-import 'package:video_player_app/functions/compress_fns.dart';
+import 'package:video_player_app/Screens/Home/Tabs/widgets/video_tile_widget.dart';
 
 class CameraTab extends StatefulWidget {
   final List<File> filesV;

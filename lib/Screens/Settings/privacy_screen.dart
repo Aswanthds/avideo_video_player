@@ -25,7 +25,7 @@ class PrivacyScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Image.asset(
-                    'images/logo.png',
+                    'assets/images/logo.png',
                     height: 100,
                   ),
                   const SizedBox(height: 20),

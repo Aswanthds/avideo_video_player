@@ -79,11 +79,11 @@ class _AboutPageState extends State<AboutPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'images/logo.png',
+                'assets/images/logo.png',
                 height: 100,
               ),
               Image.asset(
-                'images/title2.png',
+                'assets/images/title2.png',
                 height: 100,
               ),
             ],

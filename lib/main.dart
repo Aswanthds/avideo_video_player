@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:video_player_app/Screens/splash_screen.dart';
+import 'package:video_player_app/widgets/lottie_widget.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -25,6 +25,6 @@ class MyApp extends StatelessWidget {
               actionsIconTheme: IconThemeData(color: Colors.white)),
           useMaterial3: true,
         ),
-        home: const SplashScreenPage());
+        home: const LottiePage());
   }
 }

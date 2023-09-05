@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:video_compress/video_compress.dart';
-import 'package:video_player_app/functions/compress_fns.dart';
+import 'package:video_player_app/Screens/Home/Tabs/widgets/menu_icon.dart';
+import 'package:video_player_app/Screens/Home/Tabs/widgets/video_common_thumbnail.dart';
 import 'package:video_player_app/widgets/videoplayer_widget.dart';
 
 class VideoTileWidget extends StatefulWidget {
@@ -36,7 +36,7 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
       );
       thumbnailNotifier.value = thumbnailFile;
     } catch (e) {
-      print('Error generating thumbnail: $e');
+      debugPrint('Error generating thumbnail: $e');
     }
   }
 
@@ -89,73 +89,7 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
               VideoPlayerScreen(filesV: widget.videoFile.path),
         ));
       },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ValueListenableBuilder(
-                valueListenable: thumbnailNotifier,
-                builder: (context, thumbnail, child) => Container(
-                    width: 160,
-                    height: 100,
-                    decoration: BoxDecoration(
-                        color: Colors.black,
-                        image: DecorationImage(
-                          image: FileImage(
-                            thumbnail,
-                          ),
-                        )))),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                basename(widget.videoFile.path),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13.5,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class MenuIconWidget extends StatelessWidget {
-  final String title;
-
-  final IconData icon;
-
-  const MenuIconWidget({
-    super.key,
-    required this.title,
-    required this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
-      child: Column(
-        children: [
-          CircleAvatar(
-              radius: 20,
-              backgroundColor: Colors.grey,
-              child: Center(child: Icon(icon))),
-          Text(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
-      ),
+      child: VideoThumbnailCommon(thumbnailNotifier: thumbnailNotifier, widget: widget),
     );
   }
 }

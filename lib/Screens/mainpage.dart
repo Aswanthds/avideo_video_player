@@ -9,10 +9,9 @@ import 'package:video_player_app/Screens/Home/home_page_screen.dart';
 import 'package:video_player_app/Screens/PlayList/playlist_page_screen.dart';
 
 class MainPageScreen extends StatefulWidget {
-  final List<File> filesV;
+  final List<File> videoFiles;
   final List<Uint8List>? thumbnail;
-  const MainPageScreen({Key? key, required this.filesV, this.thumbnail})
-      : super(key: key);
+  const MainPageScreen({Key? key, this.thumbnail, required this.videoFiles}) : super(key: key);
 
   @override
   State<MainPageScreen> createState() => _MainPageScreenState();
@@ -21,17 +20,10 @@ class MainPageScreen extends StatefulWidget {
 class _MainPageScreenState extends State<MainPageScreen>
     with SingleTickerProviderStateMixin {
   int _bottomNavIndex = 0;
-  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
   }
 
   @override
@@ -85,7 +77,7 @@ class _MainPageScreenState extends State<MainPageScreen>
     switch (_bottomNavIndex) {
       case 0:
         return HomePageScreen(
-          filesV: widget.filesV,
+          filesV: widget.videoFiles,
         );
       case 1:
         return const PlaylistPageScreen();

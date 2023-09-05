@@ -1,26 +1,48 @@
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
-import 'package:fetch_all_videos/fetch_all_videos.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+class VideoFunctions {
+  static Future<List<String>> getPath() async {
+    bool _isVideoFile(File file) {
+      final String extension = file.path.split('.').last.toLowerCase();
+      return extension == 'mp4' ||
+          extension == 'mov' ||
+          extension == 'avi' ||
+          extension == 'mkv';
+    }
 
-Future<List<dynamic>> getPath() async {
-  FetchAllVideos ob = FetchAllVideos();
-  List<dynamic> videos = await ob.getAllVideos();
-  print('Fetched video data: $videos');
+    Directory root = Directory('/storage/emulated/0');
+    List<String> paths = [];
 
-  return videos;
-}
+    try {
+      final List<FileSystemEntity> allFiles = root.listSync(recursive: true);
 
-Future<List> storeVideos() async {
-  final videos = await getPath();
-
-  if (!Hive.isBoxOpen('videos')) {
-    await Hive.openBox<List<dynamic>>('videos');
+      for (final FileSystemEntity entity in allFiles) {
+        if (entity is File && _isVideoFile(entity)) {
+          paths.add(entity.path);
+        }
+      }
+    } catch (e) {
+      debugPrint('Error getting video files: $e');
+    }
+    debugPrint(paths.toString());
+    return paths;
   }
 
-  final box = Hive.box<List<dynamic>>('videos');
+  static Future<void> storeVideos() async {
+    final videos = await getPath();
 
-  // Store the videos list using the key 'videos' instead of 'video'
-  box.put('videos', videos); // Use the same key 'videos'
+    if (!Hive.isBoxOpen('videos')) {
+      await Hive.openBox<List<String>>('videos');
+    }
 
-  return videos;
+    final box = Hive.box<List<String>>('videos');
+
+    // Store the videos list using the key 'videos'
+    box.put('videos', videos);
+  }
 }
+ // FetchAllVideos ob = FetchAllVideos();
+    // List<dynamic> videos = await ob.getAllVideos();
+    // debugPrint('Fetched video data: $videos');
