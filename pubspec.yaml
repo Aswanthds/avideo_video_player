@@ -9,14 +9,12 @@ environment:
   sdk: '>=3.1.0 <4.0.0'
 
 dependencies:
-  chewie: ^1.7.0
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
   flutter_native_splash: ^2.3.2
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  image_picker: ^1.0.4
   intl: ^0.18.1
   lottie: ^2.6.0
   package_info_plus: ^4.1.0
@@ -50,6 +48,9 @@ flutter:
     - assets/images/logo_full.png
     - assets/images/bg_image.jpeg
     - assets/lottie/loading.json
+    - assets/images/recently.png
+    - assets/images/mostly.png
+    - assets/images/favourites.png
     
   # fonts:
   #   - family: Schyler

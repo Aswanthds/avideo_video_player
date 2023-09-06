@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:video_player_app/constants.dart';
 
 class PrivacyScreen extends StatelessWidget {
   const PrivacyScreen({super.key});
@@ -157,7 +158,7 @@ class EmailHyperlinkWidget extends StatelessWidget {
             text: '$displayText ',
             style: const TextStyle(
               fontSize: 18,
-              color: Colors.black, // Customize text style as needed
+              color: kcolorblack54, // Customize text style as needed
             ),
           ),
           TextSpan(

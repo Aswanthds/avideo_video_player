@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:video_player_app/constants.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
@@ -94,7 +95,7 @@ class _AboutPageState extends State<AboutPage> {
               "AVideo Video Player app  is a user-friendly video player app designed to provide you with a seamless video playback experience. Whether you're watching movies, videos, or educational content, AVideo has you covered with its powerful features and intuitive interface.",
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.black54,
+                color: kcolorblack54,
                 fontSize: 18,
               ),
             ),

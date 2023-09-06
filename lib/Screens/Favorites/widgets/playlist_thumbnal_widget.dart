@@ -23,41 +23,11 @@ class PlayListThumbnailWidget extends StatelessWidget {
             color: Colors.grey.withOpacity(0.4),
             borderRadius: BorderRadius.circular(20),
             image: const DecorationImage(
-              image: AssetImage('assets/images/logo_full.png'),
+              image: AssetImage('assets/images/favourites.png'),
             ),
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 20, top: 15, ),
-              child: Text(
-                'Recently Played Videos',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
-              ),
-            ),
-            Row(
-              children: [
-                IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.play_arrow,
-                      color: Colors.white,
-                    )),
-                IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.shuffle,
-                      color: Colors.white,
-                    )),
-              ],
-            ),
-          ],
-        ),
+       
       ],
     );
   }

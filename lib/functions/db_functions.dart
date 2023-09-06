@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 
 class VideoFunctions {
   static Future<List<String>> getPath() async {
-    bool _isVideoFile(File file) {
+    bool isVideoFile(File file) {
       final String extension = file.path.split('.').last.toLowerCase();
       return extension == 'mp4' ||
           extension == 'mov' ||
@@ -19,7 +19,7 @@ class VideoFunctions {
       final List<FileSystemEntity> allFiles = root.listSync(recursive: true);
 
       for (final FileSystemEntity entity in allFiles) {
-        if (entity is File && _isVideoFile(entity)) {
+        if (entity is File && isVideoFile(entity)) {
           paths.add(entity.path);
         }
       }
@@ -42,6 +42,7 @@ class VideoFunctions {
     // Store the videos list using the key 'videos'
     box.put('videos', videos);
   }
+
 }
  // FetchAllVideos ob = FetchAllVideos();
     // List<dynamic> videos = await ob.getAllVideos();

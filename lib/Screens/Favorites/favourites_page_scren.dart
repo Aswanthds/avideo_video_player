@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:video_player_app/Screens/Favorites/widgets/playlist_thumbnal_widget.dart';
 import 'package:video_player_app/Screens/Favorites/widgets/video_listtile_widget.dart';
 
-
 class FavouritesPageScreen extends StatefulWidget {
   const FavouritesPageScreen({super.key});
 
@@ -13,8 +12,6 @@ class FavouritesPageScreen extends StatefulWidget {
 class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(75),
@@ -37,8 +34,12 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
       body: const Padding(
         padding: EdgeInsets.all(8.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             PlayListThumbnailWidget(),
+            SizedBox(
+              height: 20,
+            ),
             VideoListTileWidget(),
           ],
         ),

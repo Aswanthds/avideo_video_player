@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player_app/Screens/Home/widgets/folder_tab.dart';
+import 'package:video_player_app/constants.dart';
 
 class AppbarCommon extends StatefulWidget {
   final String title;
@@ -23,7 +24,8 @@ class _AppbarCommonState extends State<AppbarCommon> {
         bottomLeft: Radius.circular(24),
       ),
       child: AppBar(
-          backgroundColor: const Color(0xF1003554),
+          iconTheme: const IconThemeData(color: Colors.white),
+          backgroundColor: kcolorblue,
           title: Text(
             widget.title,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),

@@ -1,9 +1,8 @@
 import 'dart:io';
-
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:video_player/video_player.dart';
+import 'package:video_player_app/constants.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   final String filesV;
@@ -15,7 +14,7 @@ class VideoPlayerScreen extends StatefulWidget {
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   late VideoPlayerController _controller;
-  ChewieController? _chewieController;
+
   @override
   void initState() {
     super.initState();
@@ -33,9 +32,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.transparent,
         title: Text(filename),
-        actions: const [ Icon(Icons.more_vert)],
+        actions: const [Icon(Icons.more_vert)],
       ),
-      backgroundColor: Colors.black, // Set the background color to black
+      backgroundColor: kcolorblack,
       body: Center(
         child: _controller.value.isInitialized
             ? Stack(
@@ -51,7 +50,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
-                          color: Colors.black54),
+                          color: kcolorblack54),
                       child: IconButton(
                           onPressed: () {},
                           icon: const Icon(
@@ -65,7 +64,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     child: Container(
                       height: 120,
                       decoration: const BoxDecoration(
-                        color: Colors.black54,
+                        color: kcolorblack54,
                       ),
                       child: Column(
                         children: [
@@ -91,7 +90,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                 icon: const Icon(
                                   Icons.replay_10,
                                   size: 32.0,
-                                  color: Colors.white,
+                                  color: kColorWhite,
                                 ),
                               ),
                               IconButton(
@@ -101,7 +100,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                 icon: const Icon(
                                   Icons.skip_previous,
                                   size: 32.0,
-                                  color: Colors.white,
+                                  color: kColorWhite,
                                 ),
                               ),
                               GestureDetector(
@@ -119,7 +118,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                       ? Icons.pause_circle_outline
                                       : Icons.play_circle_outline,
                                   size: 72.0,
-                                  color: Colors.white,
+                                  color: kColorWhite,
                                 ),
                               ),
                               IconButton(
@@ -129,7 +128,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                 icon: const Icon(
                                   Icons.skip_next,
                                   size: 32.0,
-                                  color: Colors.white,
+                                  color: kColorWhite,
                                 ),
                               ),
                               IconButton(
@@ -139,7 +138,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                 icon: const Icon(
                                   Icons.forward_10,
                                   size: 32.0,
-                                  color: Colors.white,
+                                  color: kColorWhite,
                                 ),
                               ),
                             ],
@@ -159,6 +158,5 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   void dispose() {
     super.dispose();
     _controller.dispose();
-    _chewieController?.dispose();
   }
 }

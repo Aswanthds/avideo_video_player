@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:video_compress/video_compress.dart';
@@ -19,7 +20,8 @@ class VideoTileWidget extends StatefulWidget {
 }
 
 class _VideoTileWidgetState extends State<VideoTileWidget> {
-  final ValueNotifier<File> thumbnailNotifier = ValueNotifier<File>(File(''));
+  final ValueNotifier<Uint8List?> thumbnailNotifier =
+      ValueNotifier<Uint8List>(Uint8List(0));
 
   @override
   void initState() {
@@ -29,11 +31,13 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
 
   Future<void> updateThumbnail() async {
     try {
-      final thumbnailFile = await VideoCompress.getFileThumbnail(
+      final thumbnailFile = await VideoCompress.getByteThumbnail(
         widget.videoFile.path,
         quality: 50,
         position: -1,
       );
+     
+
       thumbnailNotifier.value = thumbnailFile;
     } catch (e) {
       debugPrint('Error generating thumbnail: $e');
@@ -89,7 +93,8 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
               VideoPlayerScreen(filesV: widget.videoFile.path),
         ));
       },
-      child: VideoThumbnailCommon(thumbnailNotifier: thumbnailNotifier, widget: widget),
+      child: VideoThumbnailCommon(
+          thumbnailNotifier: thumbnailNotifier, widget: widget),
     );
   }
 }

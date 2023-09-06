@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:video_player_app/widgets/lottie_widget.dart';
+import 'package:video_player_app/constants.dart';
+import 'package:video_player_app/widgets/splash_screen.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -21,10 +22,10 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           brightness: Brightness.light,
           appBarTheme: const AppBarTheme(
-              titleTextStyle: TextStyle(color: Colors.white, fontSize: 18),
+              titleTextStyle: TextStyle(color: kColorWhite , fontSize: 18),
               actionsIconTheme: IconThemeData(color: Colors.white)),
           useMaterial3: true,
         ),
-        home: const LottiePage());
+        home: const SplashScreenPage());
   }
 }
