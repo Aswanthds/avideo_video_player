@@ -39,7 +39,7 @@ A simple Flutter application for playing video files. This application demonstra
 
     `flutter pub get`
 
-Usage
+## Usage
 
     Run the application:
 
@@ -55,11 +55,11 @@ Usage
 
   Tap on a video file to play it.
 
-Screenshots
+## Screenshots
 
 <---Will update Soon -->
 
-Contributions are welcome! If you'd like to contribute to this project, please follow these guidelines:
+### Contributions are welcome! If you'd like to contribute to this project, please follow these guidelines:
 
     Fork the repository.
     Create a new branch for your feature or bug fix.
