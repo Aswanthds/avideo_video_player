@@ -9,7 +9,7 @@ A simple Flutter application for playing video files. This application demonstra
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
-- [Screenshots](#Screenshots)
+- [Screenshots](#screenshots)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -31,7 +31,7 @@ A simple Flutter application for playing video files. This application demonstra
 
 
    `git clone https://github.com/yourusername/your-video-app.git`
-   `cd your-video-app`
+   `cd avideo_video_player`
 
     `Install dependencies:`
 
@@ -39,7 +39,7 @@ A simple Flutter application for playing video files. This application demonstra
 
     `flutter pub get`
 
-Usage
+## Usage
 
     Run the application:
 
@@ -47,19 +47,19 @@ Usage
 
     flutter run
 
-    The application will start with a splash screen that checks for storage permissions.
+  The application will start with a splash screen that checks for storage permissions.
 
-    Grant permission to access storage when prompted.
+   Grant permission to access storage when prompted.
 
-    Once permission is granted, the application will fetch video files and display them.
+  Once permission is granted, the application will fetch video files and display them.
 
-    Tap on a video file to play it.
+  Tap on a video file to play it.
 
-Screenshots
+## Screenshots
 
 <---Will update Soon -->
 
-Contributions are welcome! If you'd like to contribute to this project, please follow these guidelines:
+### Contributions are welcome! If you'd like to contribute to this project, please follow these guidelines:
 
     Fork the repository.
     Create a new branch for your feature or bug fix.
