@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
-import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/widgets/search_widget.dart';
 
 class HomeSearchPaage extends StatefulWidget {
@@ -15,7 +14,7 @@ class HomeSearchPaage extends StatefulWidget {
 
 class _HomeSearchPaageState extends State<HomeSearchPaage> {
   final TextEditingController _controller = TextEditingController();
-  ValueNotifier<String> _textNotifier = ValueNotifier('');
+  ValueNotifier<String> textNotifier = ValueNotifier('');
   List<String> filteredFiles = [];
 
   Widget _buildResults() {
@@ -31,7 +30,7 @@ class _HomeSearchPaageState extends State<HomeSearchPaage> {
 
   void _updateFilteredFiles() {
     final List<String> inputWords =
-        _textNotifier.value.toLowerCase().split(' ');
+        textNotifier.value.toLowerCase().split(' ');
 
     filteredFiles = widget.files
             ?.where((file) {
@@ -42,7 +41,7 @@ class _HomeSearchPaageState extends State<HomeSearchPaage> {
             .toList() ??
         [];
 
-    _textNotifier.value = _textNotifier.value;
+    textNotifier.value = textNotifier.value;
     setState(() {});
   }
 
@@ -50,7 +49,7 @@ class _HomeSearchPaageState extends State<HomeSearchPaage> {
   void initState() {
     super.initState();
     _controller.addListener(() {
-      _textNotifier.value = _controller.text;
+      textNotifier.value = _controller.text;
       _updateFilteredFiles();
     });
   }
@@ -62,7 +61,7 @@ class _HomeSearchPaageState extends State<HomeSearchPaage> {
         leadingWidth: 30,
         leading: IconButton(
             onPressed: () => Navigator.of(context).pop(),
-            icon: Icon(Icons.arrow_back)),
+            icon: const Icon(Icons.arrow_back)),
         centerTitle: false,
         automaticallyImplyLeading: false,
         title: Padding(

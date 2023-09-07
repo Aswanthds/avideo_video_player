@@ -33,7 +33,7 @@ class _AboutPageState extends State<AboutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const PreferredSize(
-        preferredSize: const Size.fromHeight(75),
+        preferredSize: Size.fromHeight(75),
         child: SettingsAppBar(),
       ),
       body: ListView(

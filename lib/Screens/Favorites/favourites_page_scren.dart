@@ -31,7 +31,7 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
               IconButton(
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) =>
-                            HomeSearchPaage(text: 'Search videos..'),
+                            const HomeSearchPaage(text: 'Search videos..'),
                       )),
                   icon: const Icon(Icons.search))
             ],
