@@ -4,6 +4,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:video_player_app/Screens/mainpage.dart';
+import 'package:video_player_app/constants.dart';
+
+import 'package:video_player_app/functions/path_functions.dart';
 
 class SplashScreenPage extends StatefulWidget {
   const SplashScreenPage({super.key});
@@ -15,16 +18,30 @@ class SplashScreenPage extends StatefulWidget {
 class _SplashScreenPageState extends State<SplashScreenPage> {
   List<File> videoFiles = [];
   List<dynamic> videoData = [];
+
   @override
   void initState() {
     super.initState();
     delayAndCheckPermissions();
   }
 
+  void fetchAndShowVideos() async {
+    final fetchedVideos = await PathFunctions.getPath();
+
+    setState(() {
+      videoData = List<String>.from(fetchedVideos);
+      videoFiles = fetchedVideos.map((path) => File(path)).toList();
+    });
+
+    debugPrint('All Video Data:');
+    for (String data in videoData) {
+      debugPrint(data);
+    }
+  }
+
   Future<void> delayAndCheckPermissions() async {
     await Future.delayed(const Duration(seconds: 3));
     checkPermissionsAndNavigate();
-  
   }
 
   Future<void> checkPermissionsAndNavigate() async {
@@ -51,7 +68,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                   child: const Text('No'),
                 ),
                 TextButton(
-                  onPressed: () => checkPermissionsAndNavigate().then((value) => Navigator.of(context).pop()),
+                  onPressed: () => checkPermissionsAndNavigate(),
                   child: const Text('Yes'),
                 ),
               ],
@@ -65,7 +82,9 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   void navigateToMainScreen() async {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => const MainPageScreen(),
+        builder: (context) => MainPageScreen(
+          videoFile: videoFiles,
+        ),
       ),
     );
   }
@@ -73,7 +92,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orangeAccent,
+      backgroundColor: kColorWhite,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

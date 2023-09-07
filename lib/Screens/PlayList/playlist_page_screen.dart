@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_player_app/Screens/Home/widgets/home_search_page.dart';
 import 'package:video_player_app/Screens/PlayList/most_played_videos.dart';
 import 'package:video_player_app/Screens/PlayList/recent_played_videos.dart';
 import 'package:video_player_app/Screens/PlayList/widget/playlist_widget.dart';
@@ -20,7 +21,7 @@ class _PlaylistPageScreenState extends State<PlaylistPageScreen> {
         appBar: const PreferredSize(
           preferredSize: Size.fromHeight(75),
           child:  AppbarCommon(
-            title: 'Playlists', isHome: false,
+            title: 'Playlists', isHome: false, navigation: HomeSearchPaage(text: 'Search Playlists'),
           ), 
         ),
         body: Column(

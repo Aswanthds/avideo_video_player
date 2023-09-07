@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/Screens/Home/Tabs/widgets/video_tile_widget.dart';
@@ -11,7 +12,7 @@ class CameraTab extends StatefulWidget {
   State<CameraTab> createState() => _CameraTabState();
 }
 
-final ValueNotifier<File> thumbnailNotifier = ValueNotifier<File>(File(''));
+final ValueNotifier<Uint8List> thumbnailNotifier = ValueNotifier<Uint8List>(Uint8List(0));
 
 class _CameraTabState extends State<CameraTab> {
   MediaInfo? info;

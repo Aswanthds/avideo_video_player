@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           brightness: Brightness.light,
           appBarTheme: const AppBarTheme(
-              titleTextStyle: TextStyle(color: kColorWhite , fontSize: 18),
-              actionsIconTheme: IconThemeData(color: Colors.white)),
+              titleTextStyle: TextStyle(color: kColorWhite, fontSize: 18),
+              actionsIconTheme: IconThemeData(color: kColorWhite)),
           useMaterial3: true,
         ),
         home: const SplashScreenPage());

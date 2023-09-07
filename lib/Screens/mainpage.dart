@@ -8,11 +8,13 @@ import 'package:video_player_app/Screens/Favorites/favourites_page_scren.dart';
 import 'package:video_player_app/Screens/Home/home_page_screen.dart';
 import 'package:video_player_app/Screens/PlayList/playlist_page_screen.dart';
 import 'package:video_player_app/constants.dart';
-import 'package:video_player_app/functions/db_functions.dart';
+import 'package:video_player_app/functions/path_functions.dart';
 
 class MainPageScreen extends StatefulWidget {
+  final List<File> videoFile;
   final List<Uint8List>? thumbnail;
-  const MainPageScreen({Key? key, this.thumbnail}) : super(key: key);
+  const MainPageScreen({Key? key, this.thumbnail, required this.videoFile})
+      : super(key: key);
 
   @override
   State<MainPageScreen> createState() => _MainPageScreenState();
@@ -30,7 +32,7 @@ class _MainPageScreenState extends State<MainPageScreen>
   }
 
   void fetchAndShowVideos() async {
-    final fetchedVideos = await VideoFunctions.getPath();
+    final fetchedVideos = await PathFunctions.getPath();
 
     setState(() {
       videoData = List<String>.from(fetchedVideos);
@@ -53,7 +55,7 @@ class _MainPageScreenState extends State<MainPageScreen>
           topRight: Radius.circular(24),
         ),
         child: SalomonBottomBar(
-          backgroundColor: const Color(0xF1003554),
+          backgroundColor:  kcolorDarkblue,
           currentIndex: _bottomNavIndex,
           onTap: (i) => setState(() => _bottomNavIndex = i),
           items: [
@@ -62,28 +64,28 @@ class _MainPageScreenState extends State<MainPageScreen>
                 icon: const Icon(Icons.home),
                 title: const Text("Home"),
                 selectedColor: kColorAmber,
-                unselectedColor: Colors.white),
+                unselectedColor: kColorWhite),
 
             /// Likes
             SalomonBottomBarItem(
                 icon: const Icon(Icons.playlist_play),
                 title: const Text("Playlist"),
                 selectedColor: kColorCyan,
-                unselectedColor: Colors.white),
+                unselectedColor: kColorWhite),
 
             /// Search
             SalomonBottomBarItem(
                 icon: const Icon(Icons.favorite_outline),
                 title: const Text("Favourites"),
                 selectedColor: kColorOrange,
-                unselectedColor: Colors.white),
+                unselectedColor: kColorWhite),
 
             /// Profile
             SalomonBottomBarItem(
                 icon: const Icon(Icons.settings),
                 title: const Text("Settings"),
                 selectedColor: kColorDeepOrange,
-                unselectedColor: Colors.white),
+                unselectedColor: kColorWhite),
           ],
         ),
       ),

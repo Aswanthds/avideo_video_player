@@ -5,11 +5,12 @@ import 'package:video_player_app/constants.dart';
 class AppbarCommon extends StatefulWidget {
   final String title;
   final bool isHome;
-
+  final Widget navigation;
   const AppbarCommon({
     super.key,
     required this.title,
     required this.isHome,
+    required this.navigation,
   });
 
   @override
@@ -24,14 +25,20 @@ class _AppbarCommonState extends State<AppbarCommon> {
         bottomLeft: Radius.circular(24),
       ),
       child: AppBar(
-          iconTheme: const IconThemeData(color: Colors.white),
-          backgroundColor: kcolorblue,
+          iconTheme: const IconThemeData(color: kColorWhite),
+          backgroundColor: kcolorDarkblue,
           title: Text(
             widget.title,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
           actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.search))
+            IconButton(
+                onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => widget.navigation,
+                      ),
+                    ),
+                icon: const Icon(Icons.search))
           ],
           bottom: widget.isHome
               ? const PreferredSize(
@@ -49,10 +56,10 @@ class HomeTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const TabBar(
-      labelColor: Colors.white,
+      labelColor: kColorWhite,
       unselectedLabelColor: Colors.grey,
       isScrollable: true,
-      labelStyle: TextStyle(color: Colors.white),
+      labelStyle: TextStyle(color: kColorWhite),
       indicatorColor: Colors.lightBlue,
       tabs: [
         FolderTab(

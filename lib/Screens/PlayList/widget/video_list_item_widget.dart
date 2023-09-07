@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_player_app/constants.dart';
 
 class VideoListTileWidget extends StatelessWidget {
   const VideoListTileWidget({super.key});
@@ -46,14 +47,14 @@ class VideoListTileWidget extends StatelessWidget {
           decoration: BoxDecoration(
               boxShadow: const [
                 BoxShadow(
-                    color: Color(0xF1003554),
+                    color: kcolorDarkblue,
                     blurRadius: 10,
                     blurStyle: BlurStyle.outer),
               ],
-              color: const Color(0xF1003554),
+              color:  kcolorDarkblue,
               border: Border.all(
                 style: BorderStyle.solid,
-                color: const Color(0xF1003554),
+                color:  kcolorDarkblue,
                 width: 2,
               ),
               borderRadius: BorderRadius.circular(20)),
@@ -61,7 +62,7 @@ class VideoListTileWidget extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
                 'assets/images/logo.png',
-                color: Colors.white,
+                color: kColorWhite,
               ))),
       title: const Text('Video'),
       trailing: GestureDetector(
@@ -69,7 +70,7 @@ class VideoListTileWidget extends StatelessWidget {
             showPopupMenu(details.globalPosition),
         child: const Icon(
           Icons.more_vert,
-          color: Color(0xF1003554),
+          color: kcolorDarkblue,
           fill: 0,
         ),
       ),

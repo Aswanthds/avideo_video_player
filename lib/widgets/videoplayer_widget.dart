@@ -29,7 +29,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     final filename = basename(widget.filesV);
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: kColorWhite),
         backgroundColor: Colors.transparent,
         title: Text(filename),
         actions: const [Icon(Icons.more_vert)],
@@ -55,7 +55,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                           onPressed: () {},
                           icon: const Icon(
                             Icons.fullscreen,
-                            color: Colors.white,
+                            color: kColorWhite,
                           )),
                     ),
                   ),

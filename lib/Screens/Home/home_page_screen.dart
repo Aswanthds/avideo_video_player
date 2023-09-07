@@ -5,6 +5,7 @@ import 'package:video_player_app/Screens/Home/Tabs/download_tab.dart';
 import 'package:video_player_app/Screens/Home/Tabs/others_tab.dart';
 import 'package:video_player_app/Screens/Home/Tabs/screenshots_tab.dart';
 import 'package:video_player_app/Screens/Home/Tabs/whatsapp_tab.dart';
+import 'package:video_player_app/Screens/Home/widgets/home_search_page.dart';
 import 'package:video_player_app/widgets/appbar_common.dart';
 
 class HomePageScreen extends StatefulWidget {
@@ -32,11 +33,12 @@ class _HomePageScreenState extends State<HomePageScreen> {
     return DefaultTabController(
       length: 5,
       child: Scaffold(
-        appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(100),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(100),
           child: AppbarCommon(
             title: 'Avideo Video Player',
             isHome: true,
+            navigation: HomeSearchPaage(files: widget.filesV,text: 'Search videos'),
           ),
         ),
         body: TabBarView(

@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-class VideoFunctions {
+class PathFunctions {
   static Future<List<String>> getPath() async {
     bool isVideoFile(File file) {
       final String extension = file.path.split('.').last.toLowerCase();
@@ -12,7 +12,7 @@ class VideoFunctions {
           extension == 'mkv';
     }
 
-    Directory root = Directory('/storage/emulated/0');
+    Directory root = Directory('/storage/emulated/0/');
     List<String> paths = [];
 
     try {

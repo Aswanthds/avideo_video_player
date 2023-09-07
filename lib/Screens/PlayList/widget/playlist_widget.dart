@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_player_app/constants.dart';
 
 class PlayListWidget extends StatelessWidget {
   final String title;
@@ -15,14 +16,14 @@ class PlayListWidget extends StatelessWidget {
         decoration: BoxDecoration(
             boxShadow: const [
               BoxShadow(
-                  color: Color(0xF1003554),
+                  color: kcolorDarkblue,
                   blurRadius: 10,
                   blurStyle: BlurStyle.outer),
             ],
-            color: const Color(0xF1003554),
+            color:  kcolorDarkblue,
             border: Border.all(
               style: BorderStyle.solid,
-              color: const Color(0xF1003554),
+              color:  kcolorDarkblue,
               width: 2,
             ),
             borderRadius: BorderRadius.circular(20)),
@@ -30,14 +31,14 @@ class PlayListWidget extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Image.asset(
             'assets/images/logo.png',
-            color: Colors.white,
+            color: kColorWhite,
           ),
         ),
       ),
       title: Text(title),
       trailing: const Icon(
         Icons.arrow_forward_ios,
-        color: Color(0xF1003554),
+        color: kcolorDarkblue,
         fill: 0,
       ),
     );

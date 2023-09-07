@@ -10,6 +10,7 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.2
+  external_path: ^1.0.3
   flutter:
     sdk: flutter
   flutter_native_splash: ^2.3.2
@@ -51,7 +52,6 @@ flutter:
     - assets/images/recently.png
     - assets/images/mostly.png
     - assets/images/favourites.png
-    
   # fonts:
   #   - family: Schyler
   #     fonts:

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_player_app/Screens/Settings/about_page.dart';
 import 'package:video_player_app/Screens/Settings/privacy_screen.dart';
+import 'package:video_player_app/constants.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -15,7 +16,7 @@ class SettingsPage extends StatelessWidget {
               bottomLeft: Radius.circular(24),
             ),
             child: AppBar(
-              backgroundColor: const Color(0xF1003554),
+              backgroundColor:  kcolorDarkblue,
               title: const Text(
                 'Settings',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),

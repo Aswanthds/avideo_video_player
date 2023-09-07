@@ -28,22 +28,19 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
     super.initState();
     updateThumbnail();
   }
-
-  Future<void> updateThumbnail() async {
+Future<void> updateThumbnail() async {
     try {
       final thumbnailFile = await VideoCompress.getByteThumbnail(
         widget.videoFile.path,
         quality: 50,
         position: -1,
       );
-     
 
-      thumbnailNotifier.value = thumbnailFile;
+      thumbnailNotifier.value = thumbnailFile!;
     } catch (e) {
       debugPrint('Error generating thumbnail: $e');
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
