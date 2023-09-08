@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:video_player_app/Screens/Favorites/widgets/video_listtile_widget.dart';
+import 'package:video_player_app/widgets/video_listtile_widget.dart';
 import 'package:video_player_app/Screens/Home/widgets/home_search_page.dart';
 import 'package:video_player_app/Screens/PlayList/widget/playlist_heading_widget.dart';
 import 'package:video_player_app/widgets/appbar_common.dart';
@@ -54,7 +54,9 @@ class _MostPlayedVideosState extends State<MostPlayedVideos> {
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(75),
         child: AppbarCommon(
-          title: 'Most Played Videos', isHome: false, navigation: HomeSearchPaage(text: 'Search videos'),
+          title: 'Most Played Videos',
+          isHome: false,
+          navigation: HomeSearchPaage(text: 'Search videos'),
         ),
       ),
       body: Column(
@@ -66,10 +68,14 @@ class _MostPlayedVideosState extends State<MostPlayedVideos> {
                 color: const Color(0x54003554),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child:const  PlayListHeadingWidget(title: 'Most Played Videos',imgPath: 'assets/images/mostly.png'),
+              child: const PlayListHeadingWidget(
+                  title: 'Most Played Videos',
+                  imgPath: 'assets/images/mostly.png'),
             ),
           ),
-         const VideoListTileWidget(),
+          const VideoListTileWidget(
+            page: 'Most played',
+          ),
         ],
       ),
     );

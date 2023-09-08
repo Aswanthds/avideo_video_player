@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class VideoListTileWidget extends StatelessWidget {
+  final String page;
   const VideoListTileWidget({
     super.key,
+    required this.page,
   });
 
   @override
@@ -18,7 +20,10 @@ class VideoListTileWidget extends StatelessWidget {
             child: Row(
               children: [
                 Icon(Icons.favorite_outline),
-                Text('Remove from favourites'),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('Add  to favourites'),
+                ),
               ],
             ),
           ),
@@ -26,7 +31,32 @@ class VideoListTileWidget extends StatelessWidget {
             child: Row(
               children: [
                 Icon(Icons.playlist_add),
-                Text('Add to Playlist'),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('Add to Playlist'),
+                ),
+              ],
+            ),
+          ),
+          PopupMenuItem<Widget>(
+            child: Row(
+              children: [
+                Icon(Icons.delete),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Remove from $page'),
+                ),
+              ],
+            ),
+          ),
+          PopupMenuItem<Widget>(
+            child: Row(
+              children: [
+                Icon(Icons.info),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('info'),
+                ),
               ],
             ),
           ),

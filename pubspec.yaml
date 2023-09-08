@@ -39,7 +39,7 @@ flutter_native_splash:
   ios: true
   web: true
   image: 'assets/images/logo.png'
-  background_image: 'assets/images/bg_image.jpeg'
+  color: "#ffffff"
 
 flutter:
   uses-material-design: true
@@ -48,7 +48,6 @@ flutter:
     - assets/images/title2.png
     - assets/images/logo_full.png
     - assets/images/bg_image.jpeg
-    - assets/lottie/loading.json
     - assets/images/recently.png
     - assets/images/mostly.png
     - assets/images/favourites.png

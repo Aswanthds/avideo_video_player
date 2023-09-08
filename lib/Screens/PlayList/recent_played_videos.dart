@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:video_player_app/Screens/Favorites/widgets/video_listtile_widget.dart';
+import 'package:video_player_app/widgets/video_listtile_widget.dart';
 import 'package:video_player_app/Screens/Home/widgets/home_search_page.dart';
 import 'package:video_player_app/Screens/PlayList/widget/playlist_heading_widget.dart';
 import 'package:video_player_app/widgets/appbar_common.dart';
@@ -40,7 +40,9 @@ class _RecentlyPlayedVideosState extends State<RecentlyPlayedVideos> {
               ),
             ),
           ),
-          const VideoListTileWidget(),
+          const VideoListTileWidget(
+            page: 'recently played',
+          ),
         ],
       ),
     );

@@ -39,11 +39,8 @@ class PathFunctions {
 
     final box = Hive.box<List<String>>('videos');
 
-    // Store the videos list using the key 'videos'
     box.put('videos', videos);
   }
 
 }
- // FetchAllVideos ob = FetchAllVideos();
-    // List<dynamic> videos = await ob.getAllVideos();
-    // debugPrint('Fetched video data: $videos');
+ 

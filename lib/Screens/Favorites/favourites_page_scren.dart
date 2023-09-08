@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player_app/Screens/Favorites/widgets/playlist_thumbnal_widget.dart';
-import 'package:video_player_app/Screens/Favorites/widgets/video_listtile_widget.dart';
+import 'package:video_player_app/widgets/video_listtile_widget.dart';
 import 'package:video_player_app/Screens/Home/widgets/home_search_page.dart';
 import 'package:video_player_app/constants.dart';
 
@@ -22,7 +22,7 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
             bottomLeft: Radius.circular(24),
           ),
           child: AppBar(
-            backgroundColor:  kcolorDarkblue,
+            backgroundColor: kcolorDarkblue,
             title: const Text(
               'Favourites',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -47,7 +47,7 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
             SizedBox(
               height: 20,
             ),
-            VideoListTileWidget(),
+            VideoListTileWidget(page: 'favourites'),
           ],
         ),
       ),

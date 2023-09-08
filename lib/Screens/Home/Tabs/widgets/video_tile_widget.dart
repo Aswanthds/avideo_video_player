@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/Screens/Home/Tabs/widgets/menu_icon.dart';
 import 'package:video_player_app/Screens/Home/Tabs/widgets/video_common_thumbnail.dart';
+import 'package:video_player_app/widgets/VideoPlayer/video_player_widget.dart';
 import 'package:video_player_app/widgets/videoplayer_widget.dart';
 
 class VideoTileWidget extends StatefulWidget {
