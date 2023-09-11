@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:video_compress/video_compress.dart';
+import 'package:video_player_app/Screens/Home/Tabs/widgets/video_info_dialog.dart';
+import 'package:video_player_app/functions/video_functions.dart';
 import 'package:video_player_app/widgets/video_listtile_widget.dart';
 import 'package:video_player_app/Screens/Home/widgets/home_search_page.dart';
 import 'package:video_player_app/Screens/PlayList/widget/playlist_heading_widget.dart';
@@ -35,7 +38,20 @@ class _MostPlayedVideosState extends State<MostPlayedVideos> {
             ],
           ),
         ),
-        const PopupMenuItem<Widget>(
+        PopupMenuItem<Widget>(
+          onTap: () => showDialog(
+            context: context,
+            builder: (context) {
+              return ValueListenableBuilder<List<MediaInfo>>(
+                valueListenable: videoInfoNotifier,
+                builder: (context, info, _) {
+                  return VideoInfoDialog(
+                    info: info,
+                  );
+                },
+              );
+            },
+          ),
           child: Row(
             children: [
               Icon(Icons.info_sharp),

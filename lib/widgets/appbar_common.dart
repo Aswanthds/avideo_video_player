@@ -63,6 +63,10 @@ class HomeTabBar extends StatelessWidget {
       indicatorColor: Colors.lightBlue,
       tabs: [
         FolderTab(
+          foldername: 'All',
+          icon: Icons.video_collection,
+        ),
+        FolderTab(
           foldername: 'Camera',
           icon: Icons.camera_alt,
         ),

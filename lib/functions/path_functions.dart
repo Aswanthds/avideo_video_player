@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class PathFunctions {
+  //path fetch
   static Future<List<String>> getPath() async {
     bool isVideoFile(File file) {
       final String extension = file.path.split('.').last.toLowerCase();
@@ -30,6 +31,8 @@ class PathFunctions {
     return paths;
   }
 
+  //storevideos
+
   static Future<void> storeVideos() async {
     final videos = await getPath();
 
@@ -42,5 +45,21 @@ class PathFunctions {
     box.put('videos', videos);
   }
 
+//seprate videos;
+
+  static Future<void> seperateVideos() async {
+
+   Map<String, String> pathsAndParents = {};
+
+    // Get the paths of all the video files.
+    List<String> paths = await getPath();
+
+    // For each path, get the parent folder.
+    for (String path in paths) {
+      String parentFolder = path.split('/').last;
+
+      // Add the path and its parent folder to the dictionary.
+      pathsAndParents[path] = parentFolder;
+    }
+  }
 }
- 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_player_app/constants.dart';
 
 class MenuIconWidget extends StatelessWidget {
   final String title;
@@ -19,11 +20,19 @@ class MenuIconWidget extends StatelessWidget {
         children: [
           CircleAvatar(
               radius: 20,
-              backgroundColor: Colors.grey,
-              child: Center(child: Icon(icon))),
+              backgroundColor: kColorTeal,
+              child: Center(
+                child: Icon(
+                  icon,
+                  color: kColorWhite,
+                ),
+              )),
           Text(
             title,
             maxLines: 1,
+            style: const TextStyle(
+              fontSize: 18,
+            ),
             overflow: TextOverflow.ellipsis,
           ),
         ],

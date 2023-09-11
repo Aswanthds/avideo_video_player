@@ -43,7 +43,7 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
                       if (widget.controller.value.isPlaying) {
                         widget.controller.seekTo(
                             widget.controller.value.position -
-                                Duration(seconds: 10));
+                                const Duration(seconds: 10));
                       }
                     });
                   },
@@ -97,7 +97,7 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
                       if (widget.controller.value.isPlaying) {
                         widget.controller.seekTo(
                             widget.controller.value.position +
-                                Duration(seconds: 10));
+                                const Duration(seconds: 10));
                       }
                     });
                   },

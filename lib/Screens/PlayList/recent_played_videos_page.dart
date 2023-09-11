@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:video_player_app/widgets/video_listtile_widget.dart';
+import 'package:video_player_app/Screens/PlayList/widget/recently_played/recently_played_video_list.dart';
 import 'package:video_player_app/Screens/Home/widgets/home_search_page.dart';
 import 'package:video_player_app/Screens/PlayList/widget/playlist_heading_widget.dart';
 import 'package:video_player_app/widgets/appbar_common.dart';
 
-class RecentlyPlayedVideos extends StatefulWidget {
-  const RecentlyPlayedVideos({super.key});
+class RecentlyPlayedVideosPage extends StatefulWidget {
+  const RecentlyPlayedVideosPage({Key? key}) : super(key: key);
 
   @override
-  State<RecentlyPlayedVideos> createState() => _RecentlyPlayedVideosState();
+  State<RecentlyPlayedVideosPage> createState() =>
+      _RecentlyPlayedVideosPageState();
 }
 
-class _RecentlyPlayedVideosState extends State<RecentlyPlayedVideos> {
+class _RecentlyPlayedVideosPageState extends State<RecentlyPlayedVideosPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(75),
         child: AppbarCommon(
-          title: 'Recently Played Videos',
           isHome: false,
-          navigation: HomeSearchPaage(
-            text: 'Search videos',
-          ),
+          title: 'Recently Played Videos',
+          navigation: HomeSearchPaage(text: 'Search Videos here'),
         ),
       ),
       body: Column(
@@ -40,9 +39,7 @@ class _RecentlyPlayedVideosState extends State<RecentlyPlayedVideos> {
               ),
             ),
           ),
-          const VideoListTileWidget(
-            page: 'recently played',
-          ),
+          const RecenPlayedVideoList()
         ],
       ),
     );

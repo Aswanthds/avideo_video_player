@@ -18,22 +18,20 @@ class CustomAppBar extends StatelessWidget {
       backgroundColor: Colors.transparent,
       title: Text(filename),
       bottom: PreferredSize(
-        preferredSize: Size.fromHeight(100),
-        child: Container(
-          child: Row(
-            children: [
-              IconButton(
-                onPressed: toggleVolumeSlider,
-                icon: Icon(
-                  Icons.volume_up,
-                  color: kColorWhite,
-                ),
+        preferredSize: const Size.fromHeight(100),
+        child: Row(
+          children: [
+            IconButton(
+              onPressed: toggleVolumeSlider,
+              icon: const Icon(
+                Icons.volume_up,
+                color: kColorWhite,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-      actions: [IconButton(onPressed: () {}, icon: Icon(Icons.more_vert))],
+      actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))],
     );
   }
 }

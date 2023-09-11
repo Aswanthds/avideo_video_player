@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:video_player_app/Screens/Home/Tabs/all_video_tab.dart';
 import 'package:video_player_app/Screens/Home/Tabs/camera_tab.dart';
 import 'package:video_player_app/Screens/Home/Tabs/download_tab.dart';
 import 'package:video_player_app/Screens/Home/Tabs/others_tab.dart';
@@ -31,7 +32,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 5,
+      length: 6,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(100),
@@ -39,10 +40,12 @@ class _HomePageScreenState extends State<HomePageScreen> {
             title: 'Avideo Video Player',
             isHome: true,
             navigation: HomeSearchPaage(files: widget.filesV,text: 'Search videos'),
+            
           ),
         ),
         body: TabBarView(
           children: [
+            AllVideoTab(video: widget.filesV,),
             CameraTab(filesV: widget.filesV),
             DownloadTab(filesV: widget.filesV),
             ScreenRecordsTab(filesV: widget.filesV),

@@ -3,17 +3,19 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:video_compress/video_compress.dart';
-import 'package:video_player_app/Screens/Home/Tabs/widgets/menu_icon.dart';
+import 'package:video_player_app/Screens/Home/Tabs/widgets/video_menu_row.dart';
 import 'package:video_player_app/Screens/Home/Tabs/widgets/video_common_thumbnail.dart';
+import 'package:video_player_app/database/recently_played.dart';
 import 'package:video_player_app/widgets/VideoPlayer/video_player_widget.dart';
-import 'package:video_player_app/widgets/videoplayer_widget.dart';
 
 class VideoTileWidget extends StatefulWidget {
   final File videoFile;
+  final int index;
 
   const VideoTileWidget({
     Key? key,
     required this.videoFile,
+    required this.index,
   }) : super(key: key);
 
   @override
@@ -29,11 +31,12 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
     super.initState();
     updateThumbnail();
   }
-Future<void> updateThumbnail() async {
+
+  Future<void> updateThumbnail() async {
     try {
       final thumbnailFile = await VideoCompress.getByteThumbnail(
         widget.videoFile.path,
-        quality: 50,
+        quality: 10,
         position: -1,
       );
 
@@ -42,6 +45,7 @@ Future<void> updateThumbnail() async {
       debugPrint('Error generating thumbnail: $e');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -55,28 +59,10 @@ Future<void> updateThumbnail() async {
                 child: Container(
                   width: double.infinity,
                   decoration: const BoxDecoration(),
-                  child: const SingleChildScrollView(
+                  child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        MenuIconWidget(
-                          title: 'Add to PlayList',
-                          icon: Icons.playlist_add,
-                        ),
-                        MenuIconWidget(
-                          title: 'Add to Favorites',
-                          icon: Icons.favorite,
-                        ),
-                        MenuIconWidget(
-                          title: 'Share Video',
-                          icon: Icons.ios_share,
-                        ),
-                        MenuIconWidget(
-                          title: 'Info',
-                          icon: Icons.info_outlined,
-                        ),
-                      ],
+                    child: VideoMenuRow(
+                      widget.videoFile.path,
                     ),
                   ),
                 ),
@@ -86,6 +72,8 @@ Future<void> updateThumbnail() async {
         );
       },
       onTap: () {
+        RecentlyPlayed.onVideoClicked(widget.videoFile.path);
+        RecentlyPlayed.checkHiveData();
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) =>
               VideoPlayerScreen(filesV: widget.videoFile.path),

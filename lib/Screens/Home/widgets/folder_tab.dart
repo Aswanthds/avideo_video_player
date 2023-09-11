@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class FolderTab extends StatelessWidget {
   final String foldername;
-  final IconData icon;
+  final IconData? icon;
 
   const FolderTab({
     super.key,
     required this.foldername,
-    required this.icon,
+    this.icon,
   });
 
   @override

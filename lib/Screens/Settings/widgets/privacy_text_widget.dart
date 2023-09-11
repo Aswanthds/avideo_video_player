@@ -19,6 +19,7 @@ class PrivacyTextWidget extends StatelessWidget {
         const SizedBox(height: 20),
         Text(
           heading,
+          textAlign: TextAlign.justify,
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -27,6 +28,7 @@ class PrivacyTextWidget extends StatelessWidget {
         const SizedBox(height: 10),
         Text(
           content,
+          textAlign: TextAlign.justify,
           style: const TextStyle(fontSize: 18),
         ),
       ],

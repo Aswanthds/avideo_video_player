@@ -22,6 +22,7 @@ class AboutInfoTile extends StatelessWidget {
       ),
       subtitle: Text(
         subtitle.isEmpty ? 'Not set' : subtitle,
+        textAlign: TextAlign.justify,
         style: const TextStyle(
           fontWeight: FontWeight.normal,
           fontSize: 15,

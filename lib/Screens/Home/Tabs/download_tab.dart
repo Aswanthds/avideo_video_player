@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:video_player_app/Screens/Home/Tabs/widgets/video_tile_widget.dart';
 
-
 class DownloadTab extends StatefulWidget {
   final List<File> filesV;
   const DownloadTab({super.key, required this.filesV});
@@ -12,15 +11,32 @@ class DownloadTab extends StatefulWidget {
 }
 
 class _DownloadTabState extends State<DownloadTab> {
-   @override
+  List<File> downloads = [];
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  List<File> getdownloadsonlyPath() {
+    List<File> downloads = [];
+    for (File path in widget.filesV) {
+      if (path.path.contains('Download')) {
+        downloads.add(path);
+      }
+    }
+    return downloads;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final downloadpath = getdownloadsonlyPath();
     return GridView.builder(
       shrinkWrap: true,
-      itemCount: widget.filesV.length,
+      itemCount: downloadpath.length,
       gridDelegate:
           const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       itemBuilder: (context, index) {
-        final videoPath = widget.filesV[index];
+        final videoPath = downloadpath[index];
 
         return Padding(
           padding: const EdgeInsets.only(
@@ -28,7 +44,10 @@ class _DownloadTabState extends State<DownloadTab> {
             left: 10,
             right: 10,
           ),
-          child: VideoTileWidget(videoFile: videoPath),
+          child: VideoTileWidget(
+            videoFile: videoPath,
+            index: index,
+          ),
         );
       },
     );

@@ -27,18 +27,35 @@ class VideoThumbnailCommon extends StatelessWidget {
           ValueListenableBuilder<Uint8List?>(
             valueListenable: thumbnailNotifier,
             builder: (context, thumbnail, child) {
-              return Container(
-                width: 160,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: kcolorblack,
-                  image: DecorationImage(
-                    image: MemoryImage(
-                      thumbnail!,
-                    ),
+              if (thumbnail!.isEmpty) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: kcolorDarkblue,
                   ),
-                ),
-              );
+                );
+              } else {
+                return Stack(
+                  children: [
+                    Container(
+                      width: 160,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: kcolorDarkblue,
+                        border: Border.all(
+                          style: BorderStyle.solid,
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                        image: DecorationImage(
+                          image: MemoryImage(
+                            thumbnail,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }
             },
           ),
           Padding(

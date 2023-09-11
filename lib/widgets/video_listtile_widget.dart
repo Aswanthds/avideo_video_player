@@ -41,7 +41,7 @@ class VideoListTileWidget extends StatelessWidget {
           PopupMenuItem<Widget>(
             child: Row(
               children: [
-                Icon(Icons.delete),
+                const Icon(Icons.delete),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text('Remove from $page'),
@@ -49,12 +49,12 @@ class VideoListTileWidget extends StatelessWidget {
               ],
             ),
           ),
-          PopupMenuItem<Widget>(
+          const PopupMenuItem<Widget>(
             child: Row(
               children: [
                 Icon(Icons.info),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: Text('info'),
                 ),
               ],

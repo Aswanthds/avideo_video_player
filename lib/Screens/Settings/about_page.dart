@@ -41,16 +41,7 @@ class _AboutPageState extends State<AboutPage> {
           const AboutLogoWidget(),
           const AboutAppText(),
           AboutInfoTile(title: 'App name', subtitle: packageInfo!.appName),
-          AboutInfoTile(
-              title: 'Package name', subtitle: packageInfo!.packageName),
           AboutInfoTile(title: 'App version', subtitle: packageInfo!.version),
-          AboutInfoTile(
-              title: 'Build number', subtitle: packageInfo!.buildNumber),
-          AboutInfoTile(
-              title: 'Build signature', subtitle: packageInfo!.buildSignature),
-          AboutInfoTile(
-              title: 'Installer store',
-              subtitle: packageInfo!.installerStore ?? 'not available'),
         ],
       ),
     );

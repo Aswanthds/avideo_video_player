@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_player_app/Screens/Settings/about_page.dart';
 import 'package:video_player_app/Screens/Settings/privacy_screen.dart';
+import 'package:video_player_app/Screens/Settings/widgets/setting_list.dart';
 import 'package:video_player_app/constants.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -16,7 +17,7 @@ class SettingsPage extends StatelessWidget {
               bottomLeft: Radius.circular(24),
             ),
             child: AppBar(
-              backgroundColor:  kcolorDarkblue,
+              backgroundColor: kcolorDarkblue,
               title: const Text(
                 'Settings',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -61,34 +62,5 @@ class SettingsPage extends StatelessWidget {
             )
           ],
         ));
-  }
-}
-
-class SettingsListWidget extends StatelessWidget {
-  final String title;
-
-  final IconData icon;
-  final bool hasroute;
-
-  const SettingsListWidget({
-    super.key,
-    required this.title,
-    required this.icon,
-    required this.hasroute,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-        leading: Icon(icon),
-        title: Text(
-          title,
-          style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
-        ),
-        trailing: hasroute
-            ? const Icon(
-                Icons.arrow_forward_ios,
-              )
-            : null);
   }
 }
