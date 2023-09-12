@@ -25,6 +25,7 @@ class _AppbarCommonState extends State<AppbarCommon> {
         bottomLeft: Radius.circular(24),
       ),
       child: AppBar(
+        
           iconTheme: const IconThemeData(color: kColorWhite),
           backgroundColor: kcolorDarkblue,
           title: Text(

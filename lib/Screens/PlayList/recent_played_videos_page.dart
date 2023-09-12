@@ -33,13 +33,10 @@ class _RecentlyPlayedVideosPageState extends State<RecentlyPlayedVideosPage> {
                 color: const Color.fromARGB(85, 0, 53, 84),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: const PlayListHeadingWidget(
-                title: 'Recently Played Videos',
-                imgPath: 'assets/images/recently.png',
-              ),
+              child: const ThumbnailRecentlyHeadingWidget(),
             ),
           ),
-          const RecenPlayedVideoList()
+          RecenPlayedVideoList()
         ],
       ),
     );

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:video_player_app/constants.dart';
 
-class ThumbnailRecentlyHeadingWidget extends StatelessWidget {
+class ThumbnailMostlyHeadingWidget extends StatelessWidget {
 
 
-  const ThumbnailRecentlyHeadingWidget({
+  const ThumbnailMostlyHeadingWidget({
     super.key,
-  
+    
   });
 
   @override
@@ -25,7 +25,7 @@ class ThumbnailRecentlyHeadingWidget extends StatelessWidget {
                 fit: BoxFit.fitWidth,
                 repeat: ImageRepeat.repeatX,
                 image: AssetImage(
-                  'assets/images/recently.png',
+                  "assets/images/mostly.png",
                 ),
               ),
             ),
@@ -36,7 +36,7 @@ class ThumbnailRecentlyHeadingWidget extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(left: 20, top: 15, bottom: 15),
                 child: Text(
-                  'Recently Played Videos',
+                  "Mostly Played Videos",
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

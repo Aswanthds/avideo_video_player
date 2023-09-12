@@ -1,33 +1,33 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'video_data.dart';
+part of 'favourite_data.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class RecentlyPlayedDataAdapter extends TypeAdapter<RecentlyPlayedData> {
+class FavoriteDataAdapter extends TypeAdapter<FavoriteData> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
-  RecentlyPlayedData read(BinaryReader reader) {
+  FavoriteData read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return RecentlyPlayedData(
-      videoPath: fields[0] as String,
+    return FavoriteData(
+      filePath: fields[0] as String,
       timestamp: fields[1] as DateTime,
     );
   }
 
   @override
-  void write(BinaryWriter writer, RecentlyPlayedData obj) {
+  void write(BinaryWriter writer, FavoriteData obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.videoPath)
+      ..write(obj.filePath)
       ..writeByte(1)
       ..write(obj.timestamp);
   }
@@ -38,7 +38,7 @@ class RecentlyPlayedDataAdapter extends TypeAdapter<RecentlyPlayedData> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is RecentlyPlayedDataAdapter &&
+      other is FavoriteDataAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

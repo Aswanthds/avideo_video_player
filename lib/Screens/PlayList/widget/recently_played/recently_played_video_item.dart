@@ -10,7 +10,7 @@ import 'package:video_player_app/Screens/PlayList/widget/recently_played/thumbno
 import 'package:video_player_app/database/video_data.dart';
 
 class RecentlyPlayedVideoItem extends StatelessWidget {
-  final VideoData videoData;
+  final RecentlyPlayedData videoData;
 
   const RecentlyPlayedVideoItem({Key? key, required this.videoData})
       : super(key: key);
@@ -25,7 +25,7 @@ class RecentlyPlayedVideoItem extends StatelessWidget {
       return thumbnailFile!;
     } catch (e) {
       debugPrint('Error generating thumbnail: $e');
-      return Uint8List(0); // Return an empty Uint8List in case of an error
+      return Uint8List(0); 
     }
   }
 

@@ -13,20 +13,22 @@ class ContactUsText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
+      textAlign: TextAlign.justify,
       text: TextSpan(
+        style: TextStyle(height: 1.5),
         children: [
           TextSpan(
             text: '$displayText ',
             style: const TextStyle(
-              fontSize: 18,
-              color: kcolorblack54, // Customize text style as needed
+              fontSize: 20,
+              color: kcolorblack54,
             ),
           ),
           TextSpan(
             text: email,
             style: const TextStyle(
-              fontSize: 18,
-              color: Colors.blue, // Hyperlink color
+              fontSize: 20,
+              color: Colors.blue,
               decoration: TextDecoration.underline,
             ),
             recognizer: TapGestureRecognizer()

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/Screens/Home/Tabs/widgets/video_info_dialog.dart';
+import 'package:video_player_app/Screens/PlayList/widget/mostly_played/mostly_played_list_screen.dart';
+import 'package:video_player_app/Screens/PlayList/widget/mostly_played/thumbnail_mostly_played.dart';
 import 'package:video_player_app/functions/video_functions.dart';
-import 'package:video_player_app/widgets/video_listtile_widget.dart';
 import 'package:video_player_app/Screens/Home/widgets/home_search_page.dart';
 import 'package:video_player_app/Screens/PlayList/widget/playlist_heading_widget.dart';
 import 'package:video_player_app/widgets/appbar_common.dart';
@@ -52,7 +53,7 @@ class _MostPlayedVideosState extends State<MostPlayedVideos> {
               );
             },
           ),
-          child: Row(
+          child: const Row(
             children: [
               Icon(Icons.info_sharp),
               Text('Info'),
@@ -66,8 +67,8 @@ class _MostPlayedVideosState extends State<MostPlayedVideos> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const PreferredSize(
+    return const Scaffold(
+      appBar: PreferredSize(
         preferredSize: Size.fromHeight(75),
         child: AppbarCommon(
           title: 'Most Played Videos',
@@ -78,20 +79,9 @@ class _MostPlayedVideosState extends State<MostPlayedVideos> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color(0x54003554),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: const PlayListHeadingWidget(
-                  title: 'Most Played Videos',
-                  imgPath: 'assets/images/mostly.png'),
-            ),
-          ),
-          const VideoListTileWidget(
-            page: 'Most played',
-          ),
+              padding: EdgeInsets.all(8.0),
+              child: ThumbnailMostlyHeadingWidget()),
+          Expanded(child: MostlyPlayedListScreen())
         ],
       ),
     );

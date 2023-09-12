@@ -1,35 +1,35 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'video_data.dart';
+part of 'most_played_data.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class RecentlyPlayedDataAdapter extends TypeAdapter<RecentlyPlayedData> {
+class MostlyPlayedDataAdapter extends TypeAdapter<MostlyPlayedData> {
   @override
-  final int typeId = 0;
+  final int typeId = 2;
 
   @override
-  RecentlyPlayedData read(BinaryReader reader) {
+  MostlyPlayedData read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return RecentlyPlayedData(
-      videoPath: fields[0] as String,
-      timestamp: fields[1] as DateTime,
+    return MostlyPlayedData(
+      videoPath: fields[0] as String?,
+      playCount: fields[1] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, RecentlyPlayedData obj) {
+  void write(BinaryWriter writer, MostlyPlayedData obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
       ..write(obj.videoPath)
       ..writeByte(1)
-      ..write(obj.timestamp);
+      ..write(obj.playCount);
   }
 
   @override
@@ -38,7 +38,7 @@ class RecentlyPlayedDataAdapter extends TypeAdapter<RecentlyPlayedData> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is RecentlyPlayedDataAdapter &&
+      other is MostlyPlayedDataAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

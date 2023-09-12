@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/Screens/Home/Tabs/widgets/menu_icon.dart';
 import 'package:video_player_app/Screens/Home/Tabs/widgets/video_info_dialog.dart';
+import 'package:video_player_app/Screens/PlayList/widget/recently_played/recently_played_video_list.dart';
+import 'package:video_player_app/functions/favorites_functions.dart';
 import 'package:video_player_app/functions/video_functions.dart';
 
 class VideoMenuRow extends StatefulWidget {
@@ -22,7 +24,7 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
       final info = await VideoFunctions.getVideoInfo(widget.path);
       videoInfoNotifier.value = info;
     } catch (e) {
-      // Handle the error gracefully, e.g., show an error message.
+      
       videoInfoNotifier.value = [];
     }
   }
@@ -42,9 +44,12 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
           title: 'Add to Playlist',
           icon: Icons.playlist_add,
         ),
-        const MenuIconWidget(
-          title: 'Add to Favorites',
-          icon: Icons.favorite,
+        GestureDetector(
+          onTap: () => FavoriteFunctions.addToFavoritesList(widget.path),
+          child: const MenuIconWidget(
+            title: 'Add to Favorites',
+            icon: Icons.favorite,
+          ),
         ),
         const MenuIconWidget(
           title: 'Share Video',
@@ -57,7 +62,9 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
               return ValueListenableBuilder<List<MediaInfo>>(
                 valueListenable: videoInfoNotifier,
                 builder: (context, info, _) {
-                  return VideoInfoDialog(info: info,);
+                  return VideoInfoDialog(
+                    info: info,
+                  );
                 },
               );
             },
@@ -70,5 +77,4 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
       ],
     );
   }
-
 }

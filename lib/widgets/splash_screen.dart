@@ -68,7 +68,9 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                   child: const Text('No'),
                 ),
                 TextButton(
-                  onPressed: () => checkPermissionsAndNavigate(),
+                  onPressed: () {
+                    PermissionStatus.granted;
+                  },
                   child: const Text('Yes'),
                 ),
               ],

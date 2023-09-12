@@ -1,5 +1,7 @@
 import 'dart:typed_data';
-import 'package:video_player_app/database/recently_played.dart';
+import 'package:video_player_app/Screens/PlayList/most_played_videos.dart';
+import 'package:video_player_app/functions/mostly_played_functions.dart';
+import 'package:video_player_app/functions/recently_played_functions.dart';
 import 'package:video_player_app/widgets/VideoPlayer/video_player_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
@@ -71,6 +73,7 @@ class RecentlyPlayedVideoTile extends StatelessWidget {
       ),
       child: ListTile(
         onTap: () {
+          MostlyPlayedFunctions.addVideoPlayData(videoPath);
           RecentlyPlayed.onVideoClicked(videoPath);
           RecentlyPlayed.checkHiveData();
           Navigator.of(context).push(

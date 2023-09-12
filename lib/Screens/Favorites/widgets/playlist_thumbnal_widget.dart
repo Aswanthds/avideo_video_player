@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 class PlayListThumbnailWidget extends StatelessWidget {
+  final ImageProvider? thumbnailImage; // ImageProvider to display the thumbnail
+
   const PlayListThumbnailWidget({
     super.key,
+    this.thumbnailImage, // Pass the thumbnail image as a parameter
   });
 
   @override
@@ -15,19 +18,22 @@ class PlayListThumbnailWidget extends StatelessWidget {
           decoration: BoxDecoration(
             boxShadow: const [
               BoxShadow(
-                  blurStyle: BlurStyle.inner,
-                  color: Colors.transparent,
-                  spreadRadius: 5,
-                  blurRadius: 10)
+                blurStyle: BlurStyle.inner,
+                color: Colors.transparent,
+                spreadRadius: 5,
+                blurRadius: 10,
+              )
             ],
             color: Colors.grey.withOpacity(0.4),
             borderRadius: BorderRadius.circular(20),
-            image: const DecorationImage(
-              image: AssetImage('assets/images/favourites.png'),
+            image: DecorationImage(
+              // Use the passed thumbnailImage as the image source
+              image:
+                  thumbnailImage ?? AssetImage('assets/images/favourites.png'),
+              fit: BoxFit.cover,
             ),
           ),
         ),
-       
       ],
     );
   }

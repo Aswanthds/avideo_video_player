@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player_app/Screens/PlayList/widget/recently_played/recently_played_video_item.dart';
-import 'package:video_player_app/database/recently_played.dart';
+import 'package:video_player_app/functions/recently_played_functions.dart';
 import 'package:video_player_app/database/video_data.dart';
 
 class RecenPlayedVideoList extends StatefulWidget {
@@ -11,7 +11,7 @@ class RecenPlayedVideoList extends StatefulWidget {
 }
 
 class _RecenPlayedVideoListState extends State<RecenPlayedVideoList> {
-  List<VideoData> recentlyPlayedVideos = [];
+  List<RecentlyPlayedData> recentlyPlayedVideos = [];
   @override
   void initState() {
     super.initState();

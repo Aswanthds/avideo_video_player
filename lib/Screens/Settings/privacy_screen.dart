@@ -57,12 +57,13 @@ class PrivacyScreen extends StatelessWidget {
             ContactUsText(
               email: 'worldofaswanth@gmail.com',
               displayText:
-                  "If you have any questions or concerns about our App's privacy practices, please contact us at ",
+                  "If you have any questions or concerns about our App's privacy practices, please contact ",
             ),
             SizedBox(height: 20),
             Text(
               "By using our App, you agree to the practices described in this Privacy Statement.",
-              style: TextStyle(fontSize: 18),
+              textAlign: TextAlign.justify,
+              style: TextStyle(fontSize: 20),
             ),
           ],
         ),

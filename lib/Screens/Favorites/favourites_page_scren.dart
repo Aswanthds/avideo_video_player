@@ -1,6 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:video_compress/video_compress.dart';
+import 'package:video_player_app/Screens/Favorites/widgets/favorites_video_widget.dart';
 import 'package:video_player_app/Screens/Favorites/widgets/playlist_thumbnal_widget.dart';
-import 'package:video_player_app/widgets/video_listtile_widget.dart';
+import 'package:video_player_app/database/favourite_data.dart';
+import 'package:video_player_app/functions/favorites_functions.dart';
 import 'package:video_player_app/Screens/Home/widgets/home_search_page.dart';
 import 'package:video_player_app/constants.dart';
 
@@ -12,6 +17,33 @@ class FavouritesPageScreen extends StatefulWidget {
 }
 
 class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
+  final ValueNotifier<Uint8List?> thumbnailNotifier =
+      ValueNotifier<Uint8List>(Uint8List(0));
+
+  FavoriteData? path;
+  final video = FavoriteFunctions.getFavoritesList();
+  Future<FavoriteData> getVideopath() async {
+    for (FavoriteData fvrt in video) {
+      path = fvrt;
+    }
+    return path!;
+  }
+
+  Future<void> updateThumbnail() async {
+    final path = await getVideopath();
+    try {
+      final thumbnailFile = await VideoCompress.getByteThumbnail(
+        path.filePath,
+        quality: 10,
+        position: -1,
+      );
+
+      thumbnailNotifier.value = thumbnailFile!;
+    } catch (e) {
+      debugPrint('Error generating thumbnail: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +70,7 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
           ),
         ),
       ),
-      body: const Padding(
+      body: Padding(
         padding: EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -47,7 +79,20 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
             SizedBox(
               height: 20,
             ),
-            VideoListTileWidget(page: 'favourites'),
+            Expanded(
+              child: ListView.builder(
+                itemCount: video.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final video = FavoriteFunctions.getFavoritesList();
+                  final videopath = video[index];
+                  return VideoListTileWidget(
+                    page: 'favourites',
+                    video: videopath,
+                    thumbnailNotifier: thumbnailNotifier,
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
