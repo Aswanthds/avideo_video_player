@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:video_player_app/database/favourite_data.dart';
-import 'package:video_player_app/database/video_data.dart';
 
 class FavoriteFunctions {
   static const String _boxName = 'favorite_videos';
@@ -63,11 +62,9 @@ class FavoriteFunctions {
       (Video) => Video.filePath == videoPath,
     );
 
-    if (videoToDelete != null) {
-      await box.delete(videoToDelete.filePath);
+    await box.delete(videoToDelete.filePath);
 
-      debugPrint('Deleted video: $videoPath');
-    }
+    debugPrint('Deleted video: $videoPath');
 
     getFavoritesList();
   }

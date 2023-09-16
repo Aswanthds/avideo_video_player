@@ -3,8 +3,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:video_compress/video_compress.dart';
-import 'package:video_player_app/Screens/Home/Tabs/widgets/video_menu_row.dart';
-import 'package:video_player_app/Screens/Home/Tabs/widgets/video_common_thumbnail.dart';
+import 'package:video_player_app/Screens/home/Tabs/widgets/video_menu_row.dart';
+import 'package:video_player_app/Screens/home/Tabs/widgets/video_common_thumbnail.dart';
 import 'package:video_player_app/functions/mostly_played_functions.dart';
 import 'package:video_player_app/functions/recently_played_functions.dart';
 import 'package:video_player_app/widgets/VideoPlayer/video_player_widget.dart';
@@ -74,7 +74,7 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
       },
       onTap: () {
         MostlyPlayedFunctions.addVideoPlayData(widget.videoFile.path);
-        RecentlyPlayed.onVideoClicked(widget.videoFile.path);
+        RecentlyPlayed.onVideoClicked(videoPath: widget.videoFile.path);
         RecentlyPlayed.checkHiveData();
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) =>
@@ -82,7 +82,9 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
         ));
       },
       child: VideoThumbnailCommon(
-          thumbnailNotifier: thumbnailNotifier, widget: widget),
+        thumbnailNotifier: thumbnailNotifier,
+        videoFile: widget.videoFile,
+      ),
     );
   }
 }

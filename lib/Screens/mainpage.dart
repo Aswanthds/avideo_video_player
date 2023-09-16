@@ -3,10 +3,10 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import 'package:video_player_app/Screens/Settings/settings_page.dart';
-import 'package:video_player_app/Screens/Favorites/favourites_page_scren.dart';
+import 'package:video_player_app/Screens/settings/settings_page.dart';
+import 'package:video_player_app/Screens/favorites/favourites_page_scren.dart';
 import 'package:video_player_app/Screens/Home/home_page_screen.dart';
-import 'package:video_player_app/Screens/PlayList/playlist_page_screen.dart';
+import 'package:video_player_app/Screens/playlist/playlist_page_screen.dart';
 import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/functions/path_functions.dart';
 

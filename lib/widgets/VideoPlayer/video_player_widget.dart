@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_player_app/constants.dart';
-import 'package:video_player_app/widgets/VideoPlayer/custom_appbar.dart';
 import 'package:video_player_app/widgets/VideoPlayer/video_player_body.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
@@ -36,28 +35,19 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final filename = basename(widget.filesV);
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(85),
-        child: CustomAppBar(
-          filename: filename,
-          toggleVolumeSlider: toggleVolumeSlider,
-        ),
-      ),
       backgroundColor: kcolorblack,
-      body: Center(
-        child: VideoPlayerBody(
-          controller: _controller,
-          showVolumeSlider: _showVolumeSlider,
-          volumeLevel: _volumeLevel,
-          onVolumeChanged: (newValue) {
-            setState(() {
-              _volumeLevel = newValue;
-              _controller.setVolume(newValue);
-            });
-          },
-        ),
+      body: VideoPlayerBody(
+        controller: _controller,
+        showVolumeSlider: _showVolumeSlider,
+        volumeLevel: _volumeLevel,
+        onVolumeChanged: (newValue) {
+          setState(() {
+            _volumeLevel = newValue;
+            _controller.setVolume(newValue);
+          });
+        },
+        filesV: widget.filesV,
       ),
     );
   }
@@ -68,3 +58,5 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     _controller.dispose();
   }
 }
+
+

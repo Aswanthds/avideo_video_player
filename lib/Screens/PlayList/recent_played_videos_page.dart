@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:video_player_app/Screens/PlayList/widget/recently_played/recently_played_video_list.dart';
+import 'package:video_player_app/Screens/playlist/widget/recently_played/recently_played_video_list.dart';
 import 'package:video_player_app/Screens/Home/widgets/home_search_page.dart';
-import 'package:video_player_app/Screens/PlayList/widget/playlist_heading_widget.dart';
+import 'package:video_player_app/Screens/playlist/widget/playlist_heading_widget.dart';
 import 'package:video_player_app/widgets/appbar_common.dart';
 
 class RecentlyPlayedVideosPage extends StatefulWidget {

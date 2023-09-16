@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:video_player_app/Screens/Home/widgets/folder_tab.dart';
 import 'package:video_player_app/constants.dart';
+import 'package:video_player_app/widgets/home_tabbar.dart';
 
 class AppbarCommon extends StatefulWidget {
   final String title;
@@ -49,45 +49,3 @@ class _AppbarCommonState extends State<AppbarCommon> {
   }
 }
 
-class HomeTabBar extends StatelessWidget {
-  const HomeTabBar({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const TabBar(
-      labelColor: kColorWhite,
-      unselectedLabelColor: Colors.grey,
-      isScrollable: true,
-      labelStyle: TextStyle(color: kColorWhite),
-      indicatorColor: Colors.lightBlue,
-      tabs: [
-        FolderTab(
-          foldername: 'All',
-          icon: Icons.video_collection,
-        ),
-        FolderTab(
-          foldername: 'Camera',
-          icon: Icons.camera_alt,
-        ),
-        FolderTab(
-          foldername: 'Download',
-          icon: Icons.download,
-        ),
-        FolderTab(
-          foldername: 'Screenrecords',
-          icon: Icons.radio_button_checked_rounded,
-        ),
-        FolderTab(
-          foldername: 'Whatsapp',
-          icon: Icons.wechat_sharp,
-        ),
-        FolderTab(
-          foldername: 'Others',
-          icon: Icons.video_label,
-        ),
-      ],
-    );
-  }
-}

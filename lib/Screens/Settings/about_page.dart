@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:video_player_app/Screens/Settings/widgets/about_info_tile.dart';
-import 'package:video_player_app/Screens/Settings/widgets/about_logo_widget.dart';
-import 'package:video_player_app/Screens/Settings/widgets/about_app_text.dart';
-import 'package:video_player_app/Screens/Settings/widgets/settings_appbar.dart';
+import 'package:video_player_app/Screens/settings/widgets/about_info_tile.dart';
+import 'package:video_player_app/Screens/settings/widgets/about_logo_widget.dart';
+import 'package:video_player_app/Screens/settings/widgets/about_app_text.dart';
+import 'package:video_player_app/Screens/settings/widgets/settings_appbar.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:video_player_app/Screens/Settings/about_page.dart';
-import 'package:video_player_app/Screens/Settings/privacy_screen.dart';
-import 'package:video_player_app/Screens/Settings/widgets/setting_list.dart';
+import 'package:video_player_app/Screens/settings/about_page.dart';
+import 'package:video_player_app/Screens/settings/privacy_screen.dart';
+import 'package:video_player_app/Screens/settings/widgets/setting_list.dart';
 import 'package:video_player_app/constants.dart';
 
 class SettingsPage extends StatelessWidget {

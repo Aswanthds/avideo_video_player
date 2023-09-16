@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_player_app/constants.dart';
 
-class VideoPlayerControls extends StatefulWidget {
+class RecentlyVideoPlayerControls extends StatefulWidget {
   final VideoPlayerController controller;
-  final Function? onNext;
-  const VideoPlayerControls({super.key, required this.controller, this.onNext});
+  const RecentlyVideoPlayerControls({super.key, required this.controller});
 
   @override
-  State<VideoPlayerControls> createState() => _VideoPlayerControlsState();
+  State<RecentlyVideoPlayerControls> createState() => _RecentlyVideoPlayerControlsState();
 }
 
-class _VideoPlayerControlsState extends State<VideoPlayerControls> {
+class _RecentlyVideoPlayerControlsState extends State<RecentlyVideoPlayerControls> {
   bool areControlsVisible = true;
 
   void toggleControlsVisibility() {
@@ -23,7 +22,7 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.bottomCenter,
+      alignment: AlignmentDirectional.bottomStart,
       child: Container(
         height: 120,
         decoration: const BoxDecoration(
@@ -96,7 +95,9 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
                   ),
                 ),
                 IconButton(
-                  onPressed: ()=> widget.onNext,
+                  onPressed: () {
+                    // Handle next action
+                  },
                   icon: const Icon(
                     Icons.skip_next,
                     size: 32.0,

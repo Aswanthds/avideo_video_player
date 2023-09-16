@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/Screens/Home/Tabs/widgets/menu_icon.dart';
 import 'package:video_player_app/Screens/Home/Tabs/widgets/video_info_dialog.dart';
-import 'package:video_player_app/Screens/PlayList/widget/recently_played/recently_played_video_list.dart';
 import 'package:video_player_app/functions/favorites_functions.dart';
 import 'package:video_player_app/functions/video_functions.dart';
 

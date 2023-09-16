@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:path/path.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +8,13 @@ import 'package:video_player_app/constants.dart';
 class VideoThumbnailCommon extends StatelessWidget {
   const VideoThumbnailCommon({
     super.key,
-    required this.thumbnailNotifier,
-    required this.widget,
+    required this.thumbnailNotifier, required this.videoFile, 
+     
   });
 
   final ValueNotifier<Uint8List?> thumbnailNotifier;
-  final VideoTileWidget widget;
+  final File videoFile;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,7 @@ class VideoThumbnailCommon extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              basename(widget.videoFile.path),
+              basename(videoFile.path),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
