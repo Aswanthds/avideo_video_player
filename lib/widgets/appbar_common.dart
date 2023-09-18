@@ -25,12 +25,10 @@ class _AppbarCommonState extends State<AppbarCommon> {
         bottomLeft: Radius.circular(24),
       ),
       child: AppBar(
-        
           iconTheme: const IconThemeData(color: kColorWhite),
           backgroundColor: kcolorDarkblue,
           title: Text(
             widget.title,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
           actions: [
             IconButton(
@@ -48,4 +46,3 @@ class _AppbarCommonState extends State<AppbarCommon> {
     );
   }
 }
-

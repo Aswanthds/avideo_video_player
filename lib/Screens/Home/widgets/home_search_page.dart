@@ -27,10 +27,10 @@ class _HomeSearchPaageState extends State<HomeSearchPaage> {
       itemCount: filteredFiles.length,
       itemBuilder: (context, index) {
         return ListTile(
-          leading: Icon(Icons.video_library),
+          leading: const Icon(Icons.video_library),
           title: Text(
             basename(filteredFiles[index]),
-            style: TextStyle(color: kcolorblack),
+            style: const TextStyle(color: kcolorblack),
           ),
           onTap: () {
             MostlyPlayedFunctions.addVideoPlayData(filteredFiles[index]);

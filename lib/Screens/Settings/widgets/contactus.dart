@@ -15,7 +15,7 @@ class ContactUsText extends StatelessWidget {
     return RichText(
       textAlign: TextAlign.justify,
       text: TextSpan(
-        style: TextStyle(height: 1.5),
+        style: const TextStyle(height: 1.5),
         children: [
           TextSpan(
             text: '$displayText ',

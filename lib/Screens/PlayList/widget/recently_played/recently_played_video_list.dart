@@ -4,6 +4,7 @@ import 'package:video_player_app/functions/recently_played_functions.dart';
 import 'package:video_player_app/database/video_data.dart';
 
 class RecenPlayedVideoList extends StatefulWidget {
+  
   const RecenPlayedVideoList({Key? key}) : super(key: key);
 
   @override

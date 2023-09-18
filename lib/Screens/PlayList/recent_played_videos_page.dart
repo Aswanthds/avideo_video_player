@@ -36,7 +36,7 @@ class _RecentlyPlayedVideosPageState extends State<RecentlyPlayedVideosPage> {
               child: const ThumbnailRecentlyHeadingWidget(),
             ),
           ),
-          RecenPlayedVideoList()
+          const RecenPlayedVideoList()
         ],
       ),
     );

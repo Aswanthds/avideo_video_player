@@ -23,7 +23,6 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
       final info = await VideoFunctions.getVideoInfo(widget.path);
       videoInfoNotifier.value = info;
     } catch (e) {
-      
       videoInfoNotifier.value = [];
     }
   }
@@ -44,7 +43,10 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
           icon: Icons.playlist_add,
         ),
         GestureDetector(
-          onTap: () => FavoriteFunctions.addToFavoritesList(widget.path),
+          onTap: () {
+            FavoriteFunctions.addToFavoritesList(widget.path);
+            Navigator.of(context).pop();
+          },
           child: const MenuIconWidget(
             title: 'Add to Favorites',
             icon: Icons.favorite,

@@ -29,13 +29,13 @@ class _PlaylistPageScreenState extends State<PlaylistPageScreen> {
             backgroundColor: kcolorDarkblue,
             title: const Text(
               'Playlists',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
             ),
             actions: [
               IconButton(
                   onPressed: () => showDialog(
                         context: context,
-                        builder: (context) => PlaylistBottomSheet(
+                        builder: (context) => const PlaylistBottomSheet(
                           playlistIcon: Icons.abc,
                           playlistName: 'Create a playlist',
                         ),

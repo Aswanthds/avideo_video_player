@@ -34,8 +34,21 @@ class MostlyPlayedFunctions {
       final newVideoData = MostlyPlayedData(videoPath: videoPath, playCount: 1);
       await box.add(newVideoData);
     }
+
+    // Check if the video has been played more than 4 times
+    if (existingDataIndex == -1) {
+      final newVideoData = MostlyPlayedData(videoPath: videoPath, playCount: 1);
+      if (newVideoData.playCount >= 4) {
+        // If played more than 4 times, add to Mostly Played
+        final mostlyPlayedBox =
+            await Hive.openBox<MostlyPlayedData>('mostly_played');
+        await mostlyPlayedBox.add(newVideoData);
+      }
+    }
+
     debugPrint('Path added to hive $videoPath @ $existingDataIndex');
   }
+
 
   static Future<List<MostlyPlayedData>> getSortedVideoPlayData() async {
     final box = await Hive.openBox<MostlyPlayedData>(_boxName);

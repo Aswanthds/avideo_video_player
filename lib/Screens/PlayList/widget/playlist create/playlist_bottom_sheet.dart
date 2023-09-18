@@ -6,18 +6,18 @@ class PlaylistBottomSheet extends StatelessWidget {
   final String playlistName;
   final IconData playlistIcon;
 
-  PlaylistBottomSheet({
+  const PlaylistBottomSheet({super.key, 
     required this.playlistName,
     required this.playlistIcon,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 200,
       child: AlertDialog(
         contentPadding: EdgeInsets.zero, // Remove default padding
-        content: Container(
+        content: SizedBox(
           height: 300, // Match the container height
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -26,12 +26,12 @@ class PlaylistBottomSheet extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   playlistName,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
               ),
-              Divider(), // Add a divider for separation
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Divider(), // Add a divider for separation
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: PlaylistForm(),
               ),
             ],

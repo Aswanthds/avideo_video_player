@@ -66,8 +66,8 @@ class _MostPlayedVideosState extends State<MostPlayedVideos> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const PreferredSize(
+    return const Scaffold(
+      appBar: PreferredSize(
         preferredSize: Size.fromHeight(75),
         child: AppbarCommon(
           title: 'Most Played Videos',
@@ -77,7 +77,7 @@ class _MostPlayedVideosState extends State<MostPlayedVideos> {
       ),
       body: Column(
         children: [
-          const Padding(
+          Padding(
               padding: EdgeInsets.all(8.0),
               child: ThumbnailMostlyHeadingWidget()),
           Expanded(child: MostlyPlayedListScreen())

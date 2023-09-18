@@ -1,4 +1,4 @@
-import 'dart:typed_data';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -8,7 +8,6 @@ import 'package:video_player_app/Screens/playlist/widget/recently_played/recentl
 import 'package:video_player_app/Screens/playlist/widget/recently_played/loading_video_tile.dart';
 import 'package:video_player_app/Screens/playlist/widget/recently_played/thumbnot_video_tile.dart';
 import 'package:video_player_app/database/video_data.dart';
-import 'package:video_player_app/functions/recently_played_functions.dart';
 
 class RecentlyPlayedVideoItem extends StatelessWidget {
   final List<RecentlyPlayedData> videoData;
@@ -20,17 +19,17 @@ class RecentlyPlayedVideoItem extends StatelessWidget {
     required this.index,
   }) : super(key: key);
 
-  Future<Uint8List> generateThumbnail(String path) async {
+  Future<File> generateThumbnail(String path) async {
     try {
-      final thumbnailFile = await VideoCompress.getByteThumbnail(
+      final thumbnailFile = await VideoCompress.getFileThumbnail(
         path,
         quality: 10,
         position: -1,
       );
-      return thumbnailFile!;
+      return thumbnailFile;
     } catch (e) {
       debugPrint('Error generating thumbnail: $e');
-      return Uint8List(0);
+      return File('');
     }
   }
 
@@ -40,7 +39,7 @@ class RecentlyPlayedVideoItem extends StatelessWidget {
     final timestamp =
         DateFormat('dd-MMM-yyyy HH:mm').format(videoData[index].timestamp);
 
-    return FutureBuilder<Uint8List>(
+    return  FutureBuilder<File>(
       future: generateThumbnail(videoPath),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -50,18 +49,14 @@ class RecentlyPlayedVideoItem extends StatelessWidget {
           );
         } else if (snapshot.hasError) {
           return RecentlyPlayedErrorVideListTile(videoPath: videoPath);
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+        } else if (!snapshot.hasData) {
           return RecentlyPlayedThumbNotVideListTile(videoPath: videoPath);
         } else {
-          return ValueListenableBuilder<List<RecentlyPlayedData>>(
-            valueListenable: recentlyPlayedVideos,
-            builder: (BuildContext context, List<RecentlyPlayedData> value,
-                    Widget? child) =>
-                RecentlyPlayedVideoTile(
-              thumbnail: snapshot.data!,
-              files: videoData,
-              index: index,
-            ),
+          return RecentlyPlayedVideoTile(
+          
+            thumbnail: snapshot.data!,
+            files: videoData,
+            index: index,
           );
         }
       },

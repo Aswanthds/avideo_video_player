@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:video_player_app/Screens/mainpage.dart';
 import 'package:video_player_app/constants.dart';
-
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:video_player_app/functions/path_functions.dart';
 
 class SplashScreenPage extends StatefulWidget {
@@ -44,13 +44,33 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     checkPermissionsAndNavigate();
   }
 
-  Future<void> checkPermissionsAndNavigate() async {
-    final status = await Permission.storage.status;
+  Future<void> navigateToMainScreen() async {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => MainPageScreen(
+          videoFile: videoFiles,
+        ),
+      ),
+    );
+  }
 
-    if (status.isGranted) {
+  Future<void> checkPermissionsAndNavigate() async {
+    bool permissionStatus;
+    final deviceInfo = await DeviceInfoPlugin().androidInfo;
+    PermissionStatus result;
+
+    if (deviceInfo.version.sdkInt > 32) {
+      permissionStatus = await Permission.videos.request().isGranted;
+    } else {
+      permissionStatus = await Permission.storage.request().isGranted;
+    }
+
+    if (permissionStatus == true) {
       navigateToMainScreen();
     } else {
-      final result = await Permission.storage.request();
+      deviceInfo.version.sdkInt > 32
+          ? (result = await Permission.videos.request())
+          : (result = await Permission.storage.request());
 
       if (result.isGranted) {
         navigateToMainScreen();
@@ -68,8 +88,9 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                   child: const Text('No'),
                 ),
                 TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     PermissionStatus.granted;
+                    await navigateToMainScreen();
                   },
                   child: const Text('Yes'),
                 ),
@@ -79,16 +100,6 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
         );
       }
     }
-  }
-
-  void navigateToMainScreen() async {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => MainPageScreen(
-          videoFile: videoFiles,
-        ),
-      ),
-    );
   }
 
   @override

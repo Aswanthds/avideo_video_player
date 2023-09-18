@@ -67,16 +67,6 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
                     color: kColorWhite,
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    // Handle forward action
-                  },
-                  icon: const Icon(
-                    Icons.skip_previous,
-                    size: 32.0,
-                    color: kColorWhite,
-                  ),
-                ),
                 GestureDetector(
                   onTap: () {
                     setState(() {
@@ -92,14 +82,6 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
                         ? Icons.pause_circle_outline
                         : Icons.play_circle_outline,
                     size: 72.0,
-                    color: kColorWhite,
-                  ),
-                ),
-                IconButton(
-                  onPressed: ()=> widget.onNext,
-                  icon: const Icon(
-                    Icons.skip_next,
-                    size: 32.0,
                     color: kColorWhite,
                   ),
                 ),

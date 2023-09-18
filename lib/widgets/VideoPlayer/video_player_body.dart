@@ -29,23 +29,22 @@ class VideoPlayerBody extends StatefulWidget {
 class _VideoPlayerBodyState extends State<VideoPlayerBody> {
   bool isrotated = false;
   bool isFullScreen = false;
-    bool _showVolumeSlider = false;
- void _toggleRotation() {
-  setState(() {
-    isrotated = !isrotated;
-    if (isrotated) {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeLeft,
-      ]);
-    } else {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-          overlays: SystemUiOverlay.values);
-      SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-    }
-  });
-}
-
+  // bool _showVolumeSlider = false;
+  void _toggleRotation() {
+    setState(() {
+      isrotated = !isrotated;
+      if (isrotated) {
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.landscapeLeft,
+        ]);
+      } else {
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+            overlays: SystemUiOverlay.values);
+        SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -54,7 +53,6 @@ class _VideoPlayerBodyState extends State<VideoPlayerBody> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
 
     untoggleRotation();

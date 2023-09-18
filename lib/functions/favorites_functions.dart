@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:video_player_app/database/favourite_data.dart';
-
+ValueNotifier<List<FavoriteData>> favoriteData =
+    ValueNotifier<List<FavoriteData>>([]);
 class FavoriteFunctions {
   static const String _boxName = 'favorite_videos';
 
@@ -17,41 +18,48 @@ class FavoriteFunctions {
     );
 
     addToFavorites(videoToAdd);
+    debugPrint(' PAth added to fvrt${videoToAdd.filePath}');
   }
 
-  static List<FavoriteData> getFavoritesList() {
-    final box = Hive.box<FavoriteData>(_boxName);
-    final videos = box.values.toList().cast<FavoriteData>();
+  static Future<List<FavoriteData>> getFavoritesList() async {
+    try {
+      final box = Hive.box<FavoriteData>(_boxName);
+      final videos = box.values.toList().cast<FavoriteData>();
 
-    final uniqueVideosMap = <String, FavoriteData>{};
+      final uniqueVideosMap = <String, FavoriteData>{};
 
-    for (final Video in videos) {
-      final videoPath = Video.filePath;
-      final timestamp = Video.timestamp;
+      for (final video in videos) {
+        final videoPath = video.filePath;
+        final timestamp = video.timestamp;
 
-      if (uniqueVideosMap.containsKey(videoPath)) {
-        final existingTimestamp = uniqueVideosMap[videoPath]!.timestamp;
-        if (timestamp.isAfter(existingTimestamp)) {
-          uniqueVideosMap[videoPath] = Video;
+        if (uniqueVideosMap.containsKey(videoPath)) {
+          final existingTimestamp = uniqueVideosMap[videoPath]!.timestamp;
+          if (timestamp.isAfter(existingTimestamp)) {
+            uniqueVideosMap[videoPath] = video;
+          }
+        } else {
+          uniqueVideosMap[videoPath] = video;
         }
-      } else {
-        uniqueVideosMap[videoPath] = Video;
       }
+
+      final uniqueVideos = uniqueVideosMap.values.toList();
+      uniqueVideos.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+
+      debugPrint('Total videos in box: ${videos.length}');
+      debugPrint('Unique videos in map: ${uniqueVideos.length}');
+
+      return uniqueVideos;
+    } catch (e) {
+      debugPrint('Error retrieving favorites: $e');
+      return [];
     }
-
-    final uniqueVideos = uniqueVideosMap.values.toList();
-    uniqueVideos.sort((a, b) => b.timestamp.compareTo(a.timestamp));
-
-    debugPrint(uniqueVideos.length.toString());
-
-    return uniqueVideos;
   }
 
-  static void checkHiveData() {
-    final recentlyPlayedVideos = getFavoritesList();
-    for (final Video in recentlyPlayedVideos) {
-      debugPrint('Video Path: ${Video.filePath}');
-      debugPrint('Timestamp: ${Video.timestamp}');
+  static void checkHiveData() async {
+    final recentlyPlayedVideos = await getFavoritesList();
+    for (final video in recentlyPlayedVideos) {
+      debugPrint('Video Path: ${video.filePath}');
+      debugPrint('Timestamp: ${video.timestamp}');
     }
   }
 
@@ -59,7 +67,7 @@ class FavoriteFunctions {
     final box = Hive.box<FavoriteData>(_boxName);
 
     final videoToDelete = box.values.firstWhere(
-      (Video) => Video.filePath == videoPath,
+      (video) => video.filePath == videoPath,
     );
 
     await box.delete(videoToDelete.filePath);

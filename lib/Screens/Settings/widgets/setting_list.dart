@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SettingsListWidget extends StatelessWidget {
   final String title;
@@ -19,7 +20,10 @@ class SettingsListWidget extends StatelessWidget {
         leading: Icon(icon),
         title: Text(
           title,
-          style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
+          style: GoogleFonts.nixieOne(
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
         ),
         trailing: hasroute
             ? const Icon(

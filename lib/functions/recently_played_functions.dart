@@ -1,12 +1,12 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:video_player/video_player.dart';
+import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/database/video_data.dart';
+import 'package:video_player_app/functions/video_functions.dart';
 
 ValueNotifier<List<RecentlyPlayedData>> recentlyPlayedVideos =
     ValueNotifier<List<RecentlyPlayedData>>([]);
+final videoduration = ValueNotifier<List<MediaInfo>>([]);
 
 class RecentlyPlayed {
   static const String _boxName = 'recently_played';
@@ -16,35 +16,21 @@ class RecentlyPlayed {
   }
 
   static void onVideoClicked({required String videoPath}) async {
-    final box = await Hive.openBox<RecentlyPlayedData>(_boxName);
-    final controller = VideoPlayerController.file(File(videoPath));
-    controller.initialize();
-    final startTimestamp = DateTime.now();
-    // final videoData =
-    //     RecentlyPlayedData(videoPath: videoPath, timestamp: DateTime.now());
-    controller.addListener(() {
-      if (!controller.value.isPlaying) {
-        final endTimestamp = DateTime.now();
-        final durationPlayed = endTimestamp.difference(startTimestamp);
-        final totalDurationPlayed =
-            (box.get(videoPath) as RecentlyPlayedData)?.duration ??
-                Duration.zero;
-        final newTotalDuration = totalDurationPlayed + durationPlayed;
+    
+    final info = await VideoFunctions.getVideoDuration(videoPath);
 
-        // Update or add the entry in the Hive box
-        box.put(
-          videoPath,
-          RecentlyPlayedData(
-            videoPath: videoPath,
-            timestamp: startTimestamp,
-            duration: newTotalDuration,
-          ),
-        );
+    final box = Hive.box<RecentlyPlayedData>(_boxName);
+    debugPrint('Duration : $info');
+    final videoData = RecentlyPlayedData(
+      videoPath: videoPath,
+      timestamp: DateTime.now(),
+      // videoPosition: position!,
+      // videoDuration: info,
+    );
 
-        debugPrint(
-            'Video clicked and added to Hive: $videoPath , $durationPlayed, $totalDurationPlayed');
-      }
-    });
+    await box.put(videoPath, videoData);
+
+    debugPrint('Video clicked and added to Hive: $videoPath ');
   }
 
   static List<RecentlyPlayedData> getRecentlyPlayedVideos() {
@@ -70,7 +56,7 @@ class RecentlyPlayed {
     final uniqueVideos = uniqueVideosMap.values.toList();
     uniqueVideos.sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
-    debugPrint(uniqueVideos.length.toString());
+    //debugPrint(uniqueVideos.length.toString());
 
     return uniqueVideos;
   }
@@ -97,8 +83,14 @@ class RecentlyPlayed {
     if (videoToDeleteKey != null) {
       await box.delete(videoToDeleteKey);
       debugPrint('Deleted video: $videoPath');
+
+      // Modify the list of recently played videos
+      final updatedList = recentlyPlayedVideos.value.toList();
+      updatedList.removeWhere((videoData) => videoData.videoPath == videoPath);
+
+      // Update the ValueNotifier with the modified list
+      recentlyPlayedVideos.value = updatedList;
     }
-    updateRecentlyPlayed(recentlyPlayedVideos.value);
   }
 
   // Add a method to update the list

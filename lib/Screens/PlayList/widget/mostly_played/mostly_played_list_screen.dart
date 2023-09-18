@@ -1,6 +1,7 @@
-import 'dart:typed_data';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:path/path.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/constants.dart';
@@ -31,17 +32,17 @@ class _MostlyPlayedListScreenState extends State<MostlyPlayedListScreen> {
     _dataNotifier.value = data;
   }
 
-  Future<Uint8List> generateThumbnail(String path) async {
+  Future<File> generateThumbnail(String path) async {
     try {
-      final thumbnailFile = await VideoCompress.getByteThumbnail(
+      final thumbnailFile = await VideoCompress.getFileThumbnail(
         path,
         quality: 10,
         position: -1,
       );
-      return thumbnailFile!;
+      return thumbnailFile;
     } catch (e) {
       debugPrint('Error generating thumbnail: $e');
-      return Uint8List(0);
+      return File('');
     }
   }
 
@@ -67,7 +68,7 @@ class _MostlyPlayedListScreenState extends State<MostlyPlayedListScreen> {
                   final item = data[index];
 
                   return ListTile(
-                    leading: FutureBuilder<Uint8List>(
+                    leading: FutureBuilder<File>(
                       future: generateThumbnail(item.videoPath!),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
@@ -75,25 +76,27 @@ class _MostlyPlayedListScreenState extends State<MostlyPlayedListScreen> {
                           return const CircularProgressIndicator();
                         } else if (snapshot.hasError) {
                           return const Icon(Icons.error);
-                        } else if (!snapshot.hasData ||
-                            snapshot.data!.isEmpty) {
+                        } else if (!snapshot.hasData) {
                           return const Icon(Icons.video_label);
                         } else {
                           return Container(
-                              width: 80,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: kcolorblack54,
-                                  borderRadius: BorderRadius.circular(10),image: DecorationImage(image: MemoryImage(snapshot.data!))),
-                              );
+                            width: 80,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                color: kcolorblack54,
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                    image: FileImage(snapshot.data!))),
+                          );
                         }
                       },
                     ),
                     title: Text(
                       basename(item.videoPath!),
                       maxLines: 1,
-                      style: const TextStyle(
-                          color: kcolorblack, overflow: TextOverflow.ellipsis),
+                      style: GoogleFonts.nixieOne(
+                        color: kcolorblack,
+                      ),
                     ),
                     subtitle: Text('Play Count: ${item.playCount}'),
                     onTap: () {

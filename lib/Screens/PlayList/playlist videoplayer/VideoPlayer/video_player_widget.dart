@@ -23,7 +23,7 @@ class RecentlyPlayedVideoScreen extends StatefulWidget {
 class _RecentlyPlayedVideoScreenState extends State<RecentlyPlayedVideoScreen> {
   late VideoPlayerController _videoController;
   double _volumeLevel = 1.0;
-  bool _showVolumeSlider = false;
+  final bool _showVolumeSlider = false;
   int _currentIndex = 0;
 
   @override

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path/path.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_player_app/Screens/playlist/playlist%20videoplayer/VideoPlayer/video_player_appbar.dart';
 import 'package:video_player_app/Screens/playlist/playlist%20videoplayer/VideoPlayer/video_player_controls.dart';
 import 'package:video_player_app/constants.dart';
-import 'package:video_player_app/database/video_data.dart';
 import 'package:video_player_app/widgets/VideoPlayer/vertical_slider.dart';
 import 'package:video_player_app/widgets/VideoPlayer/video_player_controls.dart';
 

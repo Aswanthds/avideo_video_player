@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:video_player_app/constants.dart';
 
 class PlayListWidget extends StatelessWidget {
@@ -20,10 +21,10 @@ class PlayListWidget extends StatelessWidget {
                   blurRadius: 10,
                   blurStyle: BlurStyle.outer),
             ],
-            color:  kcolorDarkblue,
+            color: kcolorDarkblue,
             border: Border.all(
               style: BorderStyle.solid,
-              color:  kcolorDarkblue,
+              color: kcolorDarkblue,
               width: 2,
             ),
             borderRadius: BorderRadius.circular(20)),
@@ -35,7 +36,13 @@ class PlayListWidget extends StatelessWidget {
           ),
         ),
       ),
-      title: Text(title),
+      title: Text(
+        title,
+        style: GoogleFonts.nixieOne(
+          fontWeight: FontWeight.bold,
+          fontSize: 15,
+        ),
+      ),
       trailing: const Icon(
         Icons.arrow_forward_ios,
         color: kcolorDarkblue,

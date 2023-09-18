@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class FolderTab extends StatelessWidget {
   final String foldername;
@@ -19,7 +20,10 @@ class FolderTab extends StatelessWidget {
           Icon(icon),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(foldername),
+            child: Text(
+              foldername,
+              style: GoogleFonts.aBeeZee(),
+            ),
           ),
         ],
       ),

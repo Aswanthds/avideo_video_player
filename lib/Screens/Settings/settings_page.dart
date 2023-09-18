@@ -20,7 +20,6 @@ class SettingsPage extends StatelessWidget {
               backgroundColor: kcolorDarkblue,
               title: const Text(
                 'Settings',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               actions: [
                 IconButton(onPressed: () {}, icon: const Icon(Icons.search))

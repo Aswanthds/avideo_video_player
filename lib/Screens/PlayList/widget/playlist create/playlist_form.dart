@@ -3,8 +3,10 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class PlaylistForm extends StatefulWidget {
+  const PlaylistForm({super.key});
+
   @override
-  _PlaylistFormState createState() => _PlaylistFormState();
+  State<PlaylistForm> createState() => _PlaylistFormState();
 }
 
 class _PlaylistFormState extends State<PlaylistForm> {
@@ -38,7 +40,7 @@ class _PlaylistFormState extends State<PlaylistForm> {
         children: <Widget>[
           TextFormField(
             controller: _playlistNameController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
                 labelText: 'Playlist Name', border: OutlineInputBorder()),
             validator: (value) {
               if (value!.isEmpty) {
@@ -47,18 +49,18 @@ class _PlaylistFormState extends State<PlaylistForm> {
               return null;
             },
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           _image == null
               ? ElevatedButton(
                   onPressed: _getImage,
-                  child: Text('Pick an Image'),
+                  child: const Text('Pick an Image'),
                 )
               : Image.file(
                   _image!,
                   height: 65,
                   width: 65,
                 ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
@@ -77,7 +79,7 @@ class _PlaylistFormState extends State<PlaylistForm> {
                 );
               }
             },
-            child: Text('Create Playlist'),
+            child: const Text('Create Playlist'),
           ),
         ],
       ),
