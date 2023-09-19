@@ -5,18 +5,20 @@ part 'create_playlist_data.g.dart';
 @HiveType(typeId: 3)
 class CreatePlaylistData {
   @HiveField(0)
-  final String filePath;
-  @HiveField(1)
-  final DateTime timestamp;
-  @HiveField(2)
-  final String name;
-  @HiveField(3)
-  final String path;
+  final String? name;
+  // @HiveField(1)
+  // final List<String> paths;
 
   CreatePlaylistData({
-    required this.filePath,
-    required this.timestamp,
-    required this.name,
-    required this.path,
+    this.name,
+    //this.paths = const [],
   });
+}
+
+@HiveType(typeId: 4)
+class Video {
+  @HiveField(0)
+  final String videoPath;
+
+  Video({required this.videoPath});
 }

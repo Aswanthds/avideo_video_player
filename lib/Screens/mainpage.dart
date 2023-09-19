@@ -25,7 +25,7 @@ class _MainPageScreenState extends State<MainPageScreen>
     with SingleTickerProviderStateMixin {
   int _bottomNavIndex = 0;
   List<File> videoFiles = [];
-  List<dynamic> videoData = [];
+  List<String> videoData = [];
   @override
   void initState() {
     super.initState();
@@ -65,7 +65,7 @@ class _MainPageScreenState extends State<MainPageScreen>
                 icon: const Icon(Icons.home),
                 title: Text(
                   "Home",
-                  style:  GoogleFonts.chelseaMarket(),
+                  style: GoogleFonts.chelseaMarket(),
                 ),
                 selectedColor: kColorAmber,
                 unselectedColor: kColorWhite),
@@ -75,7 +75,7 @@ class _MainPageScreenState extends State<MainPageScreen>
                 icon: const Icon(Icons.playlist_play),
                 title: Text(
                   "Playlist",
-                  style:  GoogleFonts.chelseaMarket(),
+                  style: GoogleFonts.chelseaMarket(),
                 ),
                 selectedColor: kColorCyan,
                 unselectedColor: kColorWhite),
@@ -85,7 +85,7 @@ class _MainPageScreenState extends State<MainPageScreen>
                 icon: const Icon(Icons.favorite_outline),
                 title: Text(
                   "Favourites",
-                  style:  GoogleFonts.chelseaMarket(),
+                  style: GoogleFonts.chelseaMarket(),
                 ),
                 selectedColor: kColorOrange,
                 unselectedColor: kColorWhite),

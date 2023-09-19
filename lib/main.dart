@@ -21,6 +21,8 @@ Future<void> callDatabseFunctions() async {
   await Hive.openBox<FavoriteData>('favorite_videos');
   await Hive.openBox<MostlyPlayedData>('mostly_played_data');
   await Hive.openBox<RecentlyPlayedData>('recently_played');
+  await Hive.openBox<CreatePlaylistData>('playlists');
+  await Hive.openBox<Video>('playlist_videos');
 }
 
 void registerAdapters() {

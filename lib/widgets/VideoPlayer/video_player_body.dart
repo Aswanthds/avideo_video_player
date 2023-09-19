@@ -12,6 +12,7 @@ class VideoPlayerBody extends StatefulWidget {
   final bool showVolumeSlider;
   final double volumeLevel;
   final ValueChanged<double> onVolumeChanged;
+  final Duration fullduration;
 
   const VideoPlayerBody({
     super.key,
@@ -20,6 +21,7 @@ class VideoPlayerBody extends StatefulWidget {
     required this.volumeLevel,
     required this.onVolumeChanged,
     required this.filesV,
+    required this.fullduration,
   });
 
   @override
@@ -68,18 +70,9 @@ class _VideoPlayerBodyState extends State<VideoPlayerBody> {
           aspectRatio: widget.controller.value.aspectRatio,
           child: VideoPlayer(widget.controller),
         ),
-        if (widget.showVolumeSlider)
-          Positioned(
-            top: 60,
-            left: -40,
-            child: VerticalSlider(
-              value: widget.volumeLevel,
-              onChanged: widget.onVolumeChanged,
-            ),
-          ),
         Positioned(
           right: isrotated ? 50 : 0,
-          bottom: 120,
+          bottom: isrotated ? 120 : 150,
           child: Container(
             height: 45,
             width: 45,
@@ -99,7 +92,7 @@ class _VideoPlayerBodyState extends State<VideoPlayerBody> {
         ),
         Positioned(
           left: 5,
-          bottom: 120,
+          bottom: isrotated ? 120 : 150,
           child: Container(
             height: 40,
             width: 40,
@@ -117,6 +110,8 @@ class _VideoPlayerBodyState extends State<VideoPlayerBody> {
         ),
         VideoPlayerControls(
           controller: widget.controller,
+          fullDuration: widget.fullduration,
+          isrotated: isrotated,
         ),
         Positioned(
           top: isrotated ? 0 : 20,

@@ -110,9 +110,8 @@ class _PlayListVideoPlayerBodyState extends State<PlayListVideoPlayerBody> {
           child: actionButtons(
               orgIcon: Icons.fullscreen, alticon: Icons.fullscreen_exit),
         ),
-        VideoPlayerControls(
+        RecentlyVideoPlayerControls(
           controller: widget.controller,
-          onNext: widget.onNext,
         ),
         Positioned(
           top: isrotated ? 0 : 20,

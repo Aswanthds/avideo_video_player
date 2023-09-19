@@ -46,6 +46,14 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
   }
 
   @override
+  void didUpdateWidget(covariant VideoTileWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.videoFile != oldWidget.videoFile) {
+      updateThumbnail();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () {

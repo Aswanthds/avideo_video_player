@@ -16,13 +16,16 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   late VideoPlayerController _controller;
   double _volumeLevel = 1.0;
   bool _showVolumeSlider = false;
-
+  Duration _fullDuration = Duration.zero;
   @override
   void initState() {
     super.initState();
     _controller = VideoPlayerController.file(File(widget.filesV));
     _controller.initialize().then((_) {
-      setState(() {});
+      setState(() {
+        _fullDuration = _controller.value.duration;
+      });
+      _controller.play();
     });
   }
 
@@ -47,6 +50,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           });
         },
         filesV: widget.filesV,
+        fullduration: _fullDuration,
       ),
     );
   }
@@ -57,5 +61,3 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     _controller.dispose();
   }
 }
-
-
