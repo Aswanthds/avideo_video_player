@@ -9,24 +9,18 @@ environment:
   sdk: '>=3.1.0 <4.0.0'
 
 dependencies:
-  cupertino_icons: ^1.0.2
   device_info_plus: ^9.0.3
-  external_path: ^1.0.3
   flutter:
     sdk: flutter
   flutter_native_splash: ^2.3.2
   google_fonts: ^6.0.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  image_picker: ^1.0.4
   intl: ^0.18.1
   package_info_plus: ^4.1.0
   path: ^1.8.3
-  path_provider: ^2.1.1
   permission_handler: 9.2.0
   salomon_bottom_bar: ^3.3.2
-  shared_preferences: ^2.2.1
-  url_launcher: ^6.1.14
   video_compress: ^3.1.2
   video_player: ^2.7.1
 
@@ -51,9 +45,7 @@ flutter:
     - assets/images/title2.png
     - assets/images/logo_full.png
     - assets/images/bg_image.jpeg
-    - assets/images/recently.png
-    - assets/images/mostly.png
-    - assets/images/favourites.png
+
   # fonts:
   #   - family: Schyler
   #     fonts:

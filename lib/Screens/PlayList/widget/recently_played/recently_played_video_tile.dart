@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:video_player_app/Screens/playlist/playlist%20videoplayer/VideoPlayer/video_player_widget.dart';
 import 'package:video_player_app/database/video_data.dart';
@@ -39,8 +40,15 @@ class _RecentlyPlayedVideoTileState extends State<RecentlyPlayedVideoTile> {
   }
 
   @override
+  void didUpdateWidget(covariant RecentlyPlayedVideoTile oldWidget) {
+    if (oldWidget.files != widget.files) {
+      setState(() {});
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {});
     showPopupMenu(Offset offset) async {
       double left = offset.dx;
       double top = offset.dy;
@@ -60,9 +68,11 @@ class _RecentlyPlayedVideoTileState extends State<RecentlyPlayedVideoTile> {
             ),
           ),
           PopupMenuItem<Widget>(
-            onTap: () async {
-              await RecentlyPlayed.deleteVideo(
-                  widget.files[widget.index].videoPath);
+            onTap: () {
+              setState(() async {
+                await RecentlyPlayed.deleteVideo(
+                    widget.files[widget.index].videoPath);
+              });
             },
             child: const Row(
               children: [
@@ -79,16 +89,40 @@ class _RecentlyPlayedVideoTileState extends State<RecentlyPlayedVideoTile> {
       );
     }
 
-    final formattedTime = DateFormat('yyyy-MM-dd – kk:mm')
-        .format(widget.files[widget.index].timestamp);
+    double? calculateProgress(double? current, double? full) {
+      if (current == null ||
+          full == null ||
+          current.isNaN ||
+          full.isNaN ||
+          full <= 0) {
+        return 0.0; // Return a default value (e.g., 0.0) when division is undefined
+      }
+      return current / full;
+    }
+
     return Padding(
       padding: const EdgeInsets.only(
         left: 5,
         bottom: 10,
       ),
-      child: ValueListenableBuilder<List<RecentlyPlayedData>>(
-        valueListenable: recentlyPlayedVideos, // Listen to changes in the list
+      child: ValueListenableBuilder(
+        valueListenable: Hive.box<RecentlyPlayedData>('recently_played')
+            .listenable(), // Listen to changes in the list
         builder: (context, recentlyPlayedList, child) {
+          final box = recentlyPlayedList.values.toList();
+          if (box.isEmpty) {
+            return Center(
+              child: Text('No data Available'),
+            );
+          }
+
+          // if (widget.index >= 0 && widget.index < box.length) {
+
+          // }
+          final current =
+              box[widget.index].current?.inMilliseconds.toDouble() ?? 0.0;
+          final full = box[widget.index].full?.inMilliseconds.toDouble() ?? 0.0;
+
           return ListTile(
             onTap: () {
               MostlyPlayedFunctions.addVideoPlayData(
@@ -114,9 +148,7 @@ class _RecentlyPlayedVideoTileState extends State<RecentlyPlayedVideoTile> {
                     border: Border.all(
                       color: kcolorblack,
                     ),
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10)),
+                    borderRadius: BorderRadius.circular(5),
                     image: DecorationImage(
                       image: FileImage(widget.thumbnail),
                       fit: BoxFit.cover,
@@ -126,18 +158,14 @@ class _RecentlyPlayedVideoTileState extends State<RecentlyPlayedVideoTile> {
                     padding: const EdgeInsets.only(top: 50),
                     child: LinearProgressIndicator(
                       minHeight: 2,
-                      value: 50,
-                      color: Colors.blue,
-                      backgroundColor: Colors.amber,
+                      value: calculateProgress(current, full),
+                      valueColor:
+                          const AlwaysStoppedAnimation<Color>(kcolorDarkblue),
+                      backgroundColor: kColorWhite54,
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
                 ),
-                // Expanded(
-                //     child: LinearProgressIndicator(
-                //   minHeight: 10,
-                //   backgroundColor: Colors.amber,
-                // )),
               ],
             ),
             title: Text(
@@ -150,7 +178,7 @@ class _RecentlyPlayedVideoTileState extends State<RecentlyPlayedVideoTile> {
               ),
             ),
             subtitle: Text(
-              formattedTime,
+              '${(calculateProgress(current, full)! * 100).round()}%',
               style: GoogleFonts.nixieOne(),
             ),
             trailing: GestureDetector(

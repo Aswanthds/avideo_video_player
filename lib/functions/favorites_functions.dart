@@ -18,7 +18,7 @@ class FavoriteFunctions {
     );
 
     addToFavorites(videoToAdd);
-    debugPrint(' PAth added to fvrt${videoToAdd.filePath}');
+    //debugPrint(' PAth added to fvrt${videoToAdd.filePath}');
   }
 
   static Future<List<FavoriteData>> getFavoritesList() async {
@@ -45,8 +45,8 @@ class FavoriteFunctions {
       final uniqueVideos = uniqueVideosMap.values.toList();
       uniqueVideos.sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
-      debugPrint('Total videos in box: ${videos.length}');
-      debugPrint('Unique videos in map: ${uniqueVideos.length}');
+      //debugPrint('Total videos in box: ${videos.length}');
+     // debugPrint('Unique videos in map: ${uniqueVideos.length}');
 
       return uniqueVideos;
     } catch (e) {
@@ -59,7 +59,7 @@ class FavoriteFunctions {
     final recentlyPlayedVideos = await getFavoritesList();
     for (final video in recentlyPlayedVideos) {
       debugPrint('Video Path: ${video.filePath}');
-      debugPrint('Timestamp: ${video.timestamp}');
+      //debugPrint('Timestamp: ${video.timestamp}');
     }
   }
 

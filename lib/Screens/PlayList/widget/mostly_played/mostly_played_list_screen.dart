@@ -101,7 +101,9 @@ class _MostlyPlayedListScreenState extends State<MostlyPlayedListScreen> {
                     subtitle: Text('Play Count: ${item.playCount}'),
                     onTap: () {
                       MostlyPlayedFunctions.addVideoPlayData(item.videoPath!);
-                      RecentlyPlayed.onVideoClicked(videoPath: item.videoPath!);
+                      RecentlyPlayed.onVideoClicked(
+                        videoPath: item.videoPath!,
+                      );
                       RecentlyPlayed.checkHiveData();
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) =>

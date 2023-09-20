@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:video_player_app/database/create_playlist_data.dart';
 
@@ -12,6 +13,6 @@ class CreatePlayListFunctions {
 
   static Future<void> addVideoToPlaylist(
       String playlistName, String videoPath) async {
-    print('$playlistName @  is $videoPath');
+    debugPrint('$videoPath is @ $playlistName');
   }
 }

@@ -95,11 +95,11 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
                       }
                     });
                   },
-                  icon: Padding(
-                    padding: const EdgeInsets.only(
+                  icon: const Padding(
+                    padding: EdgeInsets.only(
                       right: 10,
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.fast_rewind,
                       size: 32.0,
                       color: kColorWhite,
@@ -134,11 +134,11 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
                       }
                     });
                   },
-                  icon: Padding(
-                    padding: const EdgeInsets.only(
+                  icon: const Padding(
+                    padding: EdgeInsets.only(
                       left: 10,
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.fast_forward,
                       size: 32.0,
                       color: kColorWhite,

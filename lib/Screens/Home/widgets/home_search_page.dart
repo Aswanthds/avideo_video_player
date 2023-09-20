@@ -34,7 +34,9 @@ class _HomeSearchPaageState extends State<HomeSearchPaage> {
           ),
           onTap: () {
             MostlyPlayedFunctions.addVideoPlayData(filteredFiles[index]);
-            RecentlyPlayed.onVideoClicked(videoPath: filteredFiles[index]);
+            RecentlyPlayed.onVideoClicked(
+              videoPath: filteredFiles[index],
+            );
             RecentlyPlayed.checkHiveData();
             Navigator.of(context).push(MaterialPageRoute(
               builder: (context) =>

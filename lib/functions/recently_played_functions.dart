@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/database/video_data.dart';
-import 'package:video_player_app/functions/video_functions.dart';
 
 ValueNotifier<List<RecentlyPlayedData>> recentlyPlayedVideos =
     ValueNotifier<List<RecentlyPlayedData>>([]);
@@ -15,22 +14,24 @@ class RecentlyPlayed {
     await Hive.openBox<RecentlyPlayedData>(_boxName);
   }
 
-  static void onVideoClicked({required String videoPath}) async {
-    
-    final info = await VideoFunctions.getVideoDuration(videoPath);
-
+  static void onVideoClicked({
+    required String videoPath,
+    Duration? current,
+    Duration? full,
+  }) async {
     final box = Hive.box<RecentlyPlayedData>(_boxName);
-    debugPrint('Duration : $info');
+
     final videoData = RecentlyPlayedData(
       videoPath: videoPath,
       timestamp: DateTime.now(),
-      // videoPosition: position!,
-      // videoDuration: info,
+      current: current,
+      full: full,
     );
 
     await box.put(videoPath, videoData);
 
-    debugPrint('Video clicked and added to Hive: $videoPath ');
+    debugPrint(
+        'onVideo: ${videoData.videoPath}, ${videoData.current}, ${videoData.full}, ${videoData.timestamp}');
   }
 
   static List<RecentlyPlayedData> getRecentlyPlayedVideos() {
@@ -45,6 +46,7 @@ class RecentlyPlayed {
 
       if (uniqueVideosMap.containsKey(videoPath)) {
         final existingTimestamp = uniqueVideosMap[videoPath]!.timestamp;
+
         if (timestamp.isAfter(existingTimestamp)) {
           uniqueVideosMap[videoPath] = videoData;
         }
@@ -65,7 +67,7 @@ class RecentlyPlayed {
     final recentlyPlayedVideos = RecentlyPlayed.getRecentlyPlayedVideos();
     for (final videoData in recentlyPlayedVideos) {
       debugPrint('Video Path: ${videoData.videoPath}');
-      debugPrint('Timestamp: ${videoData.timestamp}');
+      //debugPrint('Timestamp: ${videoData.timestamp}');
     }
   }
 
@@ -82,7 +84,7 @@ class RecentlyPlayed {
 
     if (videoToDeleteKey != null) {
       await box.delete(videoToDeleteKey);
-      debugPrint('Deleted video: $videoPath');
+      // debugPrint('Deleted video: $videoPath');
 
       // Modify the list of recently played videos
       final updatedList = recentlyPlayedVideos.value.toList();

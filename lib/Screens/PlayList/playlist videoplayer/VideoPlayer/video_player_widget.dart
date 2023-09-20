@@ -60,7 +60,7 @@ class _RecentlyPlayedVideoScreenState extends State<RecentlyPlayedVideoScreen> {
 
   String getname() {
     final filenmae = widget.videoPaths.map((e) => e.videoPath).toList();
-    debugPrint('String  $filenmae');
+   // debugPrint('String  $filenmae');
     return filenmae[_currentIndex];
   }
 

@@ -30,27 +30,31 @@ class _OthersTabState extends State<OthersTab> {
 
   @override
   Widget build(BuildContext context) {
-    final otherspath = getdownloadsonlyPath();
-    return GridView.builder(
-      shrinkWrap: true,
-      itemCount: otherspath.length,
-      gridDelegate:
-          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-      itemBuilder: (context, index) {
-        final videoPath = otherspath[index];
+    final downloadpath = getdownloadsonlyPath();
+    return Expanded(
+      child: GridView.builder(
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        itemCount: downloadpath.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+        ),
+        itemBuilder: (context, index) {
+          final videoPath = downloadpath[index];
 
-        return Padding(
-          padding: const EdgeInsets.only(
-            top: 10,
-            left: 10,
-            right: 10,
-          ),
-          child: VideoTileWidget(
-            videoFile: videoPath,
-            index: index,
-          ),
-        );
-      },
+          return Padding(
+            padding: const EdgeInsets.only(
+              top: 10,
+              left: 10,
+              right: 10,
+            ),
+            child: VideoTileWidget(
+              videoFile: videoPath,
+              index: index,
+            ),
+          );
+        },
+      ),
     );
   }
 }

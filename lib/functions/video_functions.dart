@@ -24,18 +24,4 @@ class VideoFunctions {
     return formattedDuration;
   }
 
-  static Future<void> updateThumbnail(
-      String path, ValueNotifier thumbnailNotifier) async {
-    try {
-      final thumbnailFile = await VideoCompress.getByteThumbnail(
-        path,
-        quality: 10,
-        position: -1,
-      );
-
-      thumbnailNotifier.value = thumbnailFile!;
-    } catch (e) {
-      debugPrint('Error generating thumbnail: $e');
-    }
-  }
 }

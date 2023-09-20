@@ -11,8 +11,6 @@ class CameraTab extends StatefulWidget {
   State<CameraTab> createState() => _CameraTabState();
 }
 
-
-
 class _CameraTabState extends State<CameraTab> {
   MediaInfo? info;
   List<File> camera = [];
@@ -34,26 +32,30 @@ class _CameraTabState extends State<CameraTab> {
   @override
   Widget build(BuildContext context) {
     final downloadPath = getcameraonlyPath();
-    return GridView.builder(
-      shrinkWrap: true,
-      itemCount: downloadPath.length,
-      gridDelegate:
-          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-      itemBuilder: (context, index) {
-        final videoPath = downloadPath[index];
+    return Expanded(
+      child: GridView.builder(
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        itemCount: downloadPath.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+        ),
+        itemBuilder: (context, index) {
+          final videoPath = downloadPath[index];
 
-        return Padding(
-          padding: const EdgeInsets.only(
-            top: 10,
-            left: 10,
-            right: 10,
-          ),
-          child: VideoTileWidget(
-            videoFile: videoPath,
-            index: index,
-          ),
-        );
-      },
+          return Padding(
+            padding: const EdgeInsets.only(
+              top: 10,
+              left: 10,
+              right: 10,
+            ),
+            child: VideoTileWidget(
+              videoFile: videoPath,
+              index: index,
+            ),
+          );
+        },
+      ),
     );
   }
 }

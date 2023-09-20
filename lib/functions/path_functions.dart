@@ -12,15 +12,22 @@ class PathFunctions {
           extension == 'mkv';
     }
 
-    Directory root = Directory('/storage/emulated/0/');
+    List<String> rootDirectories = [
+      '/storage/sdcard1', // Add your first directory
+      '/storage/emulated/0/', // Add your second directory
+    ];
     List<String> paths = [];
 
     try {
-      final List<FileSystemEntity> allFiles = root.listSync(recursive: true);
+      for (final String rootPath in rootDirectories) {
+        final Directory root = Directory(rootPath);
 
-      for (final FileSystemEntity entity in allFiles) {
-        if (entity is File && isVideoFile(entity)) {
-          paths.add(entity.path);
+        final List<FileSystemEntity> allFiles = root.listSync(recursive: true);
+
+        for (final FileSystemEntity entity in allFiles) {
+          if (entity is File && isVideoFile(entity)) {
+            paths.add(entity.path);
+          }
         }
       }
     } catch (e) {

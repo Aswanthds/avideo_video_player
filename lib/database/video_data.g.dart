@@ -19,17 +19,23 @@ class RecentlyPlayedDataAdapter extends TypeAdapter<RecentlyPlayedData> {
     return RecentlyPlayedData(
       videoPath: fields[0] as String,
       timestamp: fields[1] as DateTime,
+      current: fields[2] as Duration?,
+      full: fields[3] as Duration?,
     );
   }
 
   @override
   void write(BinaryWriter writer, RecentlyPlayedData obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.videoPath)
       ..writeByte(1)
-      ..write(obj.timestamp);
+      ..write(obj.timestamp)
+      ..writeByte(2)
+      ..write(obj.current)
+      ..writeByte(3)
+      ..write(obj.full);
   }
 
   @override

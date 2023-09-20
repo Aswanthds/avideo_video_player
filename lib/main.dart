@@ -5,6 +5,7 @@ import 'package:video_player_app/database/create_playlist_data.dart';
 import 'package:video_player_app/database/favourite_data.dart';
 import 'package:video_player_app/database/most_played_data.dart';
 import 'package:video_player_app/database/video_data.dart';
+import 'package:video_player_app/database/video_duration_adapter.dart';
 import 'package:video_player_app/widgets/splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -30,6 +31,7 @@ void registerAdapters() {
   Hive.registerAdapter(RecentlyPlayedDataAdapter());
   Hive.registerAdapter(FavoriteDataAdapter());
   Hive.registerAdapter(CreatePlaylistDataAdapter());
+  Hive.registerAdapter(DurationAdapter());
 }
 
 class MyApp extends StatelessWidget {

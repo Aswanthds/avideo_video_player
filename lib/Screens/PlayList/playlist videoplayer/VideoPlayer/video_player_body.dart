@@ -5,7 +5,6 @@ import 'package:video_player_app/Screens/playlist/playlist%20videoplayer/VideoPl
 import 'package:video_player_app/Screens/playlist/playlist%20videoplayer/VideoPlayer/video_player_controls.dart';
 import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/widgets/VideoPlayer/vertical_slider.dart';
-import 'package:video_player_app/widgets/VideoPlayer/video_player_controls.dart';
 
 class PlayListVideoPlayerBody extends StatefulWidget {
   final VideoPlayerController controller;

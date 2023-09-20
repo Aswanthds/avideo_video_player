@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_player_app/constants.dart';
-import 'package:video_player_app/widgets/VideoPlayer/vertical_slider.dart';
 import 'package:video_player_app/widgets/VideoPlayer/video_player_controls.dart';
 
 class VideoPlayerBody extends StatefulWidget {
@@ -32,18 +31,16 @@ class _VideoPlayerBodyState extends State<VideoPlayerBody> {
   bool isrotated = false;
   bool isFullScreen = false;
   // bool _showVolumeSlider = false;
-  void _toggleRotation() {
-    setState(() {
+  Future<void> _toggleRotation() async {
+    setState(() async {
       isrotated = !isrotated;
       if (isrotated) {
-        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-        SystemChrome.setPreferredOrientations([
+        await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+        await SystemChrome.setPreferredOrientations([
           DeviceOrientation.landscapeLeft,
         ]);
       } else {
-        SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-            overlays: SystemUiOverlay.values);
-        SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+        await SystemChrome.setPreferredOrientations(DeviceOrientation.values);
       }
     });
   }
@@ -51,6 +48,7 @@ class _VideoPlayerBodyState extends State<VideoPlayerBody> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
   }
 
   @override
@@ -114,7 +112,7 @@ class _VideoPlayerBodyState extends State<VideoPlayerBody> {
           isrotated: isrotated,
         ),
         Positioned(
-          top: isrotated ? 0 : 20,
+          top: 0,
           left: 0,
           child: Container(
             width: MediaQuery.of(context).size.width,
@@ -151,7 +149,7 @@ class _VideoPlayerBodyState extends State<VideoPlayerBody> {
     );
   }
 
-  void untoggleRotation() async {
+  Future<void> untoggleRotation() async {
     // Restore all orientations
     SystemChrome.setPreferredOrientations(DeviceOrientation.values);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,

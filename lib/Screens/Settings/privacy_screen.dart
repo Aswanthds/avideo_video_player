@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player_app/Screens/settings/privacy_heading_widget.dart';
-import 'package:video_player_app/Screens/settings/widgets/contactus.dart';
+//import 'package:video_player_app/Screens/settings/widgets/contactus.dart';
 import 'package:video_player_app/Screens/settings/widgets/privacy_text_widget.dart';
 import 'package:video_player_app/constants.dart';
 
@@ -54,11 +54,11 @@ class PrivacyScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
-            ContactUsText(
-              email: 'worldofaswanth@gmail.com',
-              displayText:
-                  "If you have any questions or concerns about our App's privacy practices, please contact ",
-            ),
+            // ContactUsText(
+            //   email: 'worldofaswanth@gmail.com',
+            //   displayText:
+            //       "If you have any questions or concerns about our App's privacy practices, please contact ",
+            // ),
             SizedBox(height: 20),
             Text(
               "By using our App, you agree to the practices described in this Privacy Statement.",

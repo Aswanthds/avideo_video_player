@@ -102,7 +102,7 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    AlreadyPlaylist(),
+                    const AlreadyPlaylist(),
                     TextField(
                       onChanged: (value) {
                         newPlaylistName =

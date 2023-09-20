@@ -35,8 +35,8 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
     try {
       final thumbnailFile = await VideoCompress.getFileThumbnail(
         widget.videoFile.path,
-        quality: 10,
-        position: -1,
+        quality: 30,
+        position: 0,
       );
 
       thumbnailNotifier.value = thumbnailFile;

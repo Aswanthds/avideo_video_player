@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/Screens/favorites/widgets/playlist_thumbnal_widget.dart';
 import 'package:video_player_app/database/favourite_data.dart';
@@ -32,7 +32,7 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
       try {
         final thumbnailFile = await VideoCompress.getByteThumbnail(
           video.filePath,
-          quality: 10,
+          quality: 30,
           position: -1,
         );
         thumbnailNotifier.value = thumbnailFile;
@@ -82,7 +82,43 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const PlayListThumbnailWidget(),
-          Expanded(
+          ValueListenableBuilder(
+              valueListenable:
+                  Hive.box<FavoriteData>('favorite_videos').listenable(),
+              builder: (context, Box<FavoriteData> box, _) {
+                final playlists = box.values.toList();
+                if (box.isEmpty) {
+                  return const Center(
+                    child: Text('No data Available'),
+                  );
+                }
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: playlists.length,
+                    itemBuilder: (context, index) {
+                      if (index < videos.length) {
+                        final video = videos[index];
+                        return VideoListTileWidget(video: video);
+                      } else {
+                        return const SizedBox(); // Return an empty widget if index is out of bounds
+                      }
+                    },
+                  ),
+                );
+              }),
+        ],
+      ),
+    );
+  }
+}
+/*
+ValueListenableBuilder(
+      valueListenable: Hive.box<CreatePlaylistData>('playlists').listenable(),
+      builder: (context, Box<CreatePlaylistData> box, _) {
+        final playlists = box.values.toList();
+
+
+ Expanded(
             child: ListView.builder(
               itemCount: videos.length,
               itemBuilder: (context, index) {
@@ -91,8 +127,5 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
               },
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
+
+*/

@@ -33,7 +33,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
       videoFiles = fetchedVideos.map((path) => File(path)).toList();
     });
 
-    debugPrint('All Video Data:');
+   // debugPrint('All Video Data:');
     for (String data in videoData) {
       debugPrint(data);
     }
@@ -84,7 +84,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                   'Storage permission is required to use this app. Do you want to see why?'),
               actions: [
                 TextButton(
-                  onPressed: () => exit(0),
+                  onPressed: () => openAppSettings(),
                   child: const Text('No'),
                 ),
                 TextButton(

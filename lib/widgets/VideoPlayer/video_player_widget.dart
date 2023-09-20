@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_player_app/constants.dart';
+import 'package:video_player_app/functions/recently_played_functions.dart';
 import 'package:video_player_app/widgets/VideoPlayer/video_player_body.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
@@ -16,17 +18,62 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   late VideoPlayerController _controller;
   double _volumeLevel = 1.0;
   bool _showVolumeSlider = false;
-  Duration _fullDuration = Duration.zero;
+  Duration? _fullDuration;
+  Duration? current;
+  bool _disposed = false;
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.file(File(widget.filesV));
-    _controller.initialize().then((_) {
-      setState(() {
-        _fullDuration = _controller.value.duration;
-      });
-      _controller.play();
+    _initializeVideoPlayer().then((_) {
+      // Video player is initialized, you can now update Hive data.
+      _startUpdatingHiveData();
     });
+  }
+
+  Future<void> _initializeVideoPlayer() async {
+    _controller = VideoPlayerController.file(File(widget.filesV));
+    await _controller.initialize();
+    setState(() {
+      _fullDuration = _controller.value.duration;
+      current = _controller.value.position;
+    });
+
+    _controller.play();
+    _controller.addListener(_updateCurrentPosition);
+  }
+
+  void _updateCurrentPosition() {
+    final currentPosition = _controller.value.position;
+    setState(() {
+      current = currentPosition;
+    });
+
+    // Update Hive data with the current position and the video path
+    _updateHiveData(widget.filesV, currentPosition);
+  }
+
+  void _startUpdatingHiveData() {
+    // Create a timer to periodically update Hive data (e.g., every second)
+    Timer.periodic(const Duration(seconds: 1), (_) {
+      if (_controller.value.isPlaying) {
+        final currentPosition = _controller.value.position;
+        // Update Hive data with the current position and the video path
+        _updateHiveData(widget.filesV, currentPosition);
+      }
+    });
+  }
+
+  void _updateHiveData(String videoPath, Duration currentPosition) {
+    // Call the onVideoClicked function to update the data
+    if (!_disposed) {
+      // Check the flag before updating Hive data
+      // Call the onVideoClicked function to update the data
+      RecentlyPlayed.onVideoClicked(
+        videoPath: videoPath,
+        current: currentPosition,
+        full: _fullDuration,
+      );
+    }
   }
 
   void toggleVolumeSlider() {
@@ -50,14 +97,15 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           });
         },
         filesV: widget.filesV,
-        fullduration: _fullDuration,
+        fullduration: _fullDuration ?? Duration.zero,
       ),
     );
   }
 
   @override
   void dispose() {
-    super.dispose();
+    _disposed = true;
     _controller.dispose();
+    super.dispose();
   }
 }
