@@ -2,7 +2,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:video_player_app/database/most_played_data.dart';
 
 class MostlyPlayedFunctions {
-  static const String _boxName = 'video_play_data';
+  static const String _boxName = 'mostly_played_data';
 
   static Future<void> mostlyPlayedVideos(MostlyPlayedData video) async {
     final box = await Hive.openBox<MostlyPlayedData>(_boxName);

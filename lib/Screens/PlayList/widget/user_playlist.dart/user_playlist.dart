@@ -1,26 +1,26 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_player_app/Screens/playlist/playlist%20videoplayer/VideoPlayer/video_player_body.dart';
 import 'package:video_player_app/constants.dart';
-import 'package:video_player_app/database/recently_video_data.dart';
+import 'package:video_player_app/database/create_playlist_data.dart';
 
-class RecentlyPlayedVideoScreen extends StatefulWidget {
-  final List<RecentlyPlayedData> videoPaths;
+class VideoPlaylistScreen extends StatefulWidget {
+  final VideoPlaylist videoPaths;
   final int currentIndex;
 
-  const RecentlyPlayedVideoScreen({
+  const VideoPlaylistScreen({
     Key? key,
     required this.videoPaths,
     required this.currentIndex,
   }) : super(key: key);
 
   @override
-  State<RecentlyPlayedVideoScreen> createState() =>
-      _RecentlyPlayedVideoScreenState();
+  State<VideoPlaylistScreen> createState() => _VideoPlaylistScreenState();
 }
 
-class _RecentlyPlayedVideoScreenState extends State<RecentlyPlayedVideoScreen> {
+class _VideoPlaylistScreenState extends State<VideoPlaylistScreen> {
   late VideoPlayerController _videoController;
   double _volumeLevel = 1.0;
   final bool _showVolumeSlider = false;
@@ -34,34 +34,18 @@ class _RecentlyPlayedVideoScreenState extends State<RecentlyPlayedVideoScreen> {
   }
 
   void _initializeVideoController() {
-    final videoPathLsit = widget.videoPaths.map((e) => e.videoPath).toList();
-    final videopath = videoPathLsit[_currentIndex];
+    final videoPathLsit = widget.videoPaths.videos;
+    final videopath = videoPathLsit![_currentIndex];
     _videoController = VideoPlayerController.file(File(videopath))
       ..initialize().then((_) {
         setState(() {});
         _videoController.play();
       });
-    _videoController.addListener(_onVideoControllerUpdate);
   }
-
-  void _onVideoControllerUpdate() {
-    if (_videoController.value.position >= _videoController.value.duration) {
-      _playNextVideo();
-    }
-  }
-
-  void _playNextVideo() {
-    if (_currentIndex < widget.videoPaths.length - 1) {
-      _currentIndex++;
-      _videoController.dispose();
-      _initializeVideoController();
-    }
-  }
-
   String getname() {
-    final filenmae = widget.videoPaths.map((e) => e.videoPath).toList();
+    final filenmae = widget.videoPaths.videos;
     // debugPrint('String  $filenmae');
-    return filenmae[_currentIndex];
+    return filenmae![_currentIndex];
   }
 
   @override
@@ -79,7 +63,6 @@ class _RecentlyPlayedVideoScreenState extends State<RecentlyPlayedVideoScreen> {
           });
         },
         files: getname(),
-        onNext: () => _playNextVideo(),
       ),
     );
   }

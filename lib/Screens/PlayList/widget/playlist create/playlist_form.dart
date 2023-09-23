@@ -25,16 +25,19 @@ class _PlaylistFormState extends State<PlaylistForm> {
       key: _formKey,
       child: Column(
         children: <Widget>[
-          TextFormField(
-            controller: _playlistNameController,
-            decoration: const InputDecoration(
-                labelText: 'Playlist Name', border: OutlineInputBorder()),
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Please enter a playlist name';
-              }
-              return null;
-            },
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: _playlistNameController,
+              decoration: const InputDecoration(
+                  labelText: 'Playlist Name', border: OutlineInputBorder()),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter a playlist name';
+                }
+                return null;
+              },
+            ),
           ),
           const SizedBox(height: 20.0),
           const SizedBox(height: 20.0),

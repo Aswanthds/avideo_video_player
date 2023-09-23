@@ -48,7 +48,7 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
   @override
   void didUpdateWidget(covariant VideoTileWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.videoFile != oldWidget.videoFile) {
+    if (widget.videoFile != oldWidget.videoFile && !mounted) {
       updateThumbnail();
     }
   }
@@ -60,21 +60,19 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
         showModalBottomSheet(
           context: context,
           builder: (context) {
-            return Wrap(children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: double.infinity,
-                  decoration: const BoxDecoration(),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: VideoMenuRow(
-                      widget.videoFile.path,
-                    ),
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: VideoMenuRow(
+                    widget.videoFile.path,
                   ),
                 ),
               ),
-            ]);
+            );
           },
         );
       },

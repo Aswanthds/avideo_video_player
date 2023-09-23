@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:video_player_app/Screens/playlist/widget/recently_played/recently_played_video_item.dart';
+import 'package:video_player_app/database/recently_video_data.dart';
 import 'package:video_player_app/functions/recently_played_functions.dart';
-import 'package:video_player_app/database/video_data.dart';
+
 
 class RecenPlayedVideoList extends StatefulWidget {
   

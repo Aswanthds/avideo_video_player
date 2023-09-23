@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'video_data.dart';
+part of 'recently_video_data.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator

@@ -113,8 +113,8 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
 }
 /*
 ValueListenableBuilder(
-      valueListenable: Hive.box<CreatePlaylistData>('playlists').listenable(),
-      builder: (context, Box<CreatePlaylistData> box, _) {
+      valueListenable: Hive.box<VideoPlaylist>('playlists').listenable(),
+      builder: (context, Box<VideoPlaylist> box, _) {
         final playlists = box.values.toList();
 
 

@@ -7,7 +7,8 @@ import 'package:video_player_app/Screens/playlist/widget/recently_played/error_v
 import 'package:video_player_app/Screens/playlist/widget/recently_played/recently_played_video_tile.dart';
 import 'package:video_player_app/Screens/playlist/widget/recently_played/loading_video_tile.dart';
 import 'package:video_player_app/Screens/playlist/widget/recently_played/thumbnot_video_tile.dart';
-import 'package:video_player_app/database/video_data.dart';
+import 'package:video_player_app/database/recently_video_data.dart';
+
 
 class RecentlyPlayedVideoItem extends StatelessWidget {
   final List<RecentlyPlayedData> videoData;

@@ -19,6 +19,7 @@ dependencies:
   intl: ^0.18.1
   package_info_plus: ^4.1.0
   path: ^1.8.3
+  path_provider: ^2.1.1
   permission_handler: 9.2.0
   salomon_bottom_bar: ^3.3.2
   video_compress: ^3.1.2
@@ -45,7 +46,6 @@ flutter:
     - assets/images/title2.png
     - assets/images/logo_full.png
     - assets/images/bg_image.jpeg
-
   # fonts:
   #   - family: Schyler
   #     fonts:

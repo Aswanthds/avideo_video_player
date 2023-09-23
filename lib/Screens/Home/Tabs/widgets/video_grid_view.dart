@@ -18,30 +18,31 @@ class VideoGriedview extends StatefulWidget {
 class _VideoGriedviewState extends State<VideoGriedview> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: GridView.builder(
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        itemCount: widget.video.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-        ),
-        itemBuilder: (context, index) {
-          final videoPath = widget.video[index];
+    return (widget.video.isEmpty)
+        ? const Center(
+            child: Text('No video available'),
+          )
+        : GridView.builder(
+            shrinkWrap: true,
+            itemCount: widget.video.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+            ),
+            itemBuilder: (context, index) {
+              final videoPath = widget.video[index];
 
-          return Padding(
-            padding: const EdgeInsets.only(
-              top: 10,
-              left: 10,
-              right: 10,
-            ),
-            child: VideoTileWidget(
-              videoFile: videoPath,
-              index: index,
-            ),
+              return Padding(
+                padding: const EdgeInsets.only(
+                  top: 10,
+                  left: 10,
+                  right: 10,
+                ),
+                child: VideoTileWidget(
+                  videoFile: videoPath,
+                  index: index,
+                ),
+              );
+            },
           );
-        },
-      ),
-    );
   }
 }

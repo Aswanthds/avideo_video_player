@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:video_compress/video_compress.dart';
-import 'package:video_player_app/database/video_data.dart';
+import 'package:video_player_app/database/recently_video_data.dart';
 
 ValueNotifier<List<RecentlyPlayedData>> recentlyPlayedVideos =
     ValueNotifier<List<RecentlyPlayedData>>([]);

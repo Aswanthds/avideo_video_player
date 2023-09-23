@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path/path.dart';
@@ -39,89 +40,88 @@ class _VideoThumbnailCommonState extends State<VideoThumbnailCommon> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ValueListenableBuilder<File?>(
-            valueListenable: widget.thumbnailNotifier,
-            builder: (context, thumbnail, child) {
-              if (thumbnail == null) {
-                return Container(
-                  width: 160,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: kcolorDarkblue,
-                    border: Border.all(
-                      style: BorderStyle.solid,
-                    ),
-                    borderRadius: BorderRadius.circular(5),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ValueListenableBuilder<File?>(
+          valueListenable: widget.thumbnailNotifier,
+          builder: (context, thumbnail, child) {
+            if (thumbnail == null) {
+              return Container(
+                width: 160,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: kcolorDarkblue,
+                  border: Border.all(
+                    style: BorderStyle.solid,
                   ),
-                  child: const Center(
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2.0,
-                    ),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: const Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.0,
                   ),
-                );
-              } else {
-                return Stack(
-                  children: [
-                    Container(
-                      width: 160,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          style: BorderStyle.solid,
-                        ),
-                        borderRadius: BorderRadius.circular(5),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: FileImage(thumbnail),
-                        ),
+                ),
+              );
+            } else {
+              return Stack(
+                children: [
+                  Container(
+                    width: 160,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        style: BorderStyle.solid,
+                      ),
+                      borderRadius: BorderRadius.circular(5),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: FileImage(thumbnail),
                       ),
                     ),
-                    if (duration != null)
-                      Positioned(
-                        bottom: 5,
-                        right: 5,
-                        child: Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                            color: Colors.black54,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Text(
-                            duration!,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                            ),
+                  ),
+                  if (duration != null)
+                    Positioned(
+                      bottom: 5,
+                      right: 5,
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: Colors.black54,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          duration!,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
                           ),
                         ),
                       ),
-                  ],
-                );
-              }
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              basename(widget.videoFile.path),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.nixieOne(
-                fontWeight: FontWeight.bold,
-                fontSize: 13.5,
-              ),
+                    ),
+                ],
+              );
+            }
+          },
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            basename(widget.videoFile.path),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: GoogleFonts.nixieOne(
+              fontWeight: FontWeight.bold,
+              fontSize: 13.5,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

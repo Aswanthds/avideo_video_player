@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:video_player_app/constants.dart';
 import 'dart:io';
-import 'package:video_player_app/screens/home/Tabs/widgets/sort_widget.dart';
-import 'package:video_player_app/screens/home/Tabs/widgets/video_grid_view.dart';
 import 'package:video_player_app/screens/home/Tabs/widgets/video_tile_widget.dart';
 
 class AllVideoTab extends StatefulWidget {
@@ -38,16 +36,17 @@ class _AllVideoTabState extends State<AllVideoTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
-        Align(
-          alignment: Alignment.topRight,
+        Positioned(
+          top: 0,
+          right: 0,
           child: Padding(
             padding: const EdgeInsets.only(left: 5, right: 5),
             child: DropdownButton<SortingOption>(
               value: selectedOption,
 
-              underline: Container(), //empty line
+              underline: SizedBox(), //empty line
 
               dropdownColor: kColorWhite,
               iconEnabledColor: kcolorDarkblue,
@@ -82,7 +81,35 @@ class _AllVideoTabState extends State<AllVideoTab> {
             ),
           ),
         ),
-        VideoGriedview(video: widget.video,)
+        (widget.video.isEmpty)
+            ? const Center(
+                child: Text('No video available'),
+              )
+            : Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  itemCount: widget.video.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  ),
+                  itemBuilder: (context, index) {
+                    final videoPath = widget.video[index];
+
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        top: 10,
+                        left: 10,
+                        right: 10,
+                      ),
+                      child: VideoTileWidget(
+                        videoFile: videoPath,
+                        index: index,
+                      ),
+                    );
+                  },
+                ),
+              ),
       ],
     );
   }

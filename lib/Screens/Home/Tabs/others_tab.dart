@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:video_player_app/Screens/Home/Tabs/widgets/video_tile_widget.dart';
+import 'package:video_player_app/screens/home/Tabs/widgets/video_grid_view.dart';
 
 class OthersTab extends StatefulWidget {
   final List<File> filesV;
@@ -31,30 +31,6 @@ class _OthersTabState extends State<OthersTab> {
   @override
   Widget build(BuildContext context) {
     final downloadpath = getdownloadsonlyPath();
-    return Expanded(
-      child: GridView.builder(
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        itemCount: downloadpath.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-        ),
-        itemBuilder: (context, index) {
-          final videoPath = downloadpath[index];
-
-          return Padding(
-            padding: const EdgeInsets.only(
-              top: 10,
-              left: 10,
-              right: 10,
-            ),
-            child: VideoTileWidget(
-              videoFile: videoPath,
-              index: index,
-            ),
-          );
-        },
-      ),
-    );
+    return VideoGriedview(video: downloadpath);
   }
 }

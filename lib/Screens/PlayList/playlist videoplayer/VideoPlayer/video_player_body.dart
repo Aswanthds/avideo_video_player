@@ -59,6 +59,7 @@ class _PlayListVideoPlayerBodyState extends State<PlayListVideoPlayerBody> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
   }
 
   @override

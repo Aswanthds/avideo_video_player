@@ -1,5 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
-part 'video_data.g.dart';
+part 'recently_video_data.g.dart';
 
 
 @HiveType(typeId: 0)

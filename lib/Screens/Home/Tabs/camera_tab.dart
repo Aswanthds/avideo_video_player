@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:video_compress/video_compress.dart';
-import 'package:video_player_app/Screens/Home/Tabs/widgets/video_tile_widget.dart';
+import 'package:video_player_app/screens/home/Tabs/widgets/video_grid_view.dart';
 
 class CameraTab extends StatefulWidget {
   final List<File> filesV;
@@ -31,31 +31,9 @@ class _CameraTabState extends State<CameraTab> {
 
   @override
   Widget build(BuildContext context) {
-    final downloadPath = getcameraonlyPath();
-    return Expanded(
-      child: GridView.builder(
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        itemCount: downloadPath.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-        ),
-        itemBuilder: (context, index) {
-          final videoPath = downloadPath[index];
-
-          return Padding(
-            padding: const EdgeInsets.only(
-              top: 10,
-              left: 10,
-              right: 10,
-            ),
-            child: VideoTileWidget(
-              videoFile: videoPath,
-              index: index,
-            ),
-          );
-        },
-      ),
+    final cameraPath = getcameraonlyPath();
+    return VideoGriedview(
+      video: cameraPath,
     );
   }
 }
