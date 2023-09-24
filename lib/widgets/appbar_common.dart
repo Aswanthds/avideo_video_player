@@ -29,6 +29,10 @@ class _AppbarCommonState extends State<AppbarCommon> {
           backgroundColor: kcolorDarkblue,
           title: Text(
             widget.title,
+            style: const TextStyle(
+              fontFamily: 'Cookie',
+              fontSize: 35,
+            ),
           ),
           actions: [
             IconButton(

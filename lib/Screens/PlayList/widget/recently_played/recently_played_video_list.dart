@@ -3,32 +3,25 @@ import 'package:video_player_app/Screens/playlist/widget/recently_played/recentl
 import 'package:video_player_app/database/recently_video_data.dart';
 import 'package:video_player_app/functions/recently_played_functions.dart';
 
-
 class RecenPlayedVideoList extends StatefulWidget {
-  
-  const RecenPlayedVideoList({Key? key}) : super(key: key);
+  final List<RecentlyPlayedData> files;
+  const RecenPlayedVideoList({Key? key, required this.files}) : super(key: key);
 
   @override
   State<RecenPlayedVideoList> createState() => _RecenPlayedVideoListState();
 }
 
 class _RecenPlayedVideoListState extends State<RecenPlayedVideoList> {
-  List<RecentlyPlayedData> recentlyPlayedVideos = [];
   int currentIndex = 0; // Add currentIndex to track the current video index
 
   @override
   void initState() {
     super.initState();
-    loadRecentlyPlayedVideos();
-  }
-
-  void loadRecentlyPlayedVideos() async {
-    recentlyPlayedVideos = RecentlyPlayed.getRecentlyPlayedVideos();
-    setState(() {});
+    //loadRecentlyPlayedVideos();
   }
 
   void playNextVideo() {
-    if (currentIndex < recentlyPlayedVideos.length - 1) {
+    if (currentIndex < widget.files.length - 1) {
       currentIndex++; // Increment the current index
       setState(() {});
     }
@@ -39,10 +32,10 @@ class _RecenPlayedVideoListState extends State<RecenPlayedVideoList> {
     return Expanded(
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: recentlyPlayedVideos.length,
+        itemCount: widget.files.length,
         itemBuilder: (context, index) {
           return RecentlyPlayedVideoItem(
-            videoData: recentlyPlayedVideos,
+            videoData: widget.files,
             index: index,
           );
         },

@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_player_app/constants.dart';
+import 'package:video_player_app/widgets/VideoPlayer/vertical_slider.dart';
 
 class VideoPlayerControls extends StatefulWidget {
   final VideoPlayerController controller;
   final Duration fullDuration;
   final bool isrotated;
+  final double volume;
+  final ValueChanged<double> onVolumeChanged;
+
   const VideoPlayerControls({
     super.key,
     required this.controller,
     required this.fullDuration,
-    required this.isrotated,
+    required this.isrotated, required this.volume, required this.onVolumeChanged,
   });
 
   @override
@@ -71,20 +74,31 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
                 children: [
                   Text(
                     _formatDuration(widget.controller.value.position),
-                    style: GoogleFonts.openSans(color: kColorWhite),
+                    style: const TextStyle(color: kColorWhite),
                   ),
                   Text(
                     _formatDuration(widget.fullDuration),
-                    style: GoogleFonts.openSans(color: kColorWhite),
+                    style: const TextStyle(
+                        color: kColorWhite, fontFamily: 'OpenSans'),
                   ),
                 ],
               ),
             ),
             Row(
               mainAxisAlignment: widget.isrotated
-                  ? MainAxisAlignment.spaceAround
-                  : MainAxisAlignment.spaceEvenly,
+                  ? MainAxisAlignment.spaceEvenly
+                  : MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.min,
               children: [
+                const Icon(
+                  Icons.volume_down,
+                  size: 25,
+                  color: kColorWhite,
+                ),
+                VerticalSlider(
+                  value: widget.volume,
+                  onChanged: widget.onVolumeChanged,
+                ),
                 IconButton(
                   onPressed: () {
                     setState(() {
@@ -95,15 +109,10 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
                       }
                     });
                   },
-                  icon: const Padding(
-                    padding: EdgeInsets.only(
-                      right: 10,
-                    ),
-                    child: Icon(
-                      Icons.fast_rewind,
-                      size: 32.0,
-                      color: kColorWhite,
-                    ),
+                  icon: const Icon(
+                    Icons.fast_rewind_outlined,
+                    size: 30,
+                    color: kColorWhite,
                   ),
                 ),
                 GestureDetector(
@@ -118,9 +127,9 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
                   },
                   child: Icon(
                     widget.controller.value.isPlaying
-                        ? Icons.pause
-                        : Icons.play_arrow,
-                    size: 60.0,
+                        ? Icons.pause_circle_outline
+                        : Icons.play_circle_outline,
+                    size: 40.0,
                     color: kColorWhite,
                   ),
                 ),
@@ -134,15 +143,10 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
                       }
                     });
                   },
-                  icon: const Padding(
-                    padding: EdgeInsets.only(
-                      left: 10,
-                    ),
-                    child: Icon(
-                      Icons.fast_forward,
-                      size: 32.0,
-                      color: kColorWhite,
-                    ),
+                  icon: const Icon(
+                    Icons.fast_forward_outlined,
+                    size: 30,
+                    color: kColorWhite,
                   ),
                 ),
               ],

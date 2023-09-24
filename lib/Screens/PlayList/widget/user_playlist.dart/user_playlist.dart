@@ -24,6 +24,7 @@ class _VideoPlaylistScreenState extends State<VideoPlaylistScreen> {
   late VideoPlayerController _videoController;
   double _volumeLevel = 1.0;
   final bool _showVolumeSlider = false;
+  Duration? fullDuration;
   int _currentIndex = 0;
 
   @override
@@ -40,8 +41,10 @@ class _VideoPlaylistScreenState extends State<VideoPlaylistScreen> {
       ..initialize().then((_) {
         setState(() {});
         _videoController.play();
+        fullDuration =  _videoController.value.duration;
       });
   }
+
   String getname() {
     final filenmae = widget.videoPaths.videos;
     // debugPrint('String  $filenmae');
@@ -63,6 +66,7 @@ class _VideoPlaylistScreenState extends State<VideoPlaylistScreen> {
           });
         },
         files: getname(),
+        fullduration: fullDuration!,
       ),
     );
   }

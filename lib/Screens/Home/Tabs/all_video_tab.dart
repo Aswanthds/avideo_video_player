@@ -46,7 +46,7 @@ class _AllVideoTabState extends State<AllVideoTab> {
             child: DropdownButton<SortingOption>(
               value: selectedOption,
 
-              underline: SizedBox(), //empty line
+              underline: const SizedBox(), //empty line
 
               dropdownColor: kColorWhite,
               iconEnabledColor: kcolorDarkblue,
@@ -83,7 +83,10 @@ class _AllVideoTabState extends State<AllVideoTab> {
         ),
         (widget.video.isEmpty)
             ? const Center(
-                child: Text('No video available'),
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.0,
+                  color: kcolorblack,
+                ),
               )
             : Padding(
                 padding: const EdgeInsets.only(top: 40),

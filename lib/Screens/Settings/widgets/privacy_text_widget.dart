@@ -20,16 +20,13 @@ class PrivacyTextWidget extends StatelessWidget {
         Text(
           heading,
           textAlign: TextAlign.justify,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
         Text(
           content,
           textAlign: TextAlign.justify,
-          style: const TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 18, fontFamily: 'OpenSans'),
         ),
       ],
     );

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:google_fonts/google_fonts.dart';
 import 'package:video_player_app/Screens/playlist/playlist%20videoplayer/VideoPlayer/video_player_widget.dart';
 import 'package:video_player_app/database/recently_video_data.dart';
 import 'package:video_player_app/functions/mostly_played_functions.dart';
@@ -8,8 +7,6 @@ import 'package:video_player_app/functions/recently_played_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:video_player_app/constants.dart';
-import 'package:video_player_app/screens/PlayList/playlist_page_screen.dart';
-import 'package:video_player_app/screens/PlayList/widget/recently_played/recently_played_video_tile.dart';
 
 class RecentlyPlayedVideoTileWidget extends StatefulWidget {
   const RecentlyPlayedVideoTileWidget({
@@ -52,8 +49,10 @@ class _RecentlyPlayedVideoTileWidgetState
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Video deleted'), // Customize the message
-          duration: Duration(seconds: 2), // Customize the duration
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: kColorCyan,
+          content: const Text('Video deleted'), // Customize the message
+          duration: const Duration(seconds: 2), // Customize the duration
           action: SnackBarAction(
             label: 'Undo', // You can add an undo action if needed
             onPressed: () {
@@ -84,9 +83,9 @@ class _RecentlyPlayedVideoTileWidgetState
           ),
           PopupMenuItem<Widget>(
             onTap: () {
-              setState(() {
-                deleteVideo(widget.files[widget.index].videoPath);
-              });
+              deleteVideo(widget.files[widget.index].videoPath);
+              Navigator.of(context).pop();
+              setState(() {});
             },
             child: const Row(
               children: [
@@ -103,29 +102,26 @@ class _RecentlyPlayedVideoTileWidgetState
       );
     }
 
-    return (widget.index == -1)
-        ? Center(
-            child: Text('No videos'),
-          )
-        : ListTile(
-            onTap: () {
-              MostlyPlayedFunctions.addVideoPlayData(
-                  widget.files[widget.index].videoPath);
-              RecentlyPlayed.onVideoClicked(
-                  videoPath: widget.files[widget.index].videoPath);
-              RecentlyPlayed.checkHiveData();
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => RecentlyPlayedVideoScreen(
-                    currentIndex: widget.index,
-                    videoPaths: widget.files,
-                  ),
-                ),
-              );
-            },
-            leading: Stack(
-              children: [
-                Container(
+    return ListTile(
+      onTap: () {
+        MostlyPlayedFunctions.addVideoPlayData(
+            widget.files[widget.index].videoPath);
+        RecentlyPlayed.onVideoClicked(
+            videoPath: widget.files[widget.index].videoPath);
+        RecentlyPlayed.checkHiveData();
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => RecentlyPlayedVideoScreen(
+              currentIndex: widget.index,
+              videoPaths: widget.files,
+            ),
+          ),
+        );
+      },
+      leading: Stack(
+        children: [
+          (widget.thumbnail.path.isNotEmpty)
+              ? Container(
                   width: 100,
                   height: 160,
                   decoration: BoxDecoration(
@@ -149,26 +145,41 @@ class _RecentlyPlayedVideoTileWidgetState
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                ),
-              ],
-            ),
-            title: Text(
-              basename(widget.files[widget.index].videoPath),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.nixieOne(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            subtitle: Text(
-              '${(calculateProgress(widget.current, widget.full)! * 100).round()}%',
-              style: GoogleFonts.nixieOne(),
-            ),
-            trailing: GestureDetector(
-              onTapDown: (details) => showPopupMenu(details.globalPosition),
-              child: const Icon(Icons.more_vert),
-            ),
-          );
+                )
+              : Container(
+                  width: 100,
+                  height: 160,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: kcolorblack,
+                    ),
+                    borderRadius: BorderRadius.circular(5),
+                    image: const DecorationImage(
+                      image:
+                          AssetImage('assets/images/thumbnail_placeholder.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                )
+        ],
+      ),
+      title: Text(
+        basename(widget.files[widget.index].videoPath),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      subtitle: Text(
+        '${(calculateProgress(widget.current, widget.full)! * 100).round()}%',
+        style: const TextStyle(),
+      ),
+      trailing: GestureDetector(
+        onTapDown: (details) => showPopupMenu(details.globalPosition),
+        child: const Icon(Icons.more_vert),
+      ),
+    );
   }
 }

@@ -12,6 +12,10 @@ class PathFunctions {
           extension == 'mkv';
     }
 
+    List<String> restrictedDirectories = [
+      '/storage/emulated/0/Android/data',
+      '/storage/emulated/0/Android'
+    ];
     List<String> rootDirectories = [
       '/storage/sdcard1', // Add your first directory
       '/storage/emulated/0/', // Add your second directory
@@ -22,7 +26,12 @@ class PathFunctions {
       for (final String rootPath in rootDirectories) {
         final Directory root = Directory(rootPath);
 
-        final List<FileSystemEntity> allFiles = root.listSync(recursive: true);
+        if (restrictedDirectories.contains(rootPath)) {
+          continue; // Skip if the root directory doesn't exist
+        }
+
+        final List<FileSystemEntity> allFiles =
+            await root.list(recursive: true).toList();
 
         for (final FileSystemEntity entity in allFiles) {
           if (entity is File && isVideoFile(entity)) {

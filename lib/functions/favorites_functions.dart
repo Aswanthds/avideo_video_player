@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:video_player_app/database/favourite_data.dart';
+
 ValueNotifier<List<FavoriteData>> favoriteData =
     ValueNotifier<List<FavoriteData>>([]);
+
 class FavoriteFunctions {
   static const String _boxName = 'favorite_videos';
 
@@ -46,7 +48,7 @@ class FavoriteFunctions {
       uniqueVideos.sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
       //debugPrint('Total videos in box: ${videos.length}');
-     // debugPrint('Unique videos in map: ${uniqueVideos.length}');
+      // debugPrint('Unique videos in map: ${uniqueVideos.length}');
 
       return uniqueVideos;
     } catch (e) {
@@ -65,15 +67,16 @@ class FavoriteFunctions {
 
   static void deleteVideo(String videoPath) async {
     final box = Hive.box<FavoriteData>(_boxName);
-
-    final videoToDelete = box.values.firstWhere(
+    final boxValues = box.values.toList();
+    final indexToDelete = boxValues.indexWhere(
       (video) => video.filePath == videoPath,
     );
 
-    await box.delete(videoToDelete.filePath);
-
-    debugPrint('Deleted video: $videoPath');
-
-    getFavoritesList();
+    if (indexToDelete != -1) {
+      await box.deleteAt(indexToDelete);
+      debugPrint('Deleted video: $videoPath');
+    } else {
+      debugPrint('Video not found: $videoPath');
+    }
   }
 }

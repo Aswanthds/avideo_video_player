@@ -81,4 +81,35 @@ class CreatePlayListFunctions {
       debugPrint('Playlist not found: $playlistName');
     }
   }
+
+  static Future<void> updatePlaylistName(
+      String oldPlaylistName, String newPlaylistName) async {
+    final Box<VideoPlaylist> playlistBox =
+        await Hive.openBox<VideoPlaylist>('playlists_data');
+
+    if (playlistBox.containsKey(oldPlaylistName)) {
+      final playlist = playlistBox.get(oldPlaylistName);
+
+      if (playlist != null) {
+        // Create a new playlist with the updated name
+        final updatedPlaylist = VideoPlaylist(
+          name: newPlaylistName,
+          videos: playlist.videos,
+        );
+
+        // Put the updated playlist in the box with the new name
+        await playlistBox.put(newPlaylistName, updatedPlaylist);
+
+        // Delete the old playlist
+        await playlistBox.delete(oldPlaylistName);
+
+        // Optional: Print a message indicating the update
+        debugPrint(
+            'Updated playlist name: $oldPlaylistName -> $newPlaylistName');
+      }
+    } else {
+      // Optional: Print an error message if the old playlist does not exist
+      debugPrint('Playlist not found: $oldPlaylistName');
+    }
+  }
 }

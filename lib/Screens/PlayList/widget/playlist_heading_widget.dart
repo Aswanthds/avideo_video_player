@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:video_player_app/constants.dart';
 
 class ThumbnailRecentlyHeadingWidget extends StatelessWidget {
@@ -18,10 +17,11 @@ class ThumbnailRecentlyHeadingWidget extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: Colors.blue.withOpacity(0.4)),
-        child: Center(
+        child: const Center(
           child: Text(
             'RecentlyPlayed',
-            style: GoogleFonts.cookie(
+            style: TextStyle(
+              fontFamily: 'Cookie',
               color: kcolorblack,
               fontStyle: FontStyle.italic,
               fontSize: 70,

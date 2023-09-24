@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:video_player_app/constants.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class PlayListThumbnailWidget extends StatelessWidget {
   const PlayListThumbnailWidget({
@@ -26,10 +25,11 @@ class PlayListThumbnailWidget extends StatelessWidget {
           color: Colors.blue.withOpacity(0.4),
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Center(
+        child: const Center(
           child: Text(
             'Favorites',
-            style: GoogleFonts.cookie(
+            style: TextStyle(
+              fontFamily: 'Cookie',
               color: kcolorblack,
               fontStyle: FontStyle.italic,
               fontSize: 70,

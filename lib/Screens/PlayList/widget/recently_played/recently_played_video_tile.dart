@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import 'package:video_player_app/screens/PlayList/widget/recently_played/video_tile_recently.dart';
 
-
 class RecentlyPlayedVideoTile extends StatefulWidget {
   final List<RecentlyPlayedData> files;
   final int index;
@@ -24,9 +23,6 @@ class RecentlyPlayedVideoTile extends StatefulWidget {
 }
 
 class _RecentlyPlayedVideoTileState extends State<RecentlyPlayedVideoTile> {
-  Duration? currentTimestamp;
-  Duration? fullTimestamp;
-
   @override
   void initState() {
     super.initState();
@@ -35,48 +31,46 @@ class _RecentlyPlayedVideoTileState extends State<RecentlyPlayedVideoTile> {
   }
 
   Future<void> loadVideoInfo() async {
-    final videoPath = widget.files[widget.index].videoPath;
-    final recentlyPlayedList = Hive.box<RecentlyPlayedData>('recently_played');
+    if (widget.files != null &&
+        widget.index != null &&
+        widget.index < widget.files.length) {
+      final videoPath = widget.files[widget.index].videoPath;
+      final recentlyPlayedList =
+          Hive.box<RecentlyPlayedData>('recently_played');
 
-    // Find the RecentlyPlayedData object with the matching videoPath
-    final matchingData = recentlyPlayedList.values.firstWhere(
-      (data) => data.videoPath == videoPath,
-      orElse: () => RecentlyPlayedData(
+      // Find the RecentlyPlayedData object with the matching videoPath
+      final matchingData = recentlyPlayedList.values.firstWhere(
+        (data) {
+          return data.videoPath == videoPath;
+        },
+        orElse: () => RecentlyPlayedData(
           timestamp: DateTime.now(),
           videoPath: videoPath,
           current: Duration.zero,
-          full: Duration.zero),
-    );
+          full: Duration.zero,
+        ),
+      );
 
-    setState(() {
-      currentTimestamp = matchingData.current;
-      fullTimestamp = matchingData.full;
-    });
-  }
-
-  @override
-  void didUpdateWidget(covariant RecentlyPlayedVideoTile oldWidget) {
-    if (oldWidget.files != widget.files && mounted) {
-      // Update video info when the widget receives new data
-      loadVideoInfo();
+      setState(() {
+        currentTimestamp = matchingData.current!;
+        fullTimestamp = matchingData.full!;
+      });
     }
-    super.didUpdateWidget(oldWidget);
   }
+
+  Duration currentTimestamp = Duration.zero;
+  Duration fullTimestamp = Duration.zero;
 
   @override
   Widget build(BuildContext context) {
-    if (currentTimestamp != null &&
-        fullTimestamp != null &&
-        widget.files.length >= widget.index) {
-      return RecentlyPlayedVideoTileWidget(
-        current: currentTimestamp!.inMilliseconds.toDouble(),
-        full: fullTimestamp!.inMilliseconds.toDouble(),
-        files: widget.files,
-        index: widget.index,
-        thumbnail: widget.thumbnail,
-      );
-    } else {
-      return const SizedBox();
-    }
+    return (widget.files.length > widget.index || widget.files.isEmpty)
+        ? RecentlyPlayedVideoTileWidget(
+            current: currentTimestamp.inMilliseconds.toDouble(),
+            full: fullTimestamp.inMilliseconds.toDouble(),
+            files: widget.files,
+            index: widget.index,
+            thumbnail: widget.thumbnail,
+          )
+        : SizedBox();
   }
 }

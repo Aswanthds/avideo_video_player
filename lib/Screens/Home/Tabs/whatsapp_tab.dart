@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:video_player_app/Screens/Home/Tabs/widgets/video_tile_widget.dart';
 import 'package:video_player_app/screens/home/Tabs/widgets/video_grid_view.dart';
 
 class WhatsappTab extends StatefulWidget {

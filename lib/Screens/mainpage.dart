@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:video_player_app/Screens/settings/settings_page.dart';
 import 'package:video_player_app/Screens/favorites/favourites_page_scren.dart';
@@ -63,9 +62,9 @@ class _MainPageScreenState extends State<MainPageScreen>
             /// Home
             SalomonBottomBarItem(
                 icon: const Icon(Icons.home),
-                title: Text(
+                title: const Text(
                   "Home",
-                  style: GoogleFonts.chelseaMarket(),
+                  style: TextStyle(fontFamily: 'Koulen'),
                 ),
                 selectedColor: kColorAmber,
                 unselectedColor: kColorWhite),
@@ -73,9 +72,9 @@ class _MainPageScreenState extends State<MainPageScreen>
             /// Likes
             SalomonBottomBarItem(
                 icon: const Icon(Icons.playlist_play),
-                title: Text(
+                title: const Text(
                   "Playlist",
-                  style: GoogleFonts.chelseaMarket(),
+                  style: TextStyle(fontFamily: 'Koulen'),
                 ),
                 selectedColor: kColorCyan,
                 unselectedColor: kColorWhite),
@@ -83,9 +82,9 @@ class _MainPageScreenState extends State<MainPageScreen>
             /// Search
             SalomonBottomBarItem(
                 icon: const Icon(Icons.favorite_outline),
-                title: Text(
+                title: const Text(
                   "Favourites",
-                  style: GoogleFonts.chelseaMarket(),
+                  style: TextStyle(fontFamily: 'Koulen'),
                 ),
                 selectedColor: kColorOrange,
                 unselectedColor: kColorWhite),
@@ -93,9 +92,9 @@ class _MainPageScreenState extends State<MainPageScreen>
             /// Profile
             SalomonBottomBarItem(
                 icon: const Icon(Icons.settings),
-                title: Text(
+                title: const Text(
                   "Settings",
-                  style: GoogleFonts.chelseaMarket(),
+                  style: TextStyle(fontFamily: 'Koulen'),
                 ),
                 selectedColor: kColorDeepOrange,
                 unselectedColor: kColorWhite),

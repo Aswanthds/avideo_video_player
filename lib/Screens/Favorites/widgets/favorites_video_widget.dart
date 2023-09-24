@@ -37,9 +37,11 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
         quality: 10,
         position: -1,
       );
-      setState(() {
-        thumbnailFile = file;
-      });
+      if (mounted) {
+        setState(() {
+          thumbnailFile = file;
+        });
+      }
     } catch (e) {
       debugPrint('Error generating thumbnail: $e');
     }

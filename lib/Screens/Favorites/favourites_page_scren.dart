@@ -25,9 +25,11 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
 
   Future<void> updateThumbnails() async {
     final list = await FavoriteFunctions.getFavoritesList();
-    setState(() {
-      videos = list;
-    });
+    if (mounted) {
+      setState(() {
+        videos = list;
+      });
+    }
     for (final video in videos) {
       try {
         final thumbnailFile = await VideoCompress.getByteThumbnail(
@@ -61,7 +63,10 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
             backgroundColor: kcolorDarkblue,
             title: const Text(
               'Favourites',
-              // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40,
+                  fontFamily: 'Cookie'),
             ),
             actions: [
               IconButton(
@@ -83,49 +88,36 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
         children: [
           const PlayListThumbnailWidget(),
           ValueListenableBuilder(
-              valueListenable:
-                  Hive.box<FavoriteData>('favorite_videos').listenable(),
-              builder: (context, Box<FavoriteData> box, _) {
-                final playlists = box.values.toList();
-                if (box.isEmpty) {
-                  return const Center(
-                    child: Text('No data Available'),
-                  );
-                }
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: playlists.length,
-                    itemBuilder: (context, index) {
-                      if (index < videos.length) {
-                        final video = videos[index];
-                        return VideoListTileWidget(video: video);
-                      } else {
-                        return const SizedBox(); // Return an empty widget if index is out of bounds
-                      }
-                    },
-                  ),
+            valueListenable:
+                Hive.box<FavoriteData>('favorite_videos').listenable(),
+            builder: (context, Box<FavoriteData> box, _) {
+              final playlists = box.values.toList();
+              if (box.isEmpty) {
+                return const Center(
+                  child: Text('No data Available'),
                 );
-              }),
+              }
+              return (playlists.isNotEmpty)
+                  ? Expanded(
+                      child: ListView.builder(
+                        itemCount: playlists.length,
+                        itemBuilder: (context, index) {
+                          if (index < playlists.length) {
+                            return VideoListTileWidget(
+                              video: playlists[
+                                  index], // Use playlists[index] instead of videos[index]
+                            );
+                          } else {
+                            return const SizedBox(); // Return an empty widget if index is out of bounds
+                          }
+                        },
+                      ),
+                    )
+                  : const SizedBox();
+            },
+          )
         ],
       ),
     );
   }
 }
-/*
-ValueListenableBuilder(
-      valueListenable: Hive.box<VideoPlaylist>('playlists').listenable(),
-      builder: (context, Box<VideoPlaylist> box, _) {
-        final playlists = box.values.toList();
-
-
- Expanded(
-            child: ListView.builder(
-              itemCount: videos.length,
-              itemBuilder: (context, index) {
-                final video = videos[index];
-                return VideoListTileWidget(video: video);
-              },
-            ),
-          ),
-
-*/

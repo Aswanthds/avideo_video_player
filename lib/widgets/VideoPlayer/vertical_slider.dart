@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_player_app/constants.dart';
 
 class VerticalSlider extends StatefulWidget {
   final double value;
@@ -14,15 +15,25 @@ class VerticalSlider extends StatefulWidget {
 class _VerticalSliderState extends State<VerticalSlider> {
   @override
   Widget build(BuildContext context) {
-    return Transform.rotate(
-      angle: -90 * (3.14 / 180),
-      child: Slider(
-        value: widget.value,
-        onChanged: widget.onChanged,
-        min: 0.0,
-        max: 1.0,
-        divisions: 20,
-        label: '${(widget.value * 20).round()}',
+    return SizedBox(
+      width: 150,
+      child: Wrap(
+        spacing: 0,
+        runSpacing: 0,
+        alignment: WrapAlignment.start,
+        runAlignment: WrapAlignment.start,
+        direction: Axis.horizontal,
+        children: [
+         
+          Slider(
+            value: widget.value,
+            onChanged: widget.onChanged,
+            min: 0.0,
+            max: 1.0,
+            divisions: 20,
+            label: '${(widget.value * 20).round()}',
+          ),
+        ],
       ),
     );
   }

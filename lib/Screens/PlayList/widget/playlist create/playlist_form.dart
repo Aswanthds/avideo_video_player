@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_player_app/constants.dart';
 
 import 'package:video_player_app/functions/create_playlist_functions.dart';
 
@@ -51,7 +52,10 @@ class _PlaylistFormState extends State<PlaylistForm> {
 
                 Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Playlist created: $playlistName')),
+                  SnackBar(
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: kColorCyan,
+                    content: Text('Playlist created: $playlistName')),
                 );
               }
             },

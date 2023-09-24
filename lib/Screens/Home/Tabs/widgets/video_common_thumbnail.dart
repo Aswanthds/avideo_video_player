@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:path/path.dart';
 import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/functions/video_functions.dart';
@@ -33,9 +32,11 @@ class _VideoThumbnailCommonState extends State<VideoThumbnailCommon> {
   Future<void> getDuration() async {
     final videoDuration =
         await VideoFunctions.getVideoDuration(widget.videoFile.path);
-    setState(() {
-      duration = videoDuration;
-    });
+    if (mounted) {
+      setState(() {
+        duration = videoDuration;
+      });
+    }
   }
 
   @override
@@ -107,13 +108,13 @@ class _VideoThumbnailCommonState extends State<VideoThumbnailCommon> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            basename(widget.videoFile.path),
+            basename(widget.videoFile.path).toUpperCase(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.nixieOne(
-              fontWeight: FontWeight.bold,
-              fontSize: 13.5,
-            ),
+            style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 13.5,
+                fontFamily: 'OpenSans'),
           ),
         ),
       ],

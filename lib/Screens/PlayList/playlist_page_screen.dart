@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:video_player_app/Screens/playlist/most_played_videos.dart';
 import 'package:video_player_app/Screens/playlist/recent_played_videos_page.dart';
@@ -35,7 +34,10 @@ class _PlaylistPageScreenState extends State<PlaylistPageScreen> {
             backgroundColor: kcolorDarkblue,
             title: const Text(
               'Playlists',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40,
+                  fontFamily: 'Cookie'),
             ),
             actions: [
               IconButton(
@@ -102,72 +104,111 @@ class _PlaylistListWidgetState extends State<PlaylistListWidget> {
   Future<void> loadPlaylists() async {
     final Box<VideoPlaylist> playlistBox =
         await Hive.openBox<VideoPlaylist>('playlists_data');
+    final Set<String> uniquePaths =
+        Set<String>(); // Use a Set to keep track of unique paths
+
+    // Iterate through playlistBox and add unique paths to the set
+    for (final playlist in playlistBox.values) {
+      uniquePaths.addAll(playlist.videos!);
+    }
+
+    final List<VideoPlaylist> uniquePlaylists = uniquePaths.map((path) {
+      return VideoPlaylist(
+        name: 'Playlist', // You can set a default name here if needed
+        videos: [path],
+      );
+    }).toList();
+
     setState(() {
-      playlists = playlistBox.values.toList();
+      playlists = uniquePlaylists;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return playlists.isEmpty
-        ? const Center(child: Text('No videos'))
-        : ValueListenableBuilder(
-            valueListenable:
-                Hive.box<VideoPlaylist>('playlists_data').listenable(),
-            builder: (context, Box<VideoPlaylist> box, _) {
-              final playlists = box.values.toList();
+    return ValueListenableBuilder(
+      valueListenable: Hive.box<VideoPlaylist>('playlists_data').listenable(),
+      builder: (context, Box<VideoPlaylist> box, _) {
+        final playlists = box.values.toList();
 
-              return ListView.builder(
-                itemCount: playlists.length,
-                itemBuilder: (context, index) {
-                  final playlist = playlists[index];
+        return ListView.builder(
+          itemCount: playlists.length,
+          itemBuilder: (context, index) {
+            final playlist = playlists[index];
 
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                      onLongPress: () => CreatePlayListFunctions.deletePlaylist(
-                          playlist.name!),
-                      leading: Container(
-                        decoration: BoxDecoration(
-                            color: kcolorDarkblue,
-                            border: Border.all(
-                              style: BorderStyle.solid,
-                              color: kcolorDarkblue,
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: const Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Icon(
-                            Icons.playlist_play,
-                            color: kColorWhite,
-                            size: 40,
-                          ),
-                        ),
-                      ),
-                      title: Text(
-                        playlist.name ?? '',
-                        style: GoogleFonts.openSans(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => PlaylistDetailPage(
-                            playlist: playlist,
-                          ),
-                        ));
-                      },
-                      trailing: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.arrow_forward_ios),
-                      ),
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListTile(
+                onLongPress: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      content: const Text('Are you sure ?'),
+                      actions: [
+                        TextButton.icon(
+                          onPressed: () {
+                            CreatePlayListFunctions.deletePlaylist(
+                                playlist.name!);
+                            Navigator.of(context).pop();
+                          },
+                          label: const Text('Delete'),
+                          icon: const Icon(Icons.delete_forever_outlined),
+                        )
+                      ],
+                    ),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      clipBehavior: Clip.antiAlias,
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: kColorCyan,
+                      content: Text(
+                          'Video added to playlist'), // Customize the message
+                      duration: Duration(seconds: 2), // Customize the duration
                     ),
                   );
                 },
-              );
-            },
-          );
+                leading: Container(
+                  decoration: BoxDecoration(
+                      color: kcolorDarkblue,
+                      border: Border.all(
+                        style: BorderStyle.solid,
+                        color: kcolorDarkblue,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Icon(
+                      Icons.playlist_play,
+                      color: kColorWhite,
+                      size: 40,
+                    ),
+                  ),
+                ),
+                title: Text(
+                  playlist.name ?? '',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => PlaylistDetailPage(
+                      playlist: playlist,
+                    ),
+                  ));
+                },
+                trailing: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.arrow_forward_ios),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }

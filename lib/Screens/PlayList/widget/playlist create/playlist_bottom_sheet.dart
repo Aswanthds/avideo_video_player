@@ -37,7 +37,7 @@ class _PlaylistBottomSheetState extends State<PlaylistBottomSheet> {
                 ),
               ),
               const Divider(),
-              PlaylistForm(),
+              const PlaylistForm(),
             ],
           ),
         ),

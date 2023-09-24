@@ -1,19 +1,22 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_player_app/Screens/playlist/playlist%20videoplayer/VideoPlayer/video_player_appbar.dart';
 import 'package:video_player_app/Screens/playlist/playlist%20videoplayer/VideoPlayer/video_player_controls.dart';
 import 'package:video_player_app/constants.dart';
+import 'package:video_player_app/functions/recently_played_functions.dart';
 import 'package:video_player_app/widgets/VideoPlayer/vertical_slider.dart';
 
 class PlayListVideoPlayerBody extends StatefulWidget {
   final VideoPlayerController controller;
-
   final bool showVolumeSlider;
   final double volumeLevel;
   final ValueChanged<double> onVolumeChanged;
   final Function? onNext;
   final String files;
+  final Duration fullduration;
 
   const PlayListVideoPlayerBody({
     super.key,
@@ -23,6 +26,7 @@ class PlayListVideoPlayerBody extends StatefulWidget {
     required this.onVolumeChanged,
     this.onNext,
     required this.files,
+    required this.fullduration,
   });
 
   @override
@@ -31,12 +35,14 @@ class PlayListVideoPlayerBody extends StatefulWidget {
 }
 
 class _PlayListVideoPlayerBodyState extends State<PlayListVideoPlayerBody> {
-  bool isrotated = false;
+  bool isRotated = false;
   bool isFullScreen = false;
+  bool areControlsVisible = true;
+
   void _toggleRotation() {
     setState(() {
-      isrotated = !isrotated;
-      if (isrotated) {
+      isRotated = !isRotated;
+      if (isRotated) {
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
         SystemChrome.setPreferredOrientations([
           DeviceOrientation.landscapeLeft,
@@ -56,17 +62,16 @@ class _PlayListVideoPlayerBodyState extends State<PlayListVideoPlayerBody> {
         overlays: SystemUiOverlay.values);
   }
 
-  @override
-  void initState() {
-    super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+  void toggleControlsVisibility() {
+    setState(() {
+      areControlsVisible = !areControlsVisible;
+    });
   }
 
   @override
   void dispose() {
-    super.dispose();
-
     untoggleRotation();
+    super.dispose();
   }
 
   @override
@@ -74,55 +79,42 @@ class _PlayListVideoPlayerBodyState extends State<PlayListVideoPlayerBody> {
     return Stack(
       alignment: Alignment.center,
       children: [
-        AspectRatio(
-          aspectRatio: widget.controller.value.aspectRatio,
-          child: VideoPlayer(widget.controller),
-        ),
-        if (widget.showVolumeSlider)
-          Positioned(
-            top: 60,
-            left: -40,
-            child: VerticalSlider(
-              value: widget.volumeLevel,
-              onChanged: widget.onVolumeChanged,
+        GestureDetector(
+          onDoubleTap: toggleControlsVisibility,
+          child: Align(
+            alignment: areControlsVisible ? Alignment.center : Alignment.center,
+            child: AspectRatio(
+              aspectRatio: widget.controller.value.aspectRatio,
+              child: VideoPlayer(widget.controller),
             ),
           ),
-        Positioned(
-          left: isrotated ? 50 : 0,
-          top: 75,
-          child: actionButtons(
-            orgIcon: Icons.volume_up_sharp,
-            alticon: Icons.volume_up_sharp,
-            action: () => widget.showVolumeSlider,
-          ),
         ),
-        Positioned(
-          right: isrotated ? 50 : 0,
-          bottom: 120,
-          child: actionButtons(
+        if (areControlsVisible)
+          Positioned(
+            right: isRotated ? 50 : 0,
+            bottom: isRotated ? 120 : 150,
+            child: actionButtons(
               orgIcon: Icons.screen_rotation_outlined,
               alticon: Icons.screen_rotation_outlined,
-              action: _toggleRotation),
-        ),
-        Positioned(
-          left: 5,
-          bottom: 120,
-          child: actionButtons(
-              orgIcon: Icons.fullscreen, alticon: Icons.fullscreen_exit),
-        ),
-        RecentlyVideoPlayerControls(
-          controller: widget.controller,
-        ),
-        Positioned(
-          top: isrotated ? 0 : 20,
-          left: 0,
-          child: VideoPlayerAppBar(
-            filename: widget.files,
+              action: _toggleRotation,
+            ),
           ),
-        ),
-        RecentlyVideoPlayerControls(
-          controller: widget.controller,
-        ),
+        if (areControlsVisible)
+          Positioned(
+            top: 0,
+            left: 0,
+            child: VideoPlayerAppBar(
+              filename: widget.files,
+            ),
+          ),
+        if (areControlsVisible)
+          RecentlyVideoPlayerControls(
+            controller: widget.controller,
+            volume: widget.volumeLevel,
+            onVolumeChanged: widget.onVolumeChanged,
+            fullDuration: widget.fullduration,
+            isRotated: isRotated,
+          ),
       ],
     );
   }
@@ -136,12 +128,15 @@ class _PlayListVideoPlayerBodyState extends State<PlayListVideoPlayerBody> {
       height: 40,
       width: 40,
       decoration: BoxDecoration(
-          color: Colors.black26, borderRadius: BorderRadius.circular(20)),
+        color: Colors.black26,
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: FloatingActionButton(
         backgroundColor: Colors.transparent,
-        onPressed: () => action,
+        onPressed: () =>
+            action?.call(), // Call the function using action?.call()
         child: Icon(
-          isFullScreen ? orgIcon : alticon,
+          areControlsVisible ? orgIcon : alticon,
           color: kColorWhite,
         ),
       ),

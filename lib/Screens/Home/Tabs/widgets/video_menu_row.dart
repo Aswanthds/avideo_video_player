@@ -1,9 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path/path.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/Screens/Home/Tabs/widgets/menu_icon.dart';
 import 'package:video_player_app/Screens/Home/Tabs/widgets/video_info_dialog.dart';
+import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/database/create_playlist_data.dart';
 import 'package:video_player_app/functions/create_playlist_functions.dart';
 import 'package:video_player_app/functions/favorites_functions.dart';
@@ -35,7 +37,7 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
   @override
   void initState() {
     super.initState();
-    selectedPlaylist = null;
+    selectedPlaylist = ' ';
     loadVideoInfo();
   }
 
@@ -49,6 +51,12 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
           GestureDetector(
             onTap: () async {
               addtoPlaylistDialog(context);
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: kColorCyan,
+                duration: Duration(seconds: 2),
+                content: Text('Video added to playlist'),
+              ));
             },
             child: const MenuIconWidget(
               title: 'Add to Playlist',
@@ -58,16 +66,21 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
           GestureDetector(
             onTap: () {
               FavoriteFunctions.addToFavoritesList(widget.path);
-              Navigator.of(context).pop();
+              Navigator.of(context).popUntil(
+                (route) => route.isFirst,
+              );
+
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: kColorCyan,
+                duration: Duration(seconds: 2),
+                content: Text('Video added to favorites'),
+              ));
             },
             child: const MenuIconWidget(
               title: 'Add to Favorites',
               icon: Icons.favorite,
             ),
-          ),
-          const MenuIconWidget(
-            title: 'Share Video',
-            icon: Icons.ios_share,
           ),
           GestureDetector(
             onTap: () => showDialog(
@@ -96,54 +109,58 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
   Future<void> addtoPlaylistDialog(
     BuildContext context,
   ) async {
-    final box = await Hive.openBox<VideoPlaylist>('playlists');
+    final box = await Hive.openBox<VideoPlaylist>('playlists_data');
 
     String newPlaylistName = '';
     return showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog.adaptive(
+        return AlertDialog(
           content: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               ValueListenableBuilder(
-                valueListenable:
-                    Hive.box<VideoPlaylist>('playlists_data').listenable(),
+                valueListenable: box.listenable(),
                 builder: (context, Box<VideoPlaylist> box, _) {
                   final playlistNames =
                       box.values.map((playlist) => playlist.name).toList();
                   selectedPlaylist =
-                      selectedPlaylist = playlistNames.isNotEmpty ? null : null;
-                  debugPrint(playlistNames[0]);
+                      selectedPlaylist = playlistNames.isNotEmpty ? '' : '';
+                  // debugPrint(playlistNames[0]);
 
-                  return DropdownButtonFormField<String>(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText:
-                          'Choose', // Specify the hint text using InputDecoration
-                    ),
-                    value: selectedPlaylist,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedPlaylist = newValue;
-                        debugPrint(newValue);
-                      });
-                    },
-                    items: [
-                      const DropdownMenuItem<String>(
-                        value: null,
-                        child: Text("None"),
-                      ),
-                      ...playlistNames
-                          .map<DropdownMenuItem<String>>((String? value) {
-                        return DropdownMenuItem<String>(
-                          value: value!,
-                          child: Text(value),
+                  return (playlistNames.isEmpty || playlistNames[0] == null)
+                      ? const SizedBox(
+                          height: 20,
+                        )
+                      : DropdownButtonFormField<String>(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText:
+                                'Choose', // Specify the hint text using InputDecoration
+                          ),
+                          value: selectedPlaylist,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedPlaylist = newValue;
+                              debugPrint(newValue);
+                            });
+                          },
+                          items: [
+                            const DropdownMenuItem<String>(
+                              value: '',
+                              child: Text("None"),
+                            ),
+                            if (box.isNotEmpty)
+                              ...playlistNames.map<DropdownMenuItem<String>>(
+                                  (String? value) {
+                                return DropdownMenuItem<String>(
+                                  value: value!,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                          ],
                         );
-                      }).toList(),
-                    ],
-                  );
                 },
               ),
               const SizedBox(height: 20.0),
@@ -174,12 +191,31 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
                   await CreatePlayListFunctions.addVideoToPlaylist(
                       newPlaylistName, widget.path);
 
-                  Navigator.pop(context); // Close the dialog
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: kColorCyan,
+                      content: Text(
+                          'Video added to playlist'), // Customize the message
+                      duration: Duration(seconds: 2), // Customize the duration
+                    ),
+                  ); // Close the dialog
                 }
-                if (selectedPlaylist != null) {
+                if (selectedPlaylist!.isNotEmpty) {
                   await CreatePlayListFunctions.addVideoToPlaylist(
                       selectedPlaylist!, widget.path);
-                  Navigator.pop(context);
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      clipBehavior: Clip.antiAlias,
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: kColorCyan,
+                      content: Text(
+                          'Video added to playlist'), // Customize the message
+                      duration: Duration(seconds: 2), // Customize the duration
+                    ),
+                  );
                 }
               },
               child: const Text("Add to playlist"),

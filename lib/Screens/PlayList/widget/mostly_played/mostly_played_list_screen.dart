@@ -1,8 +1,6 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path/path.dart';
 import 'package:video_compress/video_compress.dart';
@@ -26,15 +24,9 @@ class _MostlyPlayedListScreenState extends State<MostlyPlayedListScreen> {
   @override
   void initState() {
     super.initState();
-    _loadData();
   }
 
-  Future<void> _loadData() async {
-    final data = await MostlyPlayedFunctions.getSortedVideoPlayData();
-    _dataNotifier.value = data;
-  }
-
- Future<Uint8List?> generateThumbnail(String path) async {
+  Future<Uint8List?> generateThumbnail(String path) async {
     try {
       final thumbnailFile = await VideoCompress.getByteThumbnail(
         path,
@@ -61,18 +53,23 @@ class _MostlyPlayedListScreenState extends State<MostlyPlayedListScreen> {
               child: Text('No data available.'),
             );
           } else {
+            final dataItem = data.values.toList();
+
+            // Sort the list based on playCount in descending order
+            final filteredDataItem =
+                dataItem.where((item) => item.playCount > 3).toList();
+
+            // Sort the filtered list based on playCount in descending order
+            filteredDataItem.sort((a, b) => b.playCount.compareTo(a.playCount));
             return ListView.builder(
-              itemCount: data.length,
+              itemCount: filteredDataItem.length,
               itemBuilder: (context, index) {
-                final box = data;
-                final dataItem = box.values.toList();
-                final item = dataItem[index];
+                final item = filteredDataItem[index];
                 return ListTile(
                   leading: FutureBuilder<Uint8List?>(
                     future: generateThumbnail(item.videoPath!),
                     builder: (context, snapshot) {
-                      if (snapshot.connectionState ==
-                          ConnectionState.waiting) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
                         return const CircularProgressIndicator();
                       } else if (snapshot.hasError) {
                         return const Icon(Icons.error);
@@ -94,7 +91,7 @@ class _MostlyPlayedListScreenState extends State<MostlyPlayedListScreen> {
                   title: Text(
                     basename(item.videoPath!),
                     maxLines: 1,
-                    style: GoogleFonts.nixieOne(
+                    style: const TextStyle(
                       color: kcolorblack,
                     ),
                   ),
