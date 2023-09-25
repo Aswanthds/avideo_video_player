@@ -31,9 +31,7 @@ class _RecentlyPlayedVideoTileState extends State<RecentlyPlayedVideoTile> {
   }
 
   Future<void> loadVideoInfo() async {
-    if (widget.files != null &&
-        widget.index != null &&
-        widget.index < widget.files.length) {
+    if (widget.index < widget.files.length) {
       final videoPath = widget.files[widget.index].videoPath;
       final recentlyPlayedList =
           Hive.box<RecentlyPlayedData>('recently_played');
@@ -71,6 +69,6 @@ class _RecentlyPlayedVideoTileState extends State<RecentlyPlayedVideoTile> {
             index: widget.index,
             thumbnail: widget.thumbnail,
           )
-        : SizedBox();
+        : const SizedBox();
   }
 }

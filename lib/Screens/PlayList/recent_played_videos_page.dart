@@ -38,7 +38,7 @@ class _RecentlyPlayedVideosPageState extends State<RecentlyPlayedVideosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(75),
+        preferredSize: const Size.fromHeight(75),
         child: AppbarCommon(
           isHome: false,
           title: 'Recently Played Videos',

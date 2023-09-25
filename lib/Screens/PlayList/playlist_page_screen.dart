@@ -105,7 +105,7 @@ class _PlaylistListWidgetState extends State<PlaylistListWidget> {
     final Box<VideoPlaylist> playlistBox =
         await Hive.openBox<VideoPlaylist>('playlists_data');
     final Set<String> uniquePaths =
-        Set<String>(); // Use a Set to keep track of unique paths
+        <String>{}; // Use a Set to keep track of unique paths
 
     // Iterate through playlistBox and add unique paths to the set
     for (final playlist in playlistBox.values) {

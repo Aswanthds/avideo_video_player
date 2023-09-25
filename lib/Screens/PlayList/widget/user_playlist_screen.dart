@@ -164,7 +164,7 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                                             label: const Text('Cancel')),
                                         TextButton.icon(
                                           onPressed: () async {
-                                            await CreatePlayListFunctions
+                                             CreatePlayListFunctions
                                                 .deleteVideoFromPlaylist(
                                                     widget.playlist.name!,
                                                     widget.playlist

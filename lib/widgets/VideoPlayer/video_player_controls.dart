@@ -14,7 +14,9 @@ class VideoPlayerControls extends StatefulWidget {
     super.key,
     required this.controller,
     required this.fullDuration,
-    required this.isrotated, required this.volume, required this.onVolumeChanged,
+    required this.isrotated,
+    required this.volume,
+    required this.onVolumeChanged,
   });
 
   @override
@@ -24,7 +26,7 @@ class VideoPlayerControls extends StatefulWidget {
 class _VideoPlayerControlsState extends State<VideoPlayerControls> {
   bool areControlsVisible = true;
   double videoPosition = 0.0;
-
+  bool ismute = false;
   void toggleControlsVisibility() {
     setState(() {
       areControlsVisible = !areControlsVisible;
@@ -90,10 +92,28 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
                   : MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(
-                  Icons.volume_down,
-                  size: 25,
-                  color: kColorWhite,
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      ismute = !ismute;
+                      if (ismute) {
+                        widget.controller.setVolume(0.0);
+                      } else {
+                        widget.controller.setVolume(widget.volume);
+                      }
+                    });
+                  },
+                  icon: ismute
+                      ? const Icon(
+                          Icons.volume_off,
+                          size: 25,
+                          color: kColorWhite,
+                        )
+                      : const Icon(
+                          Icons.volume_up,
+                          size: 25,
+                          color: kColorWhite,
+                        ),
                 ),
                 VerticalSlider(
                   value: widget.volume,

@@ -9,8 +9,6 @@ import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/database/create_playlist_data.dart';
 import 'package:video_player_app/functions/create_playlist_functions.dart';
 import 'package:video_player_app/functions/favorites_functions.dart';
-import 'package:video_player_app/screens/PlayList/widget/playlist%20create/playlist_bottom_sheet.dart';
-import 'package:video_player_app/screens/PlayList/widget/playlist%20create/playlist_form.dart';
 import 'package:video_player_app/widgets/VideoPlayer/video_player_controls.dart';
 
 class VideoPlayerBody extends StatefulWidget {
@@ -133,34 +131,19 @@ class _VideoPlayerBodyState extends State<VideoPlayerBody> {
                                     value: value!,
                                     child: Text(
                                       value,
-                                      style: TextStyle(color: kColorWhite),
+                                      style:
+                                          const TextStyle(color: kColorWhite),
                                     ),
                                   );
                                 }).toList(),
                             ],
-                            //  items: [
-                            //   const DropdownMenuItem<String>(
-                            //     value: '',
-                            //     child: Text(
-                            //       "None",
-                            //       style: TextStyle(color: kcolorblack),
-                            //     ),
-                            //   ),
-                            //   if (box.isNotEmpty)
-                            //     ...playlistNames.map<DropdownMenuItem<String>>(
-                            //         (String? value) {
-                            //       return DropdownMenuItem<String>(
-                            //         value: value!,
-                            //         child: Text(value),
-                            //       );
-                            //     }).toList(),
-                            // ],
                           ),
                         );
                 },
               ),
               const SizedBox(height: 20.0),
               TextFormField(
+                style: const TextStyle(color: kColorWhite),
                 onChanged: (value) {
                   newPlaylistName = value;
                 },

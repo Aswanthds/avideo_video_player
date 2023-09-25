@@ -85,6 +85,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: kcolorblack,
       body: VideoPlayerBody(
         controller: _controller,

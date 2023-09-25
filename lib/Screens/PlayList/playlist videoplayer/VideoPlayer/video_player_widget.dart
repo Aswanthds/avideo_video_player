@@ -54,6 +54,7 @@ class _RecentlyPlayedVideoScreenState extends State<RecentlyPlayedVideoScreen> {
 
     _videoController.play();
     _videoController.addListener(_updateCurrentPosition);
+    _videoController.addListener(_onVideoControllerUpdate);
   }
 
   void _onVideoControllerUpdate() {

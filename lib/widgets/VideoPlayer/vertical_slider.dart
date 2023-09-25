@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:video_player_app/constants.dart';
 
 class VerticalSlider extends StatefulWidget {
   final double value;

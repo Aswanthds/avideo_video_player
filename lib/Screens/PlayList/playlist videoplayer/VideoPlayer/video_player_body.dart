@@ -1,4 +1,4 @@
-import 'dart:async';
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,8 +6,6 @@ import 'package:video_player/video_player.dart';
 import 'package:video_player_app/Screens/playlist/playlist%20videoplayer/VideoPlayer/video_player_appbar.dart';
 import 'package:video_player_app/Screens/playlist/playlist%20videoplayer/VideoPlayer/video_player_controls.dart';
 import 'package:video_player_app/constants.dart';
-import 'package:video_player_app/functions/recently_played_functions.dart';
-import 'package:video_player_app/widgets/VideoPlayer/vertical_slider.dart';
 
 class PlayListVideoPlayerBody extends StatefulWidget {
   final VideoPlayerController controller;
@@ -38,7 +36,7 @@ class _PlayListVideoPlayerBodyState extends State<PlayListVideoPlayerBody> {
   bool isRotated = false;
   bool isFullScreen = false;
   bool areControlsVisible = true;
-
+  String? selectedPlaylist;
   void _toggleRotation() {
     setState(() {
       isRotated = !isRotated;
@@ -105,6 +103,7 @@ class _PlayListVideoPlayerBodyState extends State<PlayListVideoPlayerBody> {
             left: 0,
             child: VideoPlayerAppBar(
               filename: widget.files,
+              controller: widget.controller,
             ),
           ),
         if (areControlsVisible)

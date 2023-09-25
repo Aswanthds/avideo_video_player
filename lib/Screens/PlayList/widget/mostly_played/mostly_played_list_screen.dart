@@ -18,8 +18,7 @@ class MostlyPlayedListScreen extends StatefulWidget {
 }
 
 class _MostlyPlayedListScreenState extends State<MostlyPlayedListScreen> {
-  final ValueNotifier<List<MostlyPlayedData>> _dataNotifier =
-      ValueNotifier<List<MostlyPlayedData>>([]);
+  
 
   @override
   void initState() {
