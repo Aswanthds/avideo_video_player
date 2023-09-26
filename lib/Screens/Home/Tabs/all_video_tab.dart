@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:video_player_app/constants.dart';
 import 'dart:io';
+
 import 'package:video_player_app/screens/home/Tabs/widgets/video_tile_widget.dart';
+
 
 class AllVideoTab extends StatefulWidget {
   final List<File> video;
-  const AllVideoTab({Key? key, required this.video}) : super(key: key);
+  //final VideoGriedview videoGridView;
+  const AllVideoTab({
+    Key? key,
+    required this.video,
+  }) : super(key: key);
 
   @override
   State<AllVideoTab> createState() => _AllVideoTabState();
@@ -15,23 +20,25 @@ class AllVideoTab extends StatefulWidget {
 enum SortingOption { nameAs, nameDe }
 
 class _AllVideoTabState extends State<AllVideoTab> {
-  @override
-  void didUpdateWidget(covariant AllVideoTab oldWidget) {
-    super.didUpdateWidget(oldWidget);
-  }
+  final ValueNotifier<File> thumbnailNotifier = ValueNotifier<File>(File(''));
 
   SortingOption selectedOption = SortingOption.nameAs; // Default sorting option
 
   void sortByNameAs() {
     setState(() {
-      widget.video.sort((a, b) => basename(a.path).compareTo(basename(b.path)));
+      widget.video.sort((pat1, pat2) => (pat1.path).compareTo((pat2.path)));
     });
   }
 
   void sortByNameDe() {
     setState(() {
-      widget.video.sort((a, b) => basename(b.path).compareTo(basename(a.path)));
+      widget.video.sort((a, b) => (b.path).compareTo((a.path)));
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -81,16 +88,15 @@ class _AllVideoTabState extends State<AllVideoTab> {
             ),
           ),
         ),
-        (widget.video.isEmpty)
-            ? const Center(
-                child: CircularProgressIndicator(
-                  strokeWidth: 2.0,
-                  color: kcolorblack,
-                ),
-              )
-            : Padding(
-                padding: const EdgeInsets.only(top: 40),
-                child: GridView.builder(
+        Padding(
+          padding: const EdgeInsets.only(top: 40),
+          child: (widget.video.isEmpty)
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.0,
+                  ),
+                )
+              : GridView.builder(
                   shrinkWrap: true,
                   itemCount: widget.video.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -112,7 +118,7 @@ class _AllVideoTabState extends State<AllVideoTab> {
                     );
                   },
                 ),
-              ),
+        ),
       ],
     );
   }

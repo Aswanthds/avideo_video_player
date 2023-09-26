@@ -103,9 +103,19 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
                         itemCount: playlists.length,
                         itemBuilder: (context, index) {
                           if (index < playlists.length) {
+                            // Reverse the list to display the latest videos first
+                            // final reversedPlaylists =
+                            //     playlists.reversed.toList();
                             return VideoListTileWidget(
-                              video: playlists[
-                                  index], // Use playlists[index] instead of videos[index]
+                              index: index,
+                              video: playlists[index],
+                              onDelete: () {
+                                FavoriteFunctions.deleteVideo(
+                                    videos[index].filePath);
+                                setState(() {
+                                  videos.removeAt(index);
+                                });
+                              },
                             );
                           } else {
                             return const SizedBox(); // Return an empty widget if index is out of bounds

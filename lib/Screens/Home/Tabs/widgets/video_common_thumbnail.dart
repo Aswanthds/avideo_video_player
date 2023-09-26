@@ -2,17 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
+import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/functions/video_functions.dart';
 
 class VideoThumbnailCommon extends StatefulWidget {
   const VideoThumbnailCommon({
     Key? key,
-    required this.thumbnailNotifier,
     required this.videoFile,
   }) : super(key: key);
 
-  final ValueNotifier<File?> thumbnailNotifier;
   final File videoFile;
 
   @override
@@ -21,12 +20,27 @@ class VideoThumbnailCommon extends StatefulWidget {
 
 class _VideoThumbnailCommonState extends State<VideoThumbnailCommon> {
   String? duration;
+  final ValueNotifier<File> thumbnailNotifier = ValueNotifier<File>(File(''));
 
   @override
   void initState() {
     super.initState();
-    // Initialize duration when the widget is created
     getDuration();
+    updateThumbnail();
+  }
+
+  Future<void> updateThumbnail() async {
+    try {
+      final thumbnailFile = await VideoCompress.getFileThumbnail(
+        widget.videoFile.path,
+        quality: 30,
+        position: 0,
+      );
+
+      thumbnailNotifier.value = thumbnailFile;
+    } catch (e) {
+      debugPrint('Error generating thumbnail: $e');
+    }
   }
 
   Future<void> getDuration() async {
@@ -40,12 +54,20 @@ class _VideoThumbnailCommonState extends State<VideoThumbnailCommon> {
   }
 
   @override
+  void didUpdateWidget(covariant VideoThumbnailCommon oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.videoFile != oldWidget.videoFile) {
+      updateThumbnail();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ValueListenableBuilder<File?>(
-          valueListenable: widget.thumbnailNotifier,
+          valueListenable: thumbnailNotifier,
           builder: (context, thumbnail, child) {
             if (thumbnail == null) {
               return Container(

@@ -46,7 +46,14 @@ class _RecentlyPlayedVideoScreenState extends State<RecentlyPlayedVideoScreen> {
     final videoPathLsit = widget.videoPaths.map((e) => e.videoPath).toList();
     final videopath = videoPathLsit[_currentIndex];
     _videoController = VideoPlayerController.file(File(videopath));
+
+    // Initialize the video controller and seek to the current position
     await _videoController.initialize();
+    final currentPosition = widget.videoPaths[_currentIndex].current;
+    if (currentPosition != null) {
+      await _videoController.seekTo(currentPosition);
+    }
+
     setState(() {
       _fullDuration = _videoController.value.duration;
       current = _videoController.value.position;
@@ -79,13 +86,24 @@ class _RecentlyPlayedVideoScreenState extends State<RecentlyPlayedVideoScreen> {
 
   void _updateCurrentPosition() {
     final currentPosition = _videoController.value.position;
+    final fullDuration = _videoController.value.duration;
+
     setState(() {
       current = currentPosition;
     });
 
+    // Check if the current position is at the end of the video
+    if (currentPosition >= fullDuration) {
+      // Restart the video from the beginning
+      _videoController.seekTo(Duration.zero);
+      _videoController.play();
+    }
+
     // Update Hive data with the current position and the video path
     _updateHiveData(
-        widget.videoPaths[_currentIndex].videoPath, currentPosition);
+      widget.videoPaths[_currentIndex].videoPath,
+      currentPosition,
+    );
   }
 
   void _startUpdatingHiveData() {

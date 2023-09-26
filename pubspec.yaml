@@ -13,13 +13,12 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_native_splash: ^2.3.2
-  google_fonts: ^6.0.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   intl: ^0.18.1
   package_info_plus: ^4.1.0
   path: ^1.8.3
-  path_provider: ^2.1.1
+  external_path: ^1.0.3
   permission_handler: 9.2.0
   salomon_bottom_bar: ^3.3.2
   video_compress: ^3.1.2
@@ -59,7 +58,7 @@ flutter:
         - asset: assets/fonts/Koulen-Regular.ttf
     - family: NixieOne
       fonts:
-        - asset: assets/fonts/NixieOne-Regular.ttf    
+        - asset: assets/fonts/NixieOne-Regular.ttf
     - family: OpenSans
       fonts:
         - asset: assets/fonts/OpenSans-Bold.ttf
@@ -67,4 +66,3 @@ flutter:
         - asset: assets/fonts/OpenSans-Regular.ttf
         - asset: assets/fonts/OpenSans-Italic.ttf
           style: italic
-          

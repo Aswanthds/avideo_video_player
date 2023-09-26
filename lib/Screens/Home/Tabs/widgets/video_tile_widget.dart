@@ -23,35 +23,7 @@ class VideoTileWidget extends StatefulWidget {
 }
 
 class _VideoTileWidgetState extends State<VideoTileWidget> {
-  final ValueNotifier<File> thumbnailNotifier = ValueNotifier<File>(File(''));
-
-  @override
-  void initState() {
-    super.initState();
-    updateThumbnail();
-  }
-
-  Future<void> updateThumbnail() async {
-    try {
-      final thumbnailFile = await VideoCompress.getFileThumbnail(
-        widget.videoFile.path,
-        quality: 30,
-        position: 0,
-      );
-
-      thumbnailNotifier.value = thumbnailFile;
-    } catch (e) {
-      debugPrint('Error generating thumbnail: $e');
-    }
-  }
-
-  @override
-  void didUpdateWidget(covariant VideoTileWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.videoFile != oldWidget.videoFile && !mounted) {
-      updateThumbnail();
-    }
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +58,7 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
         ));
       },
       child: VideoThumbnailCommon(
-        thumbnailNotifier: thumbnailNotifier,
+      
         videoFile: widget.videoFile,
       ),
     );

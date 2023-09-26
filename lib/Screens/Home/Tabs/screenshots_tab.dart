@@ -29,28 +29,41 @@ class _ScreenRecordsTabState extends State<ScreenRecordsTab> {
   }
 
   @override
+  void didUpdateWidget(covariant ScreenRecordsTab oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (screenRecords != screenRecords && mounted) {
+      setState(() {});
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final downloadPath = getscreenRecordsonlyPath();
-    return GridView.builder(
-      shrinkWrap: true,
-      itemCount: downloadPath.length,
-      gridDelegate:
-          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-      itemBuilder: (context, index) {
-        final videoPath = downloadPath[index];
+    return (downloadPath.isEmpty)
+        ? const Center(
+            child: Text('No video available'),
+          )
+        : GridView.builder(
+            shrinkWrap: true,
+            itemCount: downloadPath.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+            ),
+            itemBuilder: (context, index) {
+              final videoPath = downloadPath[index];
 
-        return Padding(
-          padding: const EdgeInsets.only(
-            top: 10,
-            left: 10,
-            right: 10,
-          ),
-          child: VideoTileWidget(
-            videoFile: videoPath,
-            index: index,
-          ),
-        );
-      },
-    );
+              return Padding(
+                padding: const EdgeInsets.only(
+                  top: 10,
+                  left: 10,
+                  right: 10,
+                ),
+                child: VideoTileWidget(
+                  videoFile: videoPath,
+                  index: index,
+                ),
+              );
+            },
+          );
   }
 }

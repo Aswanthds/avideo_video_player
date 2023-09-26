@@ -1,8 +1,17 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:external_path/external_path.dart';
 
 class PathFunctions {
+  static Future<List<String>> getDevicepath() async {
+    var paths = await ExternalPath.getExternalStorageDirectories();
+    for (var path in paths) {
+      debugPrint(path);
+    }
+    return paths;
+  }
+
   static Future<List<String>> getPath() async {
     bool isVideoFile(File file) {
       final String extension = file.path.split('.').last.toLowerCase();
@@ -12,14 +21,12 @@ class PathFunctions {
           extension == 'mkv';
     }
 
+    final rootDirectories = await getDevicepath();
     List<String> restrictedDirectories = [
       '/storage/emulated/0/Android/data',
       '/storage/emulated/0/Android'
     ];
-    List<String> rootDirectories = [
-      '/storage/sdcard1', // Add your first directory
-      '/storage/emulated/0/', // Add your second directory
-    ];
+
     List<String> paths = [];
 
     try {
@@ -58,15 +65,4 @@ class PathFunctions {
     box.put('videos', videos);
   }
 
-  static Future<void> seperateVideos() async {
-    Map<String, String> pathsAndParents = {};
-
-    List<String> paths = await getPath();
-
-    for (String path in paths) {
-      String parentFolder = path.split('/').last;
-
-      pathsAndParents[path] = parentFolder;
-    }
-  }
 }

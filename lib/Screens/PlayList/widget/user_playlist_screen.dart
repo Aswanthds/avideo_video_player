@@ -65,7 +65,7 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
 
           return Padding(
               padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-              child: thumbnails.isNotEmpty
+              child: (thumbnails.isNotEmpty || widget.playlist.videos != null)
                   ? ListTile(
                       leading: (thumbnails[index] != null)
                           ? Container(
@@ -164,7 +164,7 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                                             label: const Text('Cancel')),
                                         TextButton.icon(
                                           onPressed: () async {
-                                             CreatePlayListFunctions
+                                            CreatePlayListFunctions
                                                 .deleteVideoFromPlaylist(
                                                     widget.playlist.name!,
                                                     widget.playlist

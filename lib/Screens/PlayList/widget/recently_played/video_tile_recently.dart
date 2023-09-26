@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:video_player_app/Screens/playlist/playlist%20videoplayer/VideoPlayer/video_player_widget.dart';
 import 'package:video_player_app/database/recently_video_data.dart';
 import 'package:video_player_app/functions/mostly_played_functions.dart';
@@ -157,7 +156,7 @@ class _RecentlyPlayedVideoTileWidgetState
                     image: const DecorationImage(
                       image:
                           AssetImage('assets/images/thumbnail_placeholder.jpg'),
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fitWidth,
                     ),
                   ),
                 )

@@ -18,7 +18,8 @@ class SplashScreenPage extends StatefulWidget {
 class _SplashScreenPageState extends State<SplashScreenPage> {
   List<File> videoFiles = [];
   List<dynamic> videoData = [];
-
+  bool? isGranted;
+//navigateToMainScreen();
   @override
   void initState() {
     super.initState();
@@ -33,7 +34,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
       videoFiles = fetchedVideos.map((path) => File(path)).toList();
     });
 
-   // debugPrint('All Video Data:');
+    // debugPrint('All Video Data:');
     for (String data in videoData) {
       debugPrint(data);
     }
@@ -41,7 +42,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
 
   Future<void> delayAndCheckPermissions() async {
     await Future.delayed(const Duration(seconds: 3));
-    checkPermissionsAndNavigate();
+    _reqPermission();
   }
 
   Future<void> navigateToMainScreen() async {
@@ -54,51 +55,41 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     );
   }
 
-  Future<void> checkPermissionsAndNavigate() async {
-    bool permissionStatus;
-    final deviceInfo = await DeviceInfoPlugin().androidInfo;
-    PermissionStatus result;
-
-    if (deviceInfo.version.sdkInt > 32) {
-      permissionStatus = await Permission.videos.request().isGranted;
+  Future<void> _reqPermission() async {
+    AndroidDeviceInfo build = await DeviceInfoPlugin().androidInfo;
+    if (build.version.sdkInt >= 30) {
+      var req = await Permission.manageExternalStorage.request();
+      if (req.isGranted) {
+        setState(() {
+          isGranted = true;
+        });
+      } else {
+        setState(() {
+          isGranted = false;
+        });
+      }
     } else {
-      permissionStatus = await Permission.storage.request().isGranted;
+      if (await Permission.storage.isGranted) {
+        setState(() {
+          isGranted = true;
+        });
+      } else {
+        var result = await Permission.storage.request();
+        if (result.isGranted) {
+          setState(() {
+            isGranted = true;
+          });
+        } else {
+          setState(() {
+            isGranted = false;
+          });
+        }
+      }
     }
-
-    if (permissionStatus == true) {
+    if (isGranted == true) {
       navigateToMainScreen();
     } else {
-      deviceInfo.version.sdkInt > 32
-          ? (result = await Permission.videos.request())
-          : (result = await Permission.storage.request());
-
-      if (result.isGranted) {
-        navigateToMainScreen();
-      } else {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('Permission Denied'),
-              content: const Text(
-                  'Storage permission is required to use this app. Do you want to see why?'),
-              actions: [
-                TextButton(
-                  onPressed: () => openAppSettings(),
-                  child: const Text('No'),
-                ),
-                TextButton(
-                  onPressed: () async {
-                    PermissionStatus.granted;
-                    await navigateToMainScreen();
-                  },
-                  child: const Text('Yes'),
-                ),
-              ],
-            );
-          },
-        );
-      }
+      openAppSettings();
     }
   }
 

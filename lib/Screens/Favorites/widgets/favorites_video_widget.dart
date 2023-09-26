@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:path/path.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/constants.dart';
@@ -10,15 +8,21 @@ import 'package:video_player_app/widgets/VideoPlayer/video_player_widget.dart';
 
 class VideoListTileWidget extends StatefulWidget {
   final FavoriteData video;
+  final int index;
+  final VideoDeleteCallback onDelete;
 
   const VideoListTileWidget({
     super.key,
     required this.video,
+    required this.index,
+    required this.onDelete,
   });
 
   @override
   State<VideoListTileWidget> createState() => _VideoListTileWidgetState();
 }
+
+typedef VideoDeleteCallback = void Function();
 
 class _VideoListTileWidgetState extends State<VideoListTileWidget> {
   File? thumbnailFile;
@@ -27,10 +31,11 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
   void initState() {
     super.initState();
     // Generate the thumbnail when the widget is created
-    generateThumbnail(widget.video.filePath);
+    generateThumbnail(widget.video.filePath, widget.index);
   }
 
-  Future<void> generateThumbnail(String path) async {
+  Future<void> generateThumbnail(String path, int index) async {
+    // Accept index parameter
     try {
       final file = await VideoCompress.getFileThumbnail(
         path,
@@ -79,28 +84,17 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
               ],
             ),
           ),
-          const PopupMenuItem<Widget>(
-            child: Row(
-              children: [
-                Icon(Icons.delete),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Remove from favorites'),
-                ),
-              ],
-            ),
-          ),
-          const PopupMenuItem<Widget>(
-            child: Row(
-              children: [
-                Icon(Icons.info),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Info'),
-                ),
-              ],
-            ),
-          ),
+          PopupMenuItem<Widget>(
+              child: const Row(
+                children: [
+                  Icon(Icons.delete),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('Remove from favorites'),
+                  ),
+                ],
+              ),
+              onTap: () => widget.onDelete()),
         ],
         elevation: 8.0,
       );
@@ -151,8 +145,11 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
           basename(videoFilePath),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: GoogleFonts.nixieOne(
-              fontSize: 15, color: kcolorDarkblue, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: 15,
+              color: kcolorDarkblue,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'NixieOne'),
         ),
         trailing: GestureDetector(
           onTapDown: (TapDownDetails details) {
