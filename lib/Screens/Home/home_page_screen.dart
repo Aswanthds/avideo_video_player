@@ -7,7 +7,6 @@ import 'package:video_player_app/Screens/Home/Tabs/others_tab.dart';
 import 'package:video_player_app/Screens/Home/Tabs/screenshots_tab.dart';
 import 'package:video_player_app/Screens/Home/Tabs/whatsapp_tab.dart';
 import 'package:video_player_app/Screens/Home/widgets/home_search_page.dart';
-import 'package:video_player_app/functions/path_functions.dart';
 import 'package:video_player_app/widgets/appbar_common.dart';
 
 class HomePageScreen extends StatefulWidget {
