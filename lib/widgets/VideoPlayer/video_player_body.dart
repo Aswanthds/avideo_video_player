@@ -171,7 +171,7 @@ class _VideoPlayerBodyState extends State<VideoPlayerBody> {
                   await CreatePlayListFunctions.addVideoToPlaylist(
                       newPlaylistName, widget.filesV);
 
-                  Navigator.pop(context);
+                  Navigator.of(context).popUntil((route) => route.isFirst);
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       behavior: SnackBarBehavior.floating,
@@ -214,11 +214,16 @@ class _VideoPlayerBodyState extends State<VideoPlayerBody> {
       children: [
         GestureDetector(
           onDoubleTap: toggleControlsVisibility,
-          child: Align(
-            alignment: areControlsVisible ? Alignment.center : Alignment.center,
-            child: AspectRatio(
-              aspectRatio: widget.controller.value.aspectRatio,
-              child: VideoPlayer(widget.controller),
+          child: InteractiveViewer(
+            maxScale: 5,
+            minScale: 1,
+            child: Align(
+              alignment:
+                  areControlsVisible ? Alignment.center : Alignment.center,
+              child: AspectRatio(
+                aspectRatio: widget.controller.value.aspectRatio,
+                child: VideoPlayer(widget.controller),
+              ),
             ),
           ),
         ),

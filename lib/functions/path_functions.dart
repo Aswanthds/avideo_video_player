@@ -6,7 +6,7 @@ import 'package:external_path/external_path.dart';
 class PathFunctions {
   static Future<List<String>> getDevicepath() async {
     var paths = await ExternalPath.getExternalStorageDirectories();
-    for (var path in paths) {
+    for (final String path in paths) {
       debugPrint(path);
     }
     return paths;

@@ -109,13 +109,9 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
                             return VideoListTileWidget(
                               index: index,
                               video: playlists[index],
-                              onDelete: () {
-                                FavoriteFunctions.deleteVideo(
-                                    videos[index].filePath);
-                                setState(() {
-                                  videos.removeAt(index);
-                                });
-                              },
+                              // onDelete: () {
+
+                              // },
                             );
                           } else {
                             return const SizedBox(); // Return an empty widget if index is out of bounds

@@ -11,41 +11,44 @@ class PlayListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Container(
-        decoration: BoxDecoration(
-            boxShadow: const [
-              BoxShadow(
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(style: BorderStyle.solid),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListTile(
+          leading: Container(
+            decoration: BoxDecoration(
+                color: kcolorDarkblue,
+                border: Border.all(
+                  style: BorderStyle.solid,
                   color: kcolorDarkblue,
-                  blurRadius: 10,
-                  blurStyle: BlurStyle.outer),
-            ],
-            color: kcolorDarkblue,
-            border: Border.all(
-              style: BorderStyle.solid,
-              color: kcolorDarkblue,
-              width: 2,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(20)),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                'assets/images/logo.png',
+                color: kColorWhite,
+              ),
             ),
-            borderRadius: BorderRadius.circular(20)),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.asset(
-            'assets/images/logo.png',
-            color: kColorWhite,
+          ),
+          title: Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+          trailing: const Icon(
+            Icons.arrow_forward_ios,
+            color: kcolorDarkblue,
+            fill: 0,
           ),
         ),
-      ),
-      title: Text(
-        title,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 15,
-        ),
-      ),
-      trailing: const Icon(
-        Icons.arrow_forward_ios,
-        color: kcolorDarkblue,
-        fill: 0,
       ),
     );
   }

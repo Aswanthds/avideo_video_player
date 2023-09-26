@@ -65,12 +65,12 @@ class FavoriteFunctions {
     }
   }
 
-  static void deleteVideo(String videoPath) async {
+  static void deleteVideo(String videoPath, int indexToDelete) async {
     final box = Hive.box<FavoriteData>(_boxName);
-    final boxValues = box.values.toList();
-    final indexToDelete = boxValues.indexWhere(
-      (video) => video.filePath == videoPath,
-    );
+    // final boxValues = box.values.toList();
+    // final indexToDelete = boxValues.indexWhere(
+    //   (video) => video.filePath == videoPath,
+    // );
 
     if (indexToDelete != -1) {
       await box.deleteAt(indexToDelete);

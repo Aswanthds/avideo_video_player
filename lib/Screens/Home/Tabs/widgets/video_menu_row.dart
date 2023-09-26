@@ -191,7 +191,7 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
                   await CreatePlayListFunctions.addVideoToPlaylist(
                       newPlaylistName, widget.path);
 
-                  Navigator.pop(context);
+                  Navigator.of(context).popUntil((route) => route.isFirst);
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       behavior: SnackBarBehavior.floating,
@@ -226,8 +226,5 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
     );
   }
 
-  Future<void> showAddToPlaylistDialog(
-      BuildContext context, String videoPath) async {
-    // Initialize an empty string to hold the new playlist name
-  }
+  
 }

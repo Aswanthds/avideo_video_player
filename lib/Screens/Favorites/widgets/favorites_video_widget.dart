@@ -1,21 +1,25 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path/path.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/constants.dart';
+import 'package:video_player_app/database/create_playlist_data.dart';
 import 'package:video_player_app/database/favourite_data.dart';
+import 'package:video_player_app/functions/create_playlist_functions.dart';
+import 'package:video_player_app/functions/favorites_functions.dart';
 import 'package:video_player_app/widgets/VideoPlayer/video_player_widget.dart';
 
 class VideoListTileWidget extends StatefulWidget {
   final FavoriteData video;
   final int index;
-  final VideoDeleteCallback onDelete;
 
   const VideoListTileWidget({
     super.key,
     required this.video,
     required this.index,
-    required this.onDelete,
   });
 
   @override
@@ -34,6 +38,7 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
     generateThumbnail(widget.video.filePath, widget.index);
   }
 
+  String? selectedPlaylist;
   Future<void> generateThumbnail(String path, int index) async {
     // Accept index parameter
     try {
@@ -62,19 +67,8 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
         context: context,
         position: RelativeRect.fromLTRB(left, top, 30, 0),
         items: [
-          const PopupMenuItem<Widget>(
-            child: Row(
-              children: [
-                Icon(Icons.favorite_outline),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Add to favorites'),
-                ),
-              ],
-            ),
-          ),
-          const PopupMenuItem<Widget>(
-            child: Row(
+          PopupMenuItem<Widget>(
+            child: const Row(
               children: [
                 Icon(Icons.playlist_add),
                 Padding(
@@ -83,6 +77,11 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
                 ),
               ],
             ),
+            onTap: () {
+              addtoPlaylistDialog(
+                context,
+              );
+            },
           ),
           PopupMenuItem<Widget>(
               child: const Row(
@@ -94,7 +93,14 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
                   ),
                 ],
               ),
-              onTap: () => widget.onDelete()),
+              onTap: () {
+                if (mounted) {
+                  setState(() {
+                    FavoriteFunctions.deleteVideo(
+                        widget.video.filePath, widget.index);
+                  });
+                }
+              }),
         ],
         elevation: 8.0,
       );
@@ -145,7 +151,7 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
           basename(videoFilePath),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 15,
               color: kcolorDarkblue,
               fontWeight: FontWeight.bold,
@@ -158,6 +164,127 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
           child: const Icon(Icons.more_vert),
         ),
       ),
+    );
+  }
+
+  Future<void> addtoPlaylistDialog(
+    BuildContext context,
+  ) async {
+    final box = await Hive.openBox<VideoPlaylist>('playlists_data');
+
+    String newPlaylistName = '';
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ValueListenableBuilder(
+                valueListenable: box.listenable(),
+                builder: (context, Box<VideoPlaylist> box, _) {
+                  final playlistNames =
+                      box.values.map((playlist) => playlist.name).toList();
+                  selectedPlaylist =
+                      selectedPlaylist = playlistNames.isNotEmpty ? '' : '';
+                  // debugPrint(playlistNames[0]);
+
+                  return (playlistNames.isEmpty || playlistNames[0] == null)
+                      ? const SizedBox(
+                          height: 20,
+                        )
+                      : DropdownButtonFormField<String>(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText:
+                                'Choose', // Specify the hint text using InputDecoration
+                          ),
+                          value: selectedPlaylist,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedPlaylist = newValue;
+                              debugPrint(newValue);
+                            });
+                          },
+                          items: [
+                            const DropdownMenuItem<String>(
+                              value: '',
+                              child: Text("None"),
+                            ),
+                            if (box.isNotEmpty)
+                              ...playlistNames.map<DropdownMenuItem<String>>(
+                                  (String? value) {
+                                return DropdownMenuItem<String>(
+                                  value: value!,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                          ],
+                        );
+                },
+              ),
+              const SizedBox(height: 20.0),
+              TextFormField(
+                onChanged: (value) {
+                  newPlaylistName = value;
+                },
+                decoration: const InputDecoration(
+                  hintText: "New Playlist Name",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () async {
+                // Handle creation of a new playlist
+                if (newPlaylistName.isNotEmpty) {
+                  await CreatePlayListFunctions.createPlaylist(newPlaylistName);
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+
+                  await CreatePlayListFunctions.addVideoToPlaylist(
+                      newPlaylistName, widget.video.filePath);
+
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: kColorCyan,
+                      content: Text(
+                          'Video added to playlist'), // Customize the message
+                      duration: Duration(seconds: 2), // Customize the duration
+                    ),
+                  ); // Close the dialog
+                }
+                if (selectedPlaylist!.isNotEmpty) {
+                  await CreatePlayListFunctions.addVideoToPlaylist(
+                      selectedPlaylist!, widget.video.filePath);
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      clipBehavior: Clip.antiAlias,
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: kColorCyan,
+                      content: Text(
+                          'Video added to playlist'), // Customize the message
+                      duration: Duration(seconds: 2), // Customize the duration
+                    ),
+                  );
+                }
+              },
+              child: const Text("Add to playlist"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

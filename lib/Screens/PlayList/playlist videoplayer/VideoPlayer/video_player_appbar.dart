@@ -128,7 +128,7 @@ class _VideoPlayerAppBarState extends State<VideoPlayerAppBar> {
                     await CreatePlayListFunctions.addVideoToPlaylist(
                         newPlaylistName, widget.filename);
 
-                    Navigator.pop(context);
+                    Navigator.of(context).popUntil((route) => route.isFirst);
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         behavior: SnackBarBehavior.floating,
