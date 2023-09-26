@@ -11,17 +11,17 @@ class RecenPlayedVideoList extends StatefulWidget {
 }
 
 class _RecenPlayedVideoListState extends State<RecenPlayedVideoList> {
-  int currentIndex = 0; // Add currentIndex to track the current video index
+  int currentIndex = 0; //
 
   @override
   void initState() {
     super.initState();
-    //loadRecentlyPlayedVideos();
+    //
   }
 
   void playNextVideo() {
     if (currentIndex < widget.files.length - 1) {
-      currentIndex++; // Increment the current index
+      currentIndex++; //
       setState(() {});
     }
   }

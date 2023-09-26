@@ -16,12 +16,12 @@ class WhatsappTab extends StatefulWidget {
 enum SortingOption { nameAs, nameDe }
 
 class _WhatsappTabState extends State<WhatsappTab> {
-  List<File> displayedFiles = []; // List to display in the grid
+  List<File> displayedFiles = []; //
 
   @override
   void initState() {
     super.initState();
-    sortByNameAs(); // Default sorting
+    sortByNameAs(); //
   }
 
   final ValueNotifier<File> thumbnailNotifier = ValueNotifier<File>(File(''));
@@ -43,7 +43,7 @@ class _WhatsappTabState extends State<WhatsappTab> {
     }
   }
 
-  SortingOption selectedOption = SortingOption.nameAs; // Default sorting option
+  SortingOption selectedOption = SortingOption.nameAs; //
 
   void sortByNameAs() {
     setState(() {
@@ -74,7 +74,7 @@ class _WhatsappTabState extends State<WhatsappTab> {
             padding: const EdgeInsets.only(left: 5, right: 5),
             child: DropdownButton<SortingOption>(
               value: selectedOption,
-              underline: const SizedBox(), // empty line
+              underline: const SizedBox(), //
               dropdownColor: kColorWhite,
               iconEnabledColor: kcolorDarkblue,
               style: const TextStyle(
@@ -84,7 +84,7 @@ class _WhatsappTabState extends State<WhatsappTab> {
               borderRadius: BorderRadius.circular(10),
               onChanged: (SortingOption? newValue) {
                 setState(() {
-                  // Sort your video list here based on newValue
+                  //
                   if (newValue == SortingOption.nameAs) {
                     sortByNameAs();
                   } else if (newValue == SortingOption.nameDe) {

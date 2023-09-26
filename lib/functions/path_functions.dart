@@ -34,7 +34,7 @@ class PathFunctions {
         final Directory root = Directory(rootPath);
 
         if (restrictedDirectories.contains(rootPath)) {
-          continue; // Skip if the root directory doesn't exist
+          continue; //
         }
 
         final List<FileSystemEntity> allFiles =
@@ -64,5 +64,4 @@ class PathFunctions {
 
     box.put('videos', videos);
   }
-
 }

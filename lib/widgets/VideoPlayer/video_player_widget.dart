@@ -25,7 +25,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   void initState() {
     super.initState();
     _initializeVideoPlayer().then((_) {
-      // Video player is initialized, you can now update Hive data.
+      //
       _startUpdatingHiveData();
     });
   }
@@ -48,26 +48,26 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       current = currentPosition;
     });
 
-    // Update Hive data with the current position and the video path
+    //
     _updateHiveData(widget.filesV, currentPosition);
   }
 
   void _startUpdatingHiveData() {
-    // Create a timer to periodically update Hive data (e.g., every second)
+    //
     Timer.periodic(const Duration(seconds: 1), (_) {
       if (_controller.value.isPlaying) {
         final currentPosition = _controller.value.position;
-        // Update Hive data with the current position and the video path
+        //
         _updateHiveData(widget.filesV, currentPosition);
       }
     });
   }
 
   void _updateHiveData(String videoPath, Duration currentPosition) {
-    // Call the onVideoClicked function to update the data
+    //
     if (!_disposed) {
-      // Check the flag before updating Hive data
-      // Call the onVideoClicked function to update the data
+      //
+      //
       RecentlyPlayed.onVideoClicked(
         videoPath: videoPath,
         current: currentPosition,

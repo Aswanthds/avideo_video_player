@@ -39,7 +39,7 @@ class _DownloadTabState extends State<DownloadTab> {
     }
   }
 
-  SortingOption selectedOption = SortingOption.nameAs; // Default sorting option
+  SortingOption selectedOption = SortingOption.nameAs; //
 
   void sortByNameAs() {
     setState(() {
@@ -76,7 +76,7 @@ class _DownloadTabState extends State<DownloadTab> {
             child: DropdownButton<SortingOption>(
               value: selectedOption,
 
-              underline: const SizedBox(), //empty line
+              underline: const SizedBox(), //
 
               dropdownColor: kColorWhite,
               iconEnabledColor: kcolorDarkblue,
@@ -88,7 +88,7 @@ class _DownloadTabState extends State<DownloadTab> {
               onChanged: (SortingOption? newValue) {
                 setState(() {
                   selectedOption = newValue!;
-                  // Sort your video list here based on newValue
+                  //
                   if (selectedOption == SortingOption.nameAs) {
                     sortByNameAs();
                   } else if (selectedOption == SortingOption.nameDe) {

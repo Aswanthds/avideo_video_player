@@ -38,7 +38,7 @@ class _RecentlyPlayedVideoTileWidgetState
           current.isNaN ||
           full.isNaN ||
           full <= 0) {
-        return 0.0; // Return a default value (e.g., 0.0) when division is undefined
+        return 0.0; //
       }
       return current / full;
     }
@@ -50,12 +50,12 @@ class _RecentlyPlayedVideoTileWidgetState
         SnackBar(
           behavior: SnackBarBehavior.floating,
           backgroundColor: kColorCyan,
-          content: const Text('Video deleted'), // Customize the message
-          duration: const Duration(seconds: 2), // Customize the duration
+          content: const Text('Video deleted'), //
+          duration: const Duration(seconds: 2), //
           action: SnackBarAction(
-            label: 'Undo', // You can add an undo action if needed
+            label: 'Undo', //
             onPressed: () {
-              // Implement undo logic if needed
+              //
             },
           ),
         ),

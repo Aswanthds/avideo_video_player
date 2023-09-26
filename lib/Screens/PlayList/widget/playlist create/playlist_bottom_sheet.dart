@@ -16,16 +16,14 @@ class PlaylistBottomSheet extends StatefulWidget {
 }
 
 class _PlaylistBottomSheetState extends State<PlaylistBottomSheet> {
-  
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 200,
       child: AlertDialog(
-        contentPadding: EdgeInsets.zero, // Remove default padding
+        contentPadding: EdgeInsets.zero, //
         content: SizedBox(
-          height: 300, // Match the container height
+          height: 300, //
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [

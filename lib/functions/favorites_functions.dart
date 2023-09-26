@@ -20,7 +20,7 @@ class FavoriteFunctions {
     );
 
     addToFavorites(videoToAdd);
-    //debugPrint(' PAth added to fvrt${videoToAdd.filePath}');
+    //
   }
 
   static Future<List<FavoriteData>> getFavoritesList() async {
@@ -47,8 +47,8 @@ class FavoriteFunctions {
       final uniqueVideos = uniqueVideosMap.values.toList();
       uniqueVideos.sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
-      //debugPrint('Total videos in box: ${videos.length}');
-      // debugPrint('Unique videos in map: ${uniqueVideos.length}');
+      //
+      //
 
       return uniqueVideos;
     } catch (e) {
@@ -61,16 +61,16 @@ class FavoriteFunctions {
     final recentlyPlayedVideos = await getFavoritesList();
     for (final video in recentlyPlayedVideos) {
       debugPrint('Video Path: ${video.filePath}');
-      //debugPrint('Timestamp: ${video.timestamp}');
+      //
     }
   }
 
   static void deleteVideo(String videoPath, int indexToDelete) async {
     final box = Hive.box<FavoriteData>(_boxName);
-    // final boxValues = box.values.toList();
-    // final indexToDelete = boxValues.indexWhere(
-    //   (video) => video.filePath == videoPath,
-    // );
+    //
+    //
+    //
+    //
 
     if (indexToDelete != -1) {
       await box.deleteAt(indexToDelete);

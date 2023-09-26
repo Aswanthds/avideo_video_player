@@ -20,14 +20,14 @@ class CreatePlayListFunctions {
 
     if (playlist != null) {
       playlist.videos ??= [];
-      // Add the videoPath to the playlist's videos list
+      //
       playlist.videos!.add(videoPath);
 
-      // Update the playlist in the box
+      //
       await playlistBox.put(playlistName, playlist);
     }
 
-    // Optional: Print the playlist information
+    //
     if (playlist != null) {
       debugPrint('Playlist Name: ${playlist.name}');
       debugPrint('Videos:');
@@ -47,14 +47,14 @@ class CreatePlayListFunctions {
     final playlist = playlistBox.get(playlistName);
 
     if (playlist != null && playlist.videos != null) {
-      // Remove the videoPath from the playlist's videos list
+      //
       playlist.videos!.remove(videoPath);
 
-      // Update the playlist in the box
+      //
       await playlistBox.put(playlistName, playlist);
     }
 
-    // Optional: Print the updated playlist information
+    //
     if (playlist != null) {
       debugPrint('Playlist Name: ${playlist.name}');
       debugPrint('Updated Videos:');
@@ -71,13 +71,13 @@ class CreatePlayListFunctions {
         await Hive.openBox<VideoPlaylist>('playlists_data');
 
     if (playlistBox.containsKey(playlistName)) {
-      // Delete the playlist from the box
+      //
       await playlistBox.delete(playlistName);
 
-      // Optional: Print a message indicating the deletion
+      //
       debugPrint('Deleted playlist: $playlistName');
     } else {
-      // Optional: Print an error message if the playlist does not exist
+      //
       debugPrint('Playlist not found: $playlistName');
     }
   }
@@ -91,24 +91,24 @@ class CreatePlayListFunctions {
       final playlist = playlistBox.get(oldPlaylistName);
 
       if (playlist != null) {
-        // Create a new playlist with the updated name
+        //
         final updatedPlaylist = VideoPlaylist(
           name: newPlaylistName,
           videos: playlist.videos,
         );
 
-        // Put the updated playlist in the box with the new name
+        //
         await playlistBox.put(newPlaylistName, updatedPlaylist);
 
-        // Delete the old playlist
+        //
         await playlistBox.delete(oldPlaylistName);
 
-        // Optional: Print a message indicating the update
+        //
         debugPrint(
             'Updated playlist name: $oldPlaylistName -> $newPlaylistName');
       }
     } else {
-      // Optional: Print an error message if the old playlist does not exist
+      //
       debugPrint('Playlist not found: $oldPlaylistName');
     }
   }

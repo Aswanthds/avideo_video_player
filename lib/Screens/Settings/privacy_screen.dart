@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player_app/Screens/settings/privacy_heading_widget.dart';
-//import 'package:video_player_app/Screens/settings/widgets/contactus.dart';
+//
 import 'package:video_player_app/Screens/settings/widgets/privacy_text_widget.dart';
 import 'package:video_player_app/constants.dart';
 

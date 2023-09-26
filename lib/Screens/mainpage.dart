@@ -59,7 +59,7 @@ class _MainPageScreenState extends State<MainPageScreen>
           currentIndex: _bottomNavIndex,
           onTap: (i) => setState(() => _bottomNavIndex = i),
           items: [
-            /// Home
+            //
             SalomonBottomBarItem(
                 icon: const Icon(Icons.home),
                 title: const Text(
@@ -69,7 +69,7 @@ class _MainPageScreenState extends State<MainPageScreen>
                 selectedColor: kColorAmber,
                 unselectedColor: kColorWhite),
 
-            /// Likes
+            //
             SalomonBottomBarItem(
                 icon: const Icon(Icons.playlist_play),
                 title: const Text(
@@ -79,7 +79,7 @@ class _MainPageScreenState extends State<MainPageScreen>
                 selectedColor: kColorCyan,
                 unselectedColor: kColorWhite),
 
-            /// Search
+            //
             SalomonBottomBarItem(
                 icon: const Icon(Icons.favorite_outline),
                 title: const Text(
@@ -89,7 +89,7 @@ class _MainPageScreenState extends State<MainPageScreen>
                 selectedColor: kColorOrange,
                 unselectedColor: kColorWhite),
 
-            /// Profile
+            //
             SalomonBottomBarItem(
                 icon: const Icon(Icons.settings),
                 title: const Text(

@@ -1,6 +1,5 @@
 import 'dart:io';
-// ignore: unused_import
-import 'dart:typed_data';
+//
 
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
@@ -13,7 +12,6 @@ import 'package:video_player_app/functions/favorites_functions.dart';
 import 'package:video_player_app/functions/mostly_played_functions.dart';
 import 'package:video_player_app/functions/recently_played_functions.dart';
 import 'package:video_player_app/screens/PlayList/widget/user_playlist.dart/user_playlist.dart';
-
 
 class PlaylistDetailPage extends StatefulWidget {
   final VideoPlaylist playlist;
@@ -46,7 +44,7 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
           position: -1,
         );
         setState(() {
-          thumbnails[video] = thumbnail; // Associate video path with thumbnail
+          thumbnails[video] = thumbnail; //
         });
       } catch (e) {
         debugPrint('Error generating thumbnail for $video: $e');
@@ -54,7 +52,7 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
     }
   }
 
-  SortingOption selectedOption = SortingOption.nameAs; // Default sorting option
+  SortingOption selectedOption = SortingOption.nameAs; //
 
   void sortByNameAs() {
     setState(() {
@@ -97,8 +95,8 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              // Your additional container goes here
-              height: 120, // Adjust the height as needed
+              //
+              height: 120, //
               decoration: BoxDecoration(
                   color: kColorAmber,
                   borderRadius: BorderRadius.circular(20),
@@ -125,7 +123,7 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                     child: DropdownButton<SortingOption>(
                       value: selectedOption,
 
-                      underline: const SizedBox(), //empty line
+                      underline: const SizedBox(), //
 
                       dropdownColor: kColorWhite,
                       iconEnabledColor: kcolorDarkblue,
@@ -137,7 +135,7 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                       onChanged: (SortingOption? newValue) {
                         setState(() {
                           selectedOption = newValue!;
-                          // Sort your video list here based on newValue
+                          //
                           if (selectedOption == SortingOption.nameAs) {
                             sortByNameAs();
                           } else if (selectedOption == SortingOption.nameDe) {

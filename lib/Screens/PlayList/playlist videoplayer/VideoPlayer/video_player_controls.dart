@@ -15,7 +15,8 @@ class RecentlyVideoPlayerControls extends StatefulWidget {
       required this.controller,
       required this.volume,
       required this.onVolumeChanged,
-      required this.fullDuration, required this.isRotated});
+      required this.fullDuration,
+      required this.isRotated});
 
   @override
   State<RecentlyVideoPlayerControls> createState() =>
@@ -26,7 +27,7 @@ class _RecentlyVideoPlayerControlsState
     extends State<RecentlyVideoPlayerControls> {
   @override
   Widget build(BuildContext context) {
-    //bool areControlsVisible = widget.visibility;
+    //
     return Align(
       alignment: AlignmentDirectional.bottomStart,
       child: Container(
@@ -137,7 +138,7 @@ class _RecentlyVideoPlayerControlsState
         ),
       ),
     );
-    //: const SizedBox());
+    //
   }
 
   String _formatDuration(Duration duration) {

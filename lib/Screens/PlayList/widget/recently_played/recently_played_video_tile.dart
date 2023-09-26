@@ -26,7 +26,7 @@ class _RecentlyPlayedVideoTileState extends State<RecentlyPlayedVideoTile> {
   @override
   void initState() {
     super.initState();
-    // Load video info when the widget is created
+    //
     loadVideoInfo();
   }
 
@@ -36,7 +36,7 @@ class _RecentlyPlayedVideoTileState extends State<RecentlyPlayedVideoTile> {
       final recentlyPlayedList =
           Hive.box<RecentlyPlayedData>('recently_played');
 
-      // Find the RecentlyPlayedData object with the matching videoPath
+      //
       final matchingData = recentlyPlayedList.values.firstWhere(
         (data) {
           return data.videoPath == videoPath;

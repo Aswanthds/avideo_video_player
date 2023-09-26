@@ -6,6 +6,7 @@ class AppbarCommon extends StatefulWidget {
   final String title;
   final bool isHome;
   final Widget navigation;
+
   const AppbarCommon({
     super.key,
     required this.title,
@@ -18,6 +19,11 @@ class AppbarCommon extends StatefulWidget {
 }
 
 class _AppbarCommonState extends State<AppbarCommon> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -35,6 +41,14 @@ class _AppbarCommonState extends State<AppbarCommon> {
             ),
           ),
           actions: [
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
             IconButton(
                 onPressed: () => Navigator.of(context).push(
                       MaterialPageRoute(

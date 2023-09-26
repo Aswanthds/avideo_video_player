@@ -5,7 +5,7 @@ import 'package:video_player_app/screens/home/Tabs/widgets/video_tile_widget.dar
 
 class CameraTab extends StatefulWidget {
   final List<File> filesV;
-  // final VideoGriedview videoGridView; // Add reference to the VideoGriedview
+  //
 
   const CameraTab({
     Key? key,
@@ -19,20 +19,20 @@ class CameraTab extends StatefulWidget {
 enum SortingOption { nameAs, nameDe }
 
 class _CameraTabState extends State<CameraTab> {
-  SortingOption selectedOption = SortingOption.nameAs; // Default sorting option
+  SortingOption selectedOption = SortingOption.nameAs; //
 
   void sortByNameAs() {
     setState(() {
       widget.filesV.sort((a, b) => (a.path).compareTo((b.path)));
     });
-    // widget.videoGridView.sortAndRefreshThumbnails(); // Call the function here
+    //
   }
 
   void sortByNameDe() {
     setState(() {
       widget.filesV.sort((a, b) => (b.path).compareTo((a.path)));
     });
-    // widget.videoGridView.sortAndRefreshThumbnails(); // Call the function here
+    //
   }
 
   List<File> getcameraonlyPath() {
@@ -58,7 +58,7 @@ class _CameraTabState extends State<CameraTab> {
             child: DropdownButton<SortingOption>(
               value: selectedOption,
 
-              underline: const SizedBox(), //empty line
+              underline: const SizedBox(), //
 
               dropdownColor: kColorWhite,
               iconEnabledColor: kcolorDarkblue,
@@ -70,7 +70,7 @@ class _CameraTabState extends State<CameraTab> {
               onChanged: (SortingOption? newValue) {
                 setState(() {
                   selectedOption = newValue!;
-                  // Sort your video list here based on newValue
+                  //
                   if (selectedOption == SortingOption.nameAs) {
                     sortByNameAs();
                   } else if (selectedOption == SortingOption.nameDe) {

@@ -1,3 +1,5 @@
+//
+
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
@@ -127,7 +129,7 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
                       box.values.map((playlist) => playlist.name).toList();
                   selectedPlaylist =
                       selectedPlaylist = playlistNames.isNotEmpty ? '' : '';
-                  // debugPrint(playlistNames[0]);
+                  //
 
                   return (playlistNames.isEmpty || playlistNames[0] == null)
                       ? const SizedBox(
@@ -136,8 +138,7 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
                       : DropdownButtonFormField<String>(
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            hintText:
-                                'Choose', // Specify the hint text using InputDecoration
+                            hintText: 'Choose', //
                           ),
                           value: selectedPlaylist,
                           onChanged: (String? newValue) {
@@ -178,13 +179,13 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context); //
               },
               child: const Text("Cancel"),
             ),
             TextButton(
               onPressed: () async {
-                // Handle creation of a new playlist
+                //
                 if (newPlaylistName.isNotEmpty) {
                   await CreatePlayListFunctions.createPlaylist(newPlaylistName);
 
@@ -196,11 +197,10 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
                     const SnackBar(
                       behavior: SnackBarBehavior.floating,
                       backgroundColor: kColorCyan,
-                      content: Text(
-                          'Video added to playlist'), // Customize the message
-                      duration: Duration(seconds: 2), // Customize the duration
+                      content: Text('Video added to playlist'), //
+                      duration: Duration(seconds: 2), //
                     ),
-                  ); // Close the dialog
+                  ); //
                 }
                 if (selectedPlaylist!.isNotEmpty) {
                   await CreatePlayListFunctions.addVideoToPlaylist(
@@ -211,9 +211,8 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
                       clipBehavior: Clip.antiAlias,
                       behavior: SnackBarBehavior.floating,
                       backgroundColor: kColorCyan,
-                      content: Text(
-                          'Video added to playlist'), // Customize the message
-                      duration: Duration(seconds: 2), // Customize the duration
+                      content: Text('Video added to playlist'), //
+                      duration: Duration(seconds: 2), //
                     ),
                   );
                 }
@@ -225,6 +224,4 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
       },
     );
   }
-
-  
 }

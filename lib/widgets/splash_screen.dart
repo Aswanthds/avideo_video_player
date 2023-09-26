@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+//
 
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   List<File> videoFiles = [];
   List<dynamic> videoData = [];
   bool? isGranted;
-//navigateToMainScreen();
+//
   @override
   void initState() {
     super.initState();
@@ -34,7 +34,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
       videoFiles = fetchedVideos.map((path) => File(path)).toList();
     });
 
-    // debugPrint('All Video Data:');
+    //
     for (String data in videoData) {
       debugPrint(data);
     }

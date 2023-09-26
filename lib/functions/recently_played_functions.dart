@@ -58,7 +58,7 @@ class RecentlyPlayed {
     final uniqueVideos = uniqueVideosMap.values.toList();
     uniqueVideos.sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
-    //debugPrint(uniqueVideos.length.toString());
+    //
 
     return uniqueVideos;
   }
@@ -67,7 +67,7 @@ class RecentlyPlayed {
     final recentlyPlayedVideos = RecentlyPlayed.getRecentlyPlayedVideos();
     for (final videoData in recentlyPlayedVideos) {
       debugPrint('Video Path: ${videoData.videoPath}');
-      //debugPrint('Timestamp: ${videoData.timestamp}');
+      //
     }
   }
 
@@ -84,18 +84,18 @@ class RecentlyPlayed {
 
     if (videoToDeleteKey != null) {
       await box.delete(videoToDeleteKey);
-      // debugPrint('Deleted video: $videoPath');
+      //
 
-      // Modify the list of recently played videos
+      //
       final updatedList = recentlyPlayedVideos.value.toList();
       updatedList.removeWhere((videoData) => videoData.videoPath == videoPath);
 
-      // Update the ValueNotifier with the modified list
+      //
       recentlyPlayedVideos.value = updatedList;
     }
   }
 
-  // Add a method to update the list
+  //
   static updateRecentlyPlayed(List<RecentlyPlayedData> videos) {
     recentlyPlayedVideos.value = videos;
   }

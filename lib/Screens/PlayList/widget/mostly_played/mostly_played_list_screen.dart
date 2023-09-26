@@ -18,8 +18,6 @@ class MostlyPlayedListScreen extends StatefulWidget {
 }
 
 class _MostlyPlayedListScreenState extends State<MostlyPlayedListScreen> {
-  
-
   @override
   void initState() {
     super.initState();
@@ -35,7 +33,7 @@ class _MostlyPlayedListScreenState extends State<MostlyPlayedListScreen> {
       return thumbnailFile;
     } catch (e) {
       debugPrint('Error generating thumbnail: $e');
-      // Handle the error gracefully, e.g., return a placeholder image
+      //
       return null;
     }
   }
@@ -54,11 +52,11 @@ class _MostlyPlayedListScreenState extends State<MostlyPlayedListScreen> {
           } else {
             final dataItem = data.values.toList();
 
-            // Sort the list based on playCount in descending order
+            //
             final filteredDataItem =
                 dataItem.where((item) => item.playCount > 3).toList();
 
-            // Sort the filtered list based on playCount in descending order
+            //
             filteredDataItem.sort((a, b) => b.playCount.compareTo(a.playCount));
             return ListView.builder(
               itemCount: filteredDataItem.length,

@@ -38,7 +38,7 @@ class _VideoPlaylistScreenState extends State<VideoPlaylistScreen> {
     _currentIndex = widget.currentIndex;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     _initializeVideoPlayer().then((_) {
-      // Video player is initialized, you can now update Hive data.
+      //
       _startUpdatingHiveData();
     });
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
@@ -49,7 +49,7 @@ class _VideoPlaylistScreenState extends State<VideoPlaylistScreen> {
     final videoPath = videoPathList![_currentIndex];
     _videoController = VideoPlayerController.file(File(videoPath));
 
-    // Initialize the video controller and seek to the current position
+    //
     await _videoController.initialize();
 
     setState(() {
@@ -89,14 +89,14 @@ class _VideoPlaylistScreenState extends State<VideoPlaylistScreen> {
       current = currentPosition;
     });
 
-    // Check if the current position is at the end of the video
+    //
     if (currentPosition >= fullDuration) {
-      // Restart the video from the beginning
+      //
       _videoController.seekTo(Duration.zero);
       _videoController.play();
     }
 
-    // Update Hive data with the current position and the video path
+    //
     _updateHiveData(
       widget.videoPaths.videos![_currentIndex],
       currentPosition,
@@ -104,11 +104,11 @@ class _VideoPlaylistScreenState extends State<VideoPlaylistScreen> {
   }
 
   void _startUpdatingHiveData() {
-    // Create a timer to periodically update Hive data (e.g., every second)
+    //
     Timer.periodic(const Duration(seconds: 1), (_) {
       if (_videoController.value.isPlaying) {
         final currentPosition = _videoController.value.position;
-        // Update Hive data with the current position and the video path
+        //
         _updateHiveData(
           widget.videoPaths.videos![_currentIndex],
           currentPosition,
@@ -118,10 +118,10 @@ class _VideoPlaylistScreenState extends State<VideoPlaylistScreen> {
   }
 
   void _updateHiveData(String videoPath, Duration currentPosition) {
-    // Call the onVideoClicked function to update the data
+    //
     if (!disposed) {
-      // Check the flag before updating Hive data
-      // Call the onVideoClicked function to update the data
+      //
+      //
       RecentlyPlayed.onVideoClicked(
         videoPath: videoPath,
         current: currentPosition,

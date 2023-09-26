@@ -18,7 +18,6 @@ class HomePageScreen extends StatefulWidget {
 }
 
 class _HomePageScreenState extends State<HomePageScreen> {
-  List<String> paths = [];
   @override
   void initState() {
     super.initState();

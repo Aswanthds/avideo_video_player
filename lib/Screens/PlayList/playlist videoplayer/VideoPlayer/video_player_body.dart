@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+//
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,7 +54,7 @@ class _PlayListVideoPlayerBodyState extends State<PlayListVideoPlayerBody> {
   }
 
   void untoggleRotation() async {
-    // Restore all orientations
+    //
     SystemChrome.setPreferredOrientations(DeviceOrientation.values);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: SystemUiOverlay.values);
@@ -132,8 +132,7 @@ class _PlayListVideoPlayerBodyState extends State<PlayListVideoPlayerBody> {
       ),
       child: FloatingActionButton(
         backgroundColor: Colors.transparent,
-        onPressed: () =>
-            action?.call(), // Call the function using action?.call()
+        onPressed: () => action?.call(), //
         child: Icon(
           areControlsVisible ? orgIcon : alticon,
           color: kColorWhite,

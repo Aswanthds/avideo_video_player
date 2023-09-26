@@ -1,3 +1,5 @@
+//
+
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:io';
@@ -34,13 +36,13 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
   @override
   void initState() {
     super.initState();
-    // Generate the thumbnail when the widget is created
+    //
     generateThumbnail(widget.video.filePath, widget.index);
   }
 
   String? selectedPlaylist;
   Future<void> generateThumbnail(String path, int index) async {
-    // Accept index parameter
+    //
     try {
       final file = await VideoCompress.getFileThumbnail(
         path,
@@ -188,7 +190,7 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
                       box.values.map((playlist) => playlist.name).toList();
                   selectedPlaylist =
                       selectedPlaylist = playlistNames.isNotEmpty ? '' : '';
-                  // debugPrint(playlistNames[0]);
+                  //
 
                   return (playlistNames.isEmpty || playlistNames[0] == null)
                       ? const SizedBox(
@@ -197,8 +199,7 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
                       : DropdownButtonFormField<String>(
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            hintText:
-                                'Choose', // Specify the hint text using InputDecoration
+                            hintText: 'Choose', //
                           ),
                           value: selectedPlaylist,
                           onChanged: (String? newValue) {
@@ -239,13 +240,13 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context); //
               },
               child: const Text("Cancel"),
             ),
             TextButton(
               onPressed: () async {
-                // Handle creation of a new playlist
+                //
                 if (newPlaylistName.isNotEmpty) {
                   await CreatePlayListFunctions.createPlaylist(newPlaylistName);
                   Navigator.of(context).popUntil((route) => route.isFirst);
@@ -258,11 +259,10 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
                     const SnackBar(
                       behavior: SnackBarBehavior.floating,
                       backgroundColor: kColorCyan,
-                      content: Text(
-                          'Video added to playlist'), // Customize the message
-                      duration: Duration(seconds: 2), // Customize the duration
+                      content: Text('Video added to playlist'), //
+                      duration: Duration(seconds: 2), //
                     ),
-                  ); // Close the dialog
+                  ); //
                 }
                 if (selectedPlaylist!.isNotEmpty) {
                   await CreatePlayListFunctions.addVideoToPlaylist(
@@ -273,9 +273,8 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
                       clipBehavior: Clip.antiAlias,
                       behavior: SnackBarBehavior.floating,
                       backgroundColor: kColorCyan,
-                      content: Text(
-                          'Video added to playlist'), // Customize the message
-                      duration: Duration(seconds: 2), // Customize the duration
+                      content: Text('Video added to playlist'), //
+                      duration: Duration(seconds: 2), //
                     ),
                   );
                 }

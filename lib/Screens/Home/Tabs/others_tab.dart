@@ -17,7 +17,7 @@ enum SortingOption { nameAs, nameDe }
 
 class _OthersTabState extends State<OthersTab> {
   List<File> others = [];
-  List<File> displayedFiles = []; // List to display in the grid
+  List<File> displayedFiles = []; //
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _OthersTabState extends State<OthersTab> {
           path.path.contains('WhatsApp') ||
           path.path.contains('Screenshots') ||
           path.path.contains('Camera')) {
-        // Skip files that match these conditions
+        //
       } else {
         result.add(path);
       }
@@ -40,7 +40,7 @@ class _OthersTabState extends State<OthersTab> {
     return result;
   }
 
-  SortingOption selectedOption = SortingOption.nameAs; // Default sorting option
+  SortingOption selectedOption = SortingOption.nameAs; //
 
   void sortByNameAs() {
     setState(() {
@@ -66,7 +66,7 @@ class _OthersTabState extends State<OthersTab> {
             padding: const EdgeInsets.only(left: 5, right: 5),
             child: DropdownButton<SortingOption>(
               value: selectedOption,
-              underline: const SizedBox(), //empty line
+              underline: const SizedBox(), //
               dropdownColor: kColorWhite,
               iconEnabledColor: kcolorDarkblue,
               style: const TextStyle(
@@ -77,7 +77,7 @@ class _OthersTabState extends State<OthersTab> {
               onChanged: (SortingOption? newValue) {
                 setState(() {
                   selectedOption = newValue!;
-                  // Sort your video list here based on newValue
+                  //
                   if (selectedOption == SortingOption.nameAs) {
                     sortByNameAs();
                   } else if (selectedOption == SortingOption.nameDe) {

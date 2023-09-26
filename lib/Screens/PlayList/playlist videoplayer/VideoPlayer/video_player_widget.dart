@@ -37,7 +37,7 @@ class _RecentlyPlayedVideoScreenState extends State<RecentlyPlayedVideoScreen> {
     _currentIndex = widget.currentIndex;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     _initializeVideoPlayer().then((_) {
-      // Video player is initialized, you can now update Hive data.
+      //
       _startUpdatingHiveData();
     });
   }
@@ -47,7 +47,7 @@ class _RecentlyPlayedVideoScreenState extends State<RecentlyPlayedVideoScreen> {
     final videopath = videoPathLsit[_currentIndex];
     _videoController = VideoPlayerController.file(File(videopath));
 
-    // Initialize the video controller and seek to the current position
+    //
     await _videoController.initialize();
     final currentPosition = widget.videoPaths[_currentIndex].current;
     if (currentPosition != null) {
@@ -80,7 +80,7 @@ class _RecentlyPlayedVideoScreenState extends State<RecentlyPlayedVideoScreen> {
 
   String getname() {
     final filenmae = widget.videoPaths.map((e) => e.videoPath).toList();
-    // debugPrint('String  $filenmae');
+    //
     return filenmae[_currentIndex];
   }
 
@@ -92,14 +92,14 @@ class _RecentlyPlayedVideoScreenState extends State<RecentlyPlayedVideoScreen> {
       current = currentPosition;
     });
 
-    // Check if the current position is at the end of the video
+    //
     if (currentPosition >= fullDuration) {
-      // Restart the video from the beginning
+      //
       _videoController.seekTo(Duration.zero);
       _videoController.play();
     }
 
-    // Update Hive data with the current position and the video path
+    //
     _updateHiveData(
       widget.videoPaths[_currentIndex].videoPath,
       currentPosition,
@@ -107,11 +107,11 @@ class _RecentlyPlayedVideoScreenState extends State<RecentlyPlayedVideoScreen> {
   }
 
   void _startUpdatingHiveData() {
-    // Create a timer to periodically update Hive data (e.g., every second)
+    //
     Timer.periodic(const Duration(seconds: 1), (_) {
       if (_videoController.value.isPlaying) {
         final currentPosition = _videoController.value.position;
-        // Update Hive data with the current position and the video path
+        //
         _updateHiveData(
             widget.videoPaths[_currentIndex].videoPath, currentPosition);
       }
@@ -119,10 +119,10 @@ class _RecentlyPlayedVideoScreenState extends State<RecentlyPlayedVideoScreen> {
   }
 
   void _updateHiveData(String videoPath, Duration currentPosition) {
-    // Call the onVideoClicked function to update the data
+    //
     if (!disposed) {
-      // Check the flag before updating Hive data
-      // Call the onVideoClicked function to update the data
+      //
+      //
       RecentlyPlayed.onVideoClicked(
         videoPath: videoPath,
         current: currentPosition,

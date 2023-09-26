@@ -3,9 +3,9 @@ import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/Screens/Home/Tabs/widgets/video_info_dialog.dart';
 import 'package:video_player_app/Screens/playlist/widget/mostly_played/mostly_played_list_screen.dart';
 import 'package:video_player_app/Screens/playlist/widget/mostly_played/thumbnail_mostly_played.dart';
+import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/functions/video_functions.dart';
 import 'package:video_player_app/Screens/Home/widgets/home_search_page.dart';
-import 'package:video_player_app/widgets/appbar_common.dart';
 
 class MostPlayedVideos extends StatefulWidget {
   const MostPlayedVideos({super.key});
@@ -66,16 +66,39 @@ class _MostPlayedVideosState extends State<MostPlayedVideos> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(75),
-        child: AppbarCommon(
-          title: 'Most Played Videos',
-          isHome: false,
-          navigation: HomeSearchPaage(text: 'Search videos'),
+        preferredSize: const Size.fromHeight(75),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(24),
+          ),
+          child: AppBar(
+            iconTheme: const IconThemeData(color: kColorWhite),
+            backgroundColor: kcolorDarkblue,
+            title: const Text(
+              'Mostly Played ',
+              style: TextStyle(
+                fontFamily: 'Cookie',
+                fontSize: 35,
+              ),
+            ),
+            actions: [
+              IconButton(
+                  onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const HomeSearchPaage(
+                            text: 'Search here',
+                            files: [],
+                          ),
+                        ),
+                      ),
+                  icon: const Icon(Icons.search))
+            ],
+          ),
         ),
       ),
-      body: Column(
+      body: const Column(
         children: [
           Padding(
               padding: EdgeInsets.all(8.0),

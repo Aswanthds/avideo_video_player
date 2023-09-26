@@ -18,7 +18,7 @@ class SortWidget extends StatefulWidget {
 enum SortingOption { nameAs, nameDe, duration }
 
 class _SortWidgetState extends State<SortWidget> {
-  SortingOption selectedOption = SortingOption.nameAs; // Default sorting option
+  SortingOption selectedOption = SortingOption.nameAs; //
 
   void sortByNameAs() {
     setState(() {
@@ -41,7 +41,7 @@ class _SortWidgetState extends State<SortWidget> {
         child: DropdownButton<SortingOption>(
           value: selectedOption,
 
-          underline: Container(), //empty line
+          underline: Container(), //
 
           dropdownColor: kColorWhite,
           iconEnabledColor: kcolorDarkblue,
@@ -51,7 +51,7 @@ class _SortWidgetState extends State<SortWidget> {
           onChanged: (SortingOption? newValue) {
             setState(() {
               selectedOption = newValue!;
-              // Sort your video list here based on newValue
+              //
               if (selectedOption == SortingOption.nameAs) {
                 sortByNameAs();
               } else if (selectedOption == SortingOption.nameDe) {
