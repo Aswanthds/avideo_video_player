@@ -9,7 +9,6 @@ import 'package:video_player_app/Screens/playlist/widget/recently_played/loading
 import 'package:video_player_app/Screens/playlist/widget/recently_played/thumbnot_video_tile.dart';
 import 'package:video_player_app/database/recently_video_data.dart';
 
-
 class RecentlyPlayedVideoItem extends StatelessWidget {
   final List<RecentlyPlayedData> videoData;
   final int index;
@@ -21,6 +20,14 @@ class RecentlyPlayedVideoItem extends StatelessWidget {
   }) : super(key: key);
 
   Future<File> generateThumbnail(String path) async {
+    final videoFile = File(path);
+    final isValidVideo = videoFile.existsSync();
+
+    if (!isValidVideo) {
+      // Skip invalid video paths
+      return File(''); // Return an empty SizedBox
+    }
+
     try {
       final thumbnailFile = await VideoCompress.getFileThumbnail(
         path,
@@ -40,9 +47,17 @@ class RecentlyPlayedVideoItem extends StatelessWidget {
     final timestamp =
         DateFormat('dd-MMM-yyyy HH:mm').format(videoData[index].timestamp);
 
-    return  FutureBuilder<File>(
+    return FutureBuilder<File>(
       future: generateThumbnail(videoPath),
       builder: (context, snapshot) {
+        final videoFile = File(videoPath);
+        final isValidVideo = videoFile.existsSync();
+
+        if (!isValidVideo) {
+          // Skip invalid video paths
+          return const SizedBox(); // Return an empty SizedBox
+        }
+
         if (snapshot.connectionState == ConnectionState.waiting) {
           return RecentlyPlayedLoadingVideListTile(
             videoPath: videoPath,
@@ -54,7 +69,6 @@ class RecentlyPlayedVideoItem extends StatelessWidget {
           return RecentlyPlayedThumbNotVideListTile(videoPath: videoPath);
         } else {
           return RecentlyPlayedVideoTile(
-          
             thumbnail: snapshot.data!,
             files: videoData,
             index: index,

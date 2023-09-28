@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:video_player_app/database/create_playlist_data.dart';
@@ -20,22 +22,17 @@ class CreatePlayListFunctions {
 
     if (playlist != null) {
       playlist.videos ??= [];
-      //
-      playlist.videos!.add(videoPath);
 
-      //
-      await playlistBox.put(playlistName, playlist);
-    }
-
-    //
-    if (playlist != null) {
-      debugPrint('Playlist Name: ${playlist.name}');
-      debugPrint('Videos:');
-      if (playlist.videos != null) {
-        for (var video in playlist.videos!) {
-          debugPrint(video);
-        }
+      // Check if the video file exists before adding it
+      final videoFile = File(videoPath);
+      if (videoFile.existsSync()) {
+        playlist.videos!.add(videoPath);
+      } else {
+        // Video file doesn't exist, so don't add it
+        // Optionally, you can display a message or handle it as needed
       }
+
+      await playlistBox.put(playlistName, playlist);
     }
   }
 
@@ -71,13 +68,24 @@ class CreatePlayListFunctions {
         await Hive.openBox<VideoPlaylist>('playlists_data');
 
     if (playlistBox.containsKey(playlistName)) {
-      //
+      // Retrieve the playlist
+      final playlist = playlistBox.get(playlistName);
+
+      if (playlist != null) {
+        // Remove video paths associated with the playlist from Hive
+        for (final videoPath in playlist.videos ?? []) {
+          final videoBox = Hive.box<List<String>>('videos');
+          for (var videoList in videoBox.values) {
+            videoList.remove(videoPath);
+          }
+        }
+      }
+
+      // Delete the playlist from Hive
       await playlistBox.delete(playlistName);
 
-      //
       debugPrint('Deleted playlist: $playlistName');
     } else {
-      //
       debugPrint('Playlist not found: $playlistName');
     }
   }

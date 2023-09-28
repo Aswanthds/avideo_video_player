@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/screens/home/Tabs/widgets/video_tile_widget.dart';
 
@@ -24,47 +23,32 @@ class _WhatsappTabState extends State<WhatsappTab> {
     sortByNameAs(); //
   }
 
-  final ValueNotifier<File> thumbnailNotifier = ValueNotifier<File>(File(''));
-
-  Future<void> updateThumbnails(List<File> files) async {
-    for (final videoFile in files) {
-      try {
-        final thumbnailFile = await VideoCompress.getFileThumbnail(
-          videoFile.path,
-          quality: 30,
-          position: 0,
-        );
-        setState(() {
-          thumbnailNotifier.value = thumbnailFile;
-        });
-      } catch (e) {
-        debugPrint('Error generating thumbnail: $e');
-      }
-    }
-  }
-
   SortingOption selectedOption = SortingOption.nameAs; //
 
   void sortByNameAs() {
     setState(() {
-      selectedOption = SortingOption.nameAs;
-      displayedFiles = [...widget.filesV];
-      displayedFiles.sort((a, b) => (a.path).compareTo((b.path)));
-      updateThumbnails(displayedFiles);
+      widget.filesV.sort((a, b) => (a.path).compareTo((b.path)));
     });
   }
 
   void sortByNameDe() {
     setState(() {
-      selectedOption = SortingOption.nameDe;
-      displayedFiles = [...widget.filesV];
-      displayedFiles.sort((a, b) => (b.path).compareTo((a.path)));
-      updateThumbnails(displayedFiles);
+      widget.filesV.sort((a, b) => (b.path).compareTo((a.path)));
     });
+  }
+
+  List<File> separatePaths() {
+    for (final path in widget.filesV) {
+      if (path.path.contains('WhatsApp')) {
+        displayedFiles.add(path);
+      }
+    }
+    return displayedFiles;
   }
 
   @override
   Widget build(BuildContext context) {
+    final paths = separatePaths();
     return Stack(
       children: [
         Positioned(
@@ -113,9 +97,9 @@ class _WhatsappTabState extends State<WhatsappTab> {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
             ),
-            itemCount: displayedFiles.length,
+            itemCount: paths.length,
             itemBuilder: (context, index) {
-              final videoPath = displayedFiles[index];
+              final videoPath = paths[index];
 
               return Padding(
                 padding: const EdgeInsets.only(

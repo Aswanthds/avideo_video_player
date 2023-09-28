@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 const kcolorDarkblue = Color.fromARGB(238, 0, 53, 84);
 const kcolorblack = Colors.black;
 const kcolorblack54 = Colors.black54;
+final kcolorblack05 = Colors.black.withOpacity(0.5);
 const kColorBlue = Colors.blue;
 const kColorLightBlue = Colors.lightBlue;
 const kColorblueAccent = Colors.blueAccent;

@@ -53,11 +53,11 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
           GestureDetector(
             onTap: () async {
               addtoPlaylistDialog(context);
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              ScaffoldMessenger.of(context).showSnackBar( SnackBar(
                 behavior: SnackBarBehavior.floating,
-                backgroundColor: kColorCyan,
-                duration: Duration(seconds: 2),
-                content: Text('Video added to playlist'),
+                backgroundColor: kcolorblack05,
+                duration: const Duration(seconds: 2),
+                content: const Text('Video added to playlist'),
               ));
             },
             child: const MenuIconWidget(
@@ -72,11 +72,11 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
                 (route) => route.isFirst,
               );
 
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              ScaffoldMessenger.of(context).showSnackBar( SnackBar(
                 behavior: SnackBarBehavior.floating,
-                backgroundColor: kColorCyan,
-                duration: Duration(seconds: 2),
-                content: Text('Video added to favorites'),
+                backgroundColor: kcolorblack05,
+                duration: const Duration(seconds: 2),
+                content: const Text('Video added to favorites'),
               ));
             },
             child: const MenuIconWidget(
@@ -194,11 +194,11 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
 
                   Navigator.of(context).popUntil((route) => route.isFirst);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
+                     SnackBar(
                       behavior: SnackBarBehavior.floating,
-                      backgroundColor: kColorCyan,
-                      content: Text('Video added to playlist'), //
-                      duration: Duration(seconds: 2), //
+                      backgroundColor: kcolorblack05,
+                      content: const Text('Video added to playlist'), //
+                      duration: const Duration(seconds: 2), //
                     ),
                   ); //
                 }
@@ -207,12 +207,12 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
                       selectedPlaylist!, widget.path);
                   Navigator.of(context).popUntil((route) => route.isFirst);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
+                     SnackBar(
                       clipBehavior: Clip.antiAlias,
                       behavior: SnackBarBehavior.floating,
-                      backgroundColor: kColorCyan,
-                      content: Text('Video added to playlist'), //
-                      duration: Duration(seconds: 2), //
+                      backgroundColor: kcolorblack05,
+                      content: const Text('Video added to playlist'), //
+                      duration: const Duration(seconds: 2), //
                     ),
                   );
                 }

@@ -49,7 +49,7 @@ class _RecentlyPlayedVideoTileWidgetState
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           behavior: SnackBarBehavior.floating,
-          backgroundColor: kColorCyan,
+          backgroundColor: kcolorblack05,
           content: const Text('Video deleted'), //
           duration: const Duration(seconds: 2), //
           action: SnackBarAction(

@@ -2,6 +2,8 @@
 
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:video_player_app/constants.dart';
@@ -27,22 +29,41 @@ class _PlaylistListWidgetState extends State<PlaylistListWidget> {
   Future<void> loadPlaylists() async {
     final Box<VideoPlaylist> playlistBox =
         await Hive.openBox<VideoPlaylist>('playlists_data');
-    final Set<String> uniquePaths = <String>{}; //
+    final Set<String> validPaths = <String>{};
 
-    //
+    // Filter out non-existent video paths
     for (final playlist in playlistBox.values) {
-      uniquePaths.addAll(playlist.videos!);
+      final List<String>? videos = playlist.videos;
+      if (videos != null) {
+        for (final videoPath in videos) {
+          final File videoFile = File(videoPath);
+          if (videoFile.existsSync()) {
+            validPaths.add(videoPath);
+          }
+        }
+      }
     }
 
-    final List<VideoPlaylist> uniquePlaylists = uniquePaths.map((path) {
-      return VideoPlaylist(
-        name: 'Playlist', //
-        videos: [path],
-      );
-    }).toList();
+    final List<VideoPlaylist> playlistsWithValidPaths = [];
+
+    for (final playlist in playlistBox.values) {
+      final List<String>? videos = playlist.videos;
+      if (videos != null) {
+        final List<String> validVideos = videos
+            .where((videoPath) => validPaths.contains(videoPath))
+            .toList();
+        if (validVideos.isNotEmpty) {
+          final VideoPlaylist validPlaylist = VideoPlaylist(
+            name: playlist.name, // Preserve the original playlist name
+            videos: validVideos,
+          );
+          playlistsWithValidPaths.add(validPlaylist);
+        }
+      }
+    }
 
     setState(() {
-      playlistsV = uniquePlaylists;
+      playlistsV = playlistsWithValidPaths;
     });
   }
 
@@ -161,20 +182,22 @@ class _PlaylistListWidgetState extends State<PlaylistListWidget> {
                                                     )
                                                   ],
                                                 ),
-                                              );
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                const SnackBar(
-                                                  clipBehavior: Clip.antiAlias,
-                                                  behavior:
-                                                      SnackBarBehavior.floating,
-                                                  backgroundColor: kColorCyan,
-                                                  content: Text(
-                                                      'Video added to playlist'), //
-                                                  duration:
-                                                      Duration(seconds: 2), //
-                                                ),
-                                              );
+                                              ).then((value) =>
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      clipBehavior:
+                                                          Clip.antiAlias,
+                                                      behavior: SnackBarBehavior
+                                                          .floating,
+                                                      backgroundColor:
+                                                          kcolorblack05,
+                                                      content: const Text(
+                                                          'Playlist deleted'), //
+                                                      duration: const Duration(
+                                                          seconds: 2), //
+                                                    ),
+                                                  ));
                                             },
                                           ),
                                           PopupMenuItem<Widget>(

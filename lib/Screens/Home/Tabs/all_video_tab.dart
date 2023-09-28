@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:video_player_app/constants.dart';
 import 'dart:io';
 
@@ -25,13 +26,15 @@ class _AllVideoTabState extends State<AllVideoTab> {
 
   void sortByNameAs() {
     setState(() {
-      widget.video.sort((pat1, pat2) => (pat1.path).compareTo((pat2.path)));
+      widget.video.sort(
+          (pat1, pat2) => basename(pat1.path).compareTo(basename(pat2.path)));
     });
   }
 
   void sortByNameDe() {
     setState(() {
-      widget.video.sort((a, b) => (b.path).compareTo((a.path)));
+      widget.video.sort(
+          (pat1, pat2) => basename(pat2.path).compareTo(basename(pat1.path)));
     });
   }
 

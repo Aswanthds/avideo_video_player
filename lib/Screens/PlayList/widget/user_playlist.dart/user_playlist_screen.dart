@@ -2,6 +2,7 @@ import 'dart:io';
 //
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/Screens/Home/widgets/home_search_page.dart';
@@ -46,6 +47,8 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
         setState(() {
           thumbnails[video] = thumbnail; //
         });
+      } on PlatformException catch (f) {
+        debugPrint('PlatformExceptin occured $f');
       } catch (e) {
         debugPrint('Error generating thumbnail for $video: $e');
       }
@@ -166,11 +169,21 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                       final videoPath = widget.playlist.videos![index];
                       final thumbnail = thumbnails[videoPath];
 
+                      // Check if the videoPath exists on the device
+                      final videoFile = File(videoPath);
+                      final isValidVideo = videoFile.existsSync();
+
+                      if (!isValidVideo) {
+                        // Skip invalid video paths
+                        return const SizedBox(); // Return an empty SizedBox
+                      }
+
                       return Padding(
                           padding:
                               const EdgeInsets.only(top: 10.0, bottom: 10.0),
                           child: (thumbnails.isNotEmpty ||
-                                  widget.playlist.videos != null)
+                                  widget.playlist.videos != null ||
+                                  thumbnail == null)
                               ? ListTile(
                                   leading: (thumbnail != null)
                                       ? Container(
@@ -193,29 +206,32 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                                           width: 100,
                                           height: 100,
                                           decoration: BoxDecoration(
-                                            color: kcolorDarkblue,
                                             border: Border.all(
                                               style: BorderStyle.solid,
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
+                                          ),
+                                          child: const Placeholder(
+                                              strokeWidth: 1.0),
+                                        ),
+                                  title: Text(thumbnail == null
+                                      ? 'video not found'
+                                      : basename(videoPath)),
+                                  onTap: () {
+                                    if (thumbnail != null) {
+                                      MostlyPlayedFunctions.addVideoPlayData(
+                                          videoPath);
+                                      RecentlyPlayed.onVideoClicked(
+                                          videoPath: videoPath);
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              VideoPlaylistScreen(
+                                            videoPaths: widget.playlist,
+                                            currentIndex: index,
                                           ),
                                         ),
-                                  title: Text(basename(videoPath)),
-                                  onTap: () {
-                                    MostlyPlayedFunctions.addVideoPlayData(
-                                        videoPath);
-                                    RecentlyPlayed.onVideoClicked(
-                                        videoPath: videoPath);
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            VideoPlaylistScreen(
-                                          videoPaths: widget.playlist,
-                                          currentIndex: index,
-                                        ),
-                                      ),
-                                    );
+                                      );
+                                    }
                                   },
                                   trailing: GestureDetector(
                                       onTapDown: (details) {
@@ -245,14 +261,14 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                                                           videoPath);
 
                                                   ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                          const SnackBar(
+                                                      .showSnackBar(SnackBar(
                                                     behavior: SnackBarBehavior
                                                         .floating,
-                                                    backgroundColor: kColorCyan,
-                                                    duration:
-                                                        Duration(seconds: 2),
-                                                    content: Text(
+                                                    backgroundColor:
+                                                        kcolorblack05,
+                                                    duration: const Duration(
+                                                        seconds: 2),
+                                                    content: const Text(
                                                         'Video added to favorites'),
                                                   ));
                                                 }),
@@ -299,14 +315,15 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                                                         });
                                                         Navigator.of(context)
                                                             .pop();
-                                                        ScaffoldMessenger
-                                                                .of(context)
-                                                            .showSnackBar(const SnackBar(
-                                                                behavior: SnackBarBehavior
-                                                                    .floating,
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(SnackBar(
+                                                                behavior:
+                                                                    SnackBarBehavior
+                                                                        .floating,
                                                                 backgroundColor:
-                                                                    kColorCyan,
-                                                                content: Text(
+                                                                    kcolorblack05,
+                                                                content: const Text(
                                                                     'Video Deleted Successfully')));
                                                       },
                                                       icon: const Icon(Icons

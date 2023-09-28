@@ -16,13 +16,27 @@ class OthersTab extends StatefulWidget {
 enum SortingOption { nameAs, nameDe }
 
 class _OthersTabState extends State<OthersTab> {
-  List<File> others = [];
-  List<File> displayedFiles = []; //
+  List<File> dummy = [];
+  List<File> displayFiles = [];
 
   @override
   void initState() {
+    displayFiles = getdownloadsonlyPath();
     super.initState();
-    displayedFiles = getdownloadsonlyPath();
+  }
+
+  SortingOption selectedOption = SortingOption.nameAs; //
+
+  void sortByNameAs() {
+    setState(() {
+      displayFiles.sort((a, b) => basename(a.path).compareTo(basename(b.path)));
+    });
+  }
+
+  void sortByNameDe() {
+    setState(() {
+      displayFiles.sort((a, b) => basename(b.path).compareTo(basename(a.path)));
+    });
   }
 
   List<File> getdownloadsonlyPath() {
@@ -32,27 +46,12 @@ class _OthersTabState extends State<OthersTab> {
           path.path.contains('WhatsApp') ||
           path.path.contains('Screenshots') ||
           path.path.contains('Camera')) {
-        //
+        // Skip files that match these conditions
       } else {
         result.add(path);
       }
     }
     return result;
-  }
-
-  SortingOption selectedOption = SortingOption.nameAs; //
-
-  void sortByNameAs() {
-    setState(() {
-      displayedFiles.sort((a, b) => (a.path).compareTo(b.path));
-    });
-  }
-
-  void sortByNameDe() {
-    setState(() {
-      displayedFiles
-          .sort((a, b) => basename(b.path).compareTo(basename(a.path)));
-    });
   }
 
   @override
@@ -102,18 +101,18 @@ class _OthersTabState extends State<OthersTab> {
         ),
         Padding(
           padding: const EdgeInsets.only(top: 40),
-          child: (displayedFiles.isEmpty)
+          child: (displayFiles.isEmpty)
               ? const Center(
                   child: Text('No video available'),
                 )
               : GridView.builder(
                   shrinkWrap: true,
-                  itemCount: displayedFiles.length,
+                  itemCount: displayFiles.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                   ),
                   itemBuilder: (context, index) {
-                    final videoPath = displayedFiles[index];
+                    final videoPath = displayFiles[index];
 
                     return Padding(
                       padding: const EdgeInsets.only(

@@ -28,6 +28,17 @@ class _HomePageScreenState extends State<HomePageScreen> {
     super.dispose();
   }
 
+  checkpathExists() async {
+    for (final file in widget.filesV) {
+      final isValidVideo = file.existsSync();
+
+      if (!isValidVideo) {
+        // Skip invalid video paths
+        return File(''); // Return an empty SizedBox
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

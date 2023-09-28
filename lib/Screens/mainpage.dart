@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -12,9 +11,7 @@ import 'package:video_player_app/functions/path_functions.dart';
 
 class MainPageScreen extends StatefulWidget {
   final List<File> videoFile;
-  final List<Uint8List>? thumbnail;
-  const MainPageScreen({Key? key, this.thumbnail, required this.videoFile})
-      : super(key: key);
+  const MainPageScreen({Key? key, required this.videoFile}) : super(key: key);
 
   @override
   State<MainPageScreen> createState() => _MainPageScreenState();
@@ -32,7 +29,7 @@ class _MainPageScreenState extends State<MainPageScreen>
   }
 
   void fetchAndShowVideos() async {
-    final fetchedVideos = await PathFunctions.getPath();
+    final fetchedVideos = await PathFunctions.getVideoPathsAsync();
 
     setState(() {
       videoData = List<String>.from(fetchedVideos);
@@ -59,7 +56,7 @@ class _MainPageScreenState extends State<MainPageScreen>
           currentIndex: _bottomNavIndex,
           onTap: (i) => setState(() => _bottomNavIndex = i),
           items: [
-            //
+            /// Home
             SalomonBottomBarItem(
                 icon: const Icon(Icons.home),
                 title: const Text(
@@ -69,17 +66,17 @@ class _MainPageScreenState extends State<MainPageScreen>
                 selectedColor: kColorAmber,
                 unselectedColor: kColorWhite),
 
-            //
+            /// Likes
             SalomonBottomBarItem(
                 icon: const Icon(Icons.playlist_play),
                 title: const Text(
                   "Playlist",
                   style: TextStyle(fontFamily: 'Koulen'),
                 ),
-                selectedColor: kColorCyan,
+                selectedColor: kcolorblack05,
                 unselectedColor: kColorWhite),
 
-            //
+            /// Search
             SalomonBottomBarItem(
                 icon: const Icon(Icons.favorite_outline),
                 title: const Text(
@@ -89,7 +86,7 @@ class _MainPageScreenState extends State<MainPageScreen>
                 selectedColor: kColorOrange,
                 unselectedColor: kColorWhite),
 
-            //
+            /// Profile
             SalomonBottomBarItem(
                 icon: const Icon(Icons.settings),
                 title: const Text(

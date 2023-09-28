@@ -256,11 +256,11 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
 
                   Navigator.of(context).popUntil((route) => route.isFirst);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
+                     SnackBar(
                       behavior: SnackBarBehavior.floating,
-                      backgroundColor: kColorCyan,
-                      content: Text('Video added to playlist'), //
-                      duration: Duration(seconds: 2), //
+                      backgroundColor: kcolorblack05,
+                      content: const Text('Video added to playlist'), //
+                      duration: const Duration(seconds: 2), //
                     ),
                   ); //
                 }
@@ -269,12 +269,12 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
                       selectedPlaylist!, widget.video.filePath);
                   Navigator.of(context).popUntil((route) => route.isFirst);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
+                     SnackBar(
                       clipBehavior: Clip.antiAlias,
                       behavior: SnackBarBehavior.floating,
-                      backgroundColor: kColorCyan,
-                      content: Text('Video added to playlist'), //
-                      duration: Duration(seconds: 2), //
+                      backgroundColor: kcolorblack05,
+                      content: const Text('Video added to playlist'), //
+                      duration: const Duration(seconds: 2), //
                     ),
                   );
                 }

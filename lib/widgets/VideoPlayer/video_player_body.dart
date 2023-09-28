@@ -1,7 +1,4 @@
-//
-
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -175,11 +172,11 @@ class _VideoPlayerBodyState extends State<VideoPlayerBody> {
 
                   Navigator.of(context).popUntil((route) => route.isFirst);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
+                     SnackBar(
                       behavior: SnackBarBehavior.floating,
-                      backgroundColor: kColorCyan,
-                      content: Text('Video added to playlist'), //
-                      duration: Duration(seconds: 2), //
+                      backgroundColor: kcolorblack05,
+                      content: const Text('Video added to playlist'), //
+                      duration: const Duration(seconds: 2), //
                     ),
                   ); //
                 }

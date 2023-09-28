@@ -19,25 +19,30 @@ class CameraTab extends StatefulWidget {
 enum SortingOption { nameAs, nameDe }
 
 class _CameraTabState extends State<CameraTab> {
+  List<File> camera = [];
   SortingOption selectedOption = SortingOption.nameAs; //
 
   void sortByNameAs() {
+    List<String> fileNames =
+        widget.filesV.map((path) => path.path.split('/').last).toList();
     setState(() {
-      widget.filesV.sort((a, b) => (a.path).compareTo((b.path)));
+      fileNames.sort();
     });
     //
   }
 
   void sortByNameDe() {
+    List<String> fileNames =
+        widget.filesV.map((path) => path.path.split('/').last).toList();
+
     setState(() {
-      widget.filesV.sort((a, b) => (b.path).compareTo((a.path)));
+      fileNames.sort((a, b) => b.compareTo(a));
     });
     //
   }
 
-  List<File> getcameraonlyPath() {
-    List<File> camera = [];
-    for (File path in widget.filesV) {
+  List<File> separatePaths() {
+    for (final path in widget.filesV) {
       if (path.path.contains('Camera')) {
         camera.add(path);
       }
@@ -47,7 +52,7 @@ class _CameraTabState extends State<CameraTab> {
 
   @override
   Widget build(BuildContext context) {
-    final cameraPath = getcameraonlyPath();
+    final path = separatePaths();
     return Stack(
       children: [
         Positioned(
@@ -95,18 +100,18 @@ class _CameraTabState extends State<CameraTab> {
         ),
         Padding(
           padding: const EdgeInsets.only(top: 40),
-          child: (cameraPath.isEmpty)
+          child: (path.isEmpty)
               ? const Center(
                   child: Text('No video available'),
                 )
               : GridView.builder(
                   shrinkWrap: true,
-                  itemCount: cameraPath.length,
+                  itemCount: path.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                   ),
                   itemBuilder: (context, index) {
-                    final videoPath = cameraPath[index];
+                    final videoPath = path[index];
 
                     return Padding(
                       padding: const EdgeInsets.only(

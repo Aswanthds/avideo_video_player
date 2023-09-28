@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/screens/home/Tabs/widgets/video_tile_widget.dart';
@@ -43,13 +44,13 @@ class _DownloadTabState extends State<DownloadTab> {
 
   void sortByNameAs() {
     setState(() {
-      downloads.sort((a, b) => (a.path).compareTo((b.path)));
+      downloads.sort((a, b) => basename(a.path).compareTo(basename(b.path)));
     });
   }
 
   void sortByNameDe() {
     setState(() {
-      downloads.sort((a, b) => (b.path).compareTo((a.path)));
+      downloads.sort((a, b) => basename(b.path).compareTo(basename(a.path)));
     });
   }
 
@@ -65,7 +66,7 @@ class _DownloadTabState extends State<DownloadTab> {
 
   @override
   Widget build(BuildContext context) {
-    final downloadpath = getdownloadsonlyPath();
+    final path = getdownloadsonlyPath();
     return Stack(
       children: [
         Positioned(
@@ -113,18 +114,18 @@ class _DownloadTabState extends State<DownloadTab> {
         ),
         Padding(
           padding: const EdgeInsets.only(top: 40),
-          child: (downloadpath.isEmpty)
+          child: (path.isEmpty)
               ? const Center(
                   child: Text('No video available'),
                 )
               : GridView.builder(
                   shrinkWrap: true,
-                  itemCount: downloadpath.length,
+                  itemCount: path.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                   ),
                   itemBuilder: (context, index) {
-                    final videoPath = downloadpath[index];
+                    final videoPath = path[index];
 
                     return Padding(
                       padding: const EdgeInsets.only(

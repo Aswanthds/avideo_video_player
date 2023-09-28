@@ -54,8 +54,8 @@ class _PlaylistFormState extends State<PlaylistForm> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                       behavior: SnackBarBehavior.floating,
-                      backgroundColor: kColorCyan,
-                    content: Text('Playlist created: $playlistName')),
+                      backgroundColor: kcolorblack05,
+                      content: Text('Playlist created: $playlistName')),
                 );
               }
             },
