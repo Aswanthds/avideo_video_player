@@ -111,7 +111,7 @@ class _OthersTabState extends State<OthersTab> {
         ),
        (sortedFiles.isEmpty)
             ? const Center(
-                child: Text('No videos found'),
+                child: nodata
               )
             : GridviewWidget(sortedFiles: sortedFiles),
       ],

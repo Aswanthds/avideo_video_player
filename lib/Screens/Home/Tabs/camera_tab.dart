@@ -112,7 +112,7 @@ class _CameraTabState extends State<CameraTab> {
         ),
       (sortedFiles.isEmpty)
             ? const Center(
-                child: Text('No videos found'),
+                child: nodata
               )
             : GridviewWidget(sortedFiles: sortedFiles)
       ],

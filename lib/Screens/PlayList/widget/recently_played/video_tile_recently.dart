@@ -166,10 +166,7 @@ class _RecentlyPlayedVideoTileWidgetState
         basename(widget.files[widget.index].videoPath),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: const TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-        ),
+        style:  favorites
       ),
       subtitle: Text(
         '${(calculateProgress(widget.current, widget.full)! * 100).round()}%',

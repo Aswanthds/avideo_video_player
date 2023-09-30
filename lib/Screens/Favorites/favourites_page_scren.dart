@@ -92,9 +92,7 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
             builder: (context, Box<FavoriteData> box, _) {
               final playlists = box.values.toList();
               if (box.isEmpty) {
-                return const Center(
-                  child: Text('No data Available'),
-                );
+                return const Center(child: nodata);
               }
               return (playlists.isNotEmpty)
                   ? Expanded(

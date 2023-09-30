@@ -161,9 +161,7 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                   ),
                 ),
                 widget.playlist.videos!.isEmpty
-                    ? const Center(
-                        child: Text('No Videos'),
-                      )
+                    ? const Center(child: nodata)
                     : Padding(
                         padding: const EdgeInsets.only(top: 40),
                         child: ListView.builder(
@@ -215,9 +213,12 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                                                 child: const Placeholder(
                                                     strokeWidth: 1.0),
                                               ),
-                                        title: Text(thumbnail == null
-                                            ? 'video not found'
-                                            : basename(videoPath)),
+                                        title: Text(
+                                          thumbnail == null
+                                              ? 'video not found'
+                                              : basename(videoPath),
+                                          style: favorites,
+                                        ),
                                         onTap: () {
                                           if (thumbnail != null) {
                                             MostlyPlayedFunctions
@@ -355,9 +356,7 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                                             },
                                             child: const Icon(Icons.more_vert)),
                                       )
-                                    : const Center(
-                                        child: Text('No Playlist Available'),
-                                      ));
+                                    : const Center(child: nodata));
                           },
                         ),
                       ),

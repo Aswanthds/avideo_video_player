@@ -153,11 +153,7 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
           basename(videoFilePath),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-              fontSize: 15,
-              color: kcolorDarkblue,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'NixieOne'),
+          style: favorites 
         ),
         trailing: GestureDetector(
           onTapDown: (TapDownDetails details) {

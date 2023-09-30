@@ -64,7 +64,7 @@ class _MainPageScreenState extends State<MainPageScreen>
                 icon: const Icon(Icons.home),
                 title: const Text(
                   "Home",
-                  style: TextStyle(fontFamily: 'Koulen'),
+                  style: bottomNav
                 ),
                 selectedColor: kColorAmber,
                 unselectedColor: kColorWhite),
@@ -74,7 +74,7 @@ class _MainPageScreenState extends State<MainPageScreen>
                 icon: const Icon(Icons.playlist_play),
                 title: const Text(
                   "Playlist",
-                  style: TextStyle(fontFamily: 'Koulen'),
+                  style: bottomNav,
                 ),
                 selectedColor: kColorCyan,
                 unselectedColor: kColorWhite),
@@ -84,7 +84,7 @@ class _MainPageScreenState extends State<MainPageScreen>
                 icon: const Icon(Icons.favorite_outline),
                 title: const Text(
                   "Favourites",
-                  style: TextStyle(fontFamily: 'Koulen'),
+                  style: bottomNav
                 ),
                 selectedColor: kColorOrange,
                 unselectedColor: kColorWhite),
@@ -94,7 +94,7 @@ class _MainPageScreenState extends State<MainPageScreen>
                 icon: const Icon(Icons.settings),
                 title: const Text(
                   "Settings",
-                  style: TextStyle(fontFamily: 'Koulen'),
+                  style: bottomNav,
                 ),
                 selectedColor: kColorDeepOrange,
                 unselectedColor: kColorWhite),

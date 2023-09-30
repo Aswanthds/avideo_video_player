@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/database/recently_video_data.dart';
 import 'package:flutter/material.dart';
 
@@ -61,7 +62,7 @@ class _RecentlyPlayedVideoTileState extends State<RecentlyPlayedVideoTile> {
 
   @override
   Widget build(BuildContext context) {
-    return (widget.files.length > widget.index || widget.files.isEmpty)
+    return (widget.files.length > widget.index || widget.files.isEmpty && widget.files.isNotEmpty)
         ? RecentlyPlayedVideoTileWidget(
             current: currentTimestamp.inMilliseconds.toDouble(),
             full: fullTimestamp.inMilliseconds.toDouble(),
@@ -69,6 +70,6 @@ class _RecentlyPlayedVideoTileState extends State<RecentlyPlayedVideoTile> {
             index: widget.index,
             thumbnail: widget.thumbnail,
           )
-        : const SizedBox();
+        : const Center(child: nodata,);
   }
 }

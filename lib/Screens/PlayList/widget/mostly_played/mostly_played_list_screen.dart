@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -38,6 +39,11 @@ class _MostlyPlayedListScreenState extends State<MostlyPlayedListScreen> {
     }
   }
 
+  bool isVideoFileExists(String path) {
+    final file = File(path);
+    return file.existsSync();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,68 +51,75 @@ class _MostlyPlayedListScreenState extends State<MostlyPlayedListScreen> {
         valueListenable:
             Hive.box<MostlyPlayedData>('mostly_played_data').listenable(),
         builder: (context, data, child) {
-          if (data.isEmpty) {
-            return const Center(
-              child: Text('No data available.'),
-            );
+           if (data.isEmpty) {
+            return const Center(child: nodata);
           } else {
             final dataItem = data.values.toList();
 
-            //
-            final filteredDataItem =
-                dataItem.where((item) => item.playCount > 3).toList();
+            final filteredDataItem = dataItem
+                .where((item) =>
+                    item.playCount > 2 && isVideoFileExists(item.videoPath!))
+                .toList();
 
-            //
             filteredDataItem.sort((a, b) => b.playCount.compareTo(a.playCount));
-            return ListView.builder(
-              itemCount: filteredDataItem.length,
-              itemBuilder: (context, index) {
-                final item = filteredDataItem[index];
-                return ListTile(
-                  leading: FutureBuilder<Uint8List?>(
-                    future: generateThumbnail(item.videoPath!),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
-                      } else if (snapshot.hasError) {
-                        return const Icon(Icons.error);
-                      } else if (!snapshot.hasData) {
-                        return const Icon(Icons.video_label);
-                      } else {
-                        return Container(
-                          width: 80,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              color: kcolorblack54,
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                  image: MemoryImage(snapshot.data!))),
-                        );
-                      }
+            return (filteredDataItem.isNotEmpty)
+                ? ListView.builder(
+                    itemCount: filteredDataItem.length,
+                    itemBuilder: (context, index) {
+                      final item = filteredDataItem[index];
+                      return (item.videoPath!.isNotEmpty)
+                          ? ListTile(
+                              leading: FutureBuilder<Uint8List?>(
+                                future: generateThumbnail(item.videoPath!),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const CircularProgressIndicator();
+                                  } else if (snapshot.hasError) {
+                                    return const Icon(Icons.error);
+                                  } else if (!snapshot.hasData) {
+                                    return const SizedBox();
+                                  } else {
+                                    return Container(
+                                      width: 80,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: kcolorblack54,
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: MemoryImage(snapshot.data!),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
+                              title: Text(
+                                basename(item.videoPath!),
+                                maxLines: 1,
+                                style: const TextStyle(
+                                  color: kcolorblack,
+                                ),
+                              ),
+                              subtitle: Text('Play Count: ${item.playCount}'),
+                              onTap: () {
+                                MostlyPlayedFunctions.addVideoPlayData(
+                                    item.videoPath!);
+                                RecentlyPlayed.onVideoClicked(
+                                  videoPath: item.videoPath!,
+                                );
+                                RecentlyPlayed.checkHiveData();
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => VideoPlayerScreen(
+                                    filesV: item.videoPath!,
+                                  ),
+                                ));
+                              },
+                            )
+                          : const SizedBox();
                     },
-                  ),
-                  title: Text(
-                    basename(item.videoPath!),
-                    maxLines: 1,
-                    style: const TextStyle(
-                      color: kcolorblack,
-                    ),
-                  ),
-                  subtitle: Text('Play Count: ${item.playCount}'),
-                  onTap: () {
-                    MostlyPlayedFunctions.addVideoPlayData(item.videoPath!);
-                    RecentlyPlayed.onVideoClicked(
-                      videoPath: item.videoPath!,
-                    );
-                    RecentlyPlayed.checkHiveData();
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          VideoPlayerScreen(filesV: item.videoPath!),
-                    ));
-                  },
-                );
-              },
-            );
+                  )
+                : const Center(child: nodata);
           }
         },
       ),

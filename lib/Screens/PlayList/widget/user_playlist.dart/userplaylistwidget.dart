@@ -84,7 +84,7 @@ class _PlaylistListWidgetState extends State<PlaylistListWidget> {
         ),
         playlistsV.isEmpty
             ? const Center(
-                child: Text('No created Playlist'),
+                child: nodata
               )
             : Expanded(
                 child: Padding(

@@ -19,3 +19,18 @@ const kColorOrange = Colors.orange;
 const kColorDeepOrange = Colors.deepOrange;
 const kColorAmber = Colors.amber;
 const kColorOrangeAccent = Colors.orangeAccent;
+
+// No data available Texts
+
+const Widget nodata =
+    Text('No data Available', style: TextStyle(color: kColorBlue));
+const TextStyle appbar =
+    TextStyle(color: kColorWhite, fontSize: 25, fontWeight: FontWeight.bold);
+
+const TextStyle bottomNav = TextStyle(fontFamily: 'Koulen');
+
+const TextStyle favorites = TextStyle(
+    fontSize: 15,
+    color: kcolorDarkblue,
+    fontWeight: FontWeight.bold,
+    fontFamily: 'NixieOne');

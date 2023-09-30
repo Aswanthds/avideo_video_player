@@ -67,7 +67,7 @@ class _ScreenRecordsTabState extends State<ScreenRecordsTab> {
         sortingWidget(),
         (sortedFiles.isEmpty)
             ? const Center(
-                child: Text('No videos found'),
+                child: nodata
               )
             : GridviewWidget(sortedFiles: sortedFiles),
       ],

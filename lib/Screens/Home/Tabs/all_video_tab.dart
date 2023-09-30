@@ -98,7 +98,7 @@ class _AllVideoTabState extends State<AllVideoTab> {
             ),
           ),
         ),
-        (widget.video.isEmpty)
+        (widget.video.isEmpty )
             ? const Center(child:  CircularProgressIndicator(strokeWidth: 2.0,))
             : GridviewWidget(sortedFiles: widget.video)
       ],

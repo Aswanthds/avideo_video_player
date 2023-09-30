@@ -36,16 +36,21 @@ class _RecentlyPlayedVideosPageState extends State<RecentlyPlayedVideosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(100),
-        child: AppBar(
-          iconTheme: const IconThemeData(color: kColorWhite),
-          backgroundColor: kcolorDarkblue,
-          // ignore: prefer_const_constructors
-          title: Text(
-            'Avideo Video Player',
-            style: const TextStyle(
-              fontFamily: 'Cookie',
-              fontSize: 35,
+        preferredSize: const Size.fromHeight(75),
+        child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(24),
+          ),
+          child: AppBar(
+            iconTheme: const IconThemeData(color: kColorWhite),
+            backgroundColor: kcolorDarkblue,
+            // ignore: prefer_const_constructors
+            title: Text(
+              'Avideo Video Player',
+              style: const TextStyle(
+                fontFamily: 'Cookie',
+                fontSize: 35,
+              ),
             ),
           ),
         ),
@@ -62,7 +67,7 @@ class _RecentlyPlayedVideosPageState extends State<RecentlyPlayedVideosPage> {
               child: const ThumbnailRecentlyHeadingWidget(),
             ),
           ),
-          RecenPlayedVideoList(files: recentlyPlayedVideos)
+           RecenPlayedVideoList(files: recentlyPlayedVideos) 
         ],
       ),
     );
