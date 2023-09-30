@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:video_player_app/Screens/home/Tabs/widgets/video_menu_row.dart';
-import 'package:video_player_app/Screens/home/Tabs/widgets/video_common_thumbnail.dart';
+import 'package:video_player_app/Screens/home/Tabs/widgets/video_thumbnail.dart';
 import 'package:video_player_app/functions/mostly_played_functions.dart';
 import 'package:video_player_app/functions/recently_played_functions.dart';
 import 'package:video_player_app/widgets/VideoPlayer/video_player_widget.dart';

@@ -3,42 +3,45 @@ import 'package:video_player_app/Screens/home/widgets/folder_tab.dart';
 import 'package:video_player_app/constants.dart';
 
 class HomeTabBar extends StatelessWidget {
+  final TabController controller;
   const HomeTabBar({
     super.key,
+    required this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
-    return const TabBar(
+    return TabBar(
+      controller: controller,
       labelColor: kColorWhite,
       unselectedLabelColor: Colors.grey,
       isScrollable: true,
-      labelStyle: TextStyle(color: kColorWhite),
+      labelStyle: const TextStyle(color: kColorWhite),
       indicatorColor: Colors.lightBlue,
-      tabs: [
+      tabs: const [
         FolderTab(
           foldername: 'All',
-          icon: Icons.video_collection,
+          icon: Icon(Icons.video_collection),
         ),
         FolderTab(
           foldername: 'Camera',
-          icon: Icons.camera_alt,
+          icon: Icon(Icons.camera_alt),
         ),
         FolderTab(
           foldername: 'Download',
-          icon: Icons.download,
+          icon: Icon(Icons.download),
         ),
         FolderTab(
           foldername: 'Screenrecords',
-          icon: Icons.radio_button_checked_rounded,
+          icon: Icon(Icons.radio_button_checked_rounded),
         ),
         FolderTab(
           foldername: 'Whatsapp',
-          icon: Icons.wechat_sharp,
+          icon: Image(image: AssetImage('assets/images/bg.png'),height: 24,color: kColorWhite,)
         ),
         FolderTab(
           foldername: 'Others',
-          icon: Icons.video_label,
+          icon: Icon(Icons.video_label),
         ),
       ],
     );

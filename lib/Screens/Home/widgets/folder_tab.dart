@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class FolderTab extends StatelessWidget {
   final String foldername;
-  final IconData? icon;
+  final Widget icon;
 
   const FolderTab({
     super.key,
     required this.foldername,
-    this.icon,
+     required this.icon,
   });
 
   @override
@@ -16,7 +16,7 @@ class FolderTab extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Icon(icon),
+          icon,
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(

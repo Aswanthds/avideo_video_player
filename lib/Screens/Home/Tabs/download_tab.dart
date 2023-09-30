@@ -1,9 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/constants.dart';
-import 'package:video_player_app/screens/home/Tabs/widgets/video_tile_widget.dart';
+import 'package:video_player_app/screens/home/Tabs/widgets/sorting_widget.dart';
 
 class DownloadTab extends StatefulWidget {
   final List<File> filesV;
@@ -16,57 +14,53 @@ class DownloadTab extends StatefulWidget {
 enum SortingOption { nameAs, nameDe }
 
 class _DownloadTabState extends State<DownloadTab> {
-  List<File> downloads = [];
+  SortingOption selectedOption = SortingOption.nameAs; //
+
+  List<File> sortedFiles = []; // Maintain a separate sorted list
   @override
   void initState() {
     super.initState();
-  }
-
-  final ValueNotifier<File> thumbnailNotifier = ValueNotifier<File>(File(''));
-  Future<void> updateThumbnails() async {
-    for (final videoFile in downloads) {
-      try {
-        final thumbnailFile = await VideoCompress.getFileThumbnail(
-          videoFile.path,
-          quality: 30,
-          position: 0,
-        );
-        setState(() {
-          thumbnailNotifier.value = thumbnailFile;
-        });
-      } catch (e) {
-        debugPrint('Error generating thumbnail: $e');
-      }
-    }
-  }
-
-  SortingOption selectedOption = SortingOption.nameAs; //
-
-  void sortByNameAs() {
-    setState(() {
-      downloads.sort((a, b) => basename(a.path).compareTo(basename(b.path)));
-    });
-  }
-
-  void sortByNameDe() {
-    setState(() {
-      downloads.sort((a, b) => basename(b.path).compareTo(basename(a.path)));
-    });
+    sortedFiles = getdownloadsonlyPath();
+    sortByNameAs(); // Initialize with the default sorting
   }
 
   List<File> getdownloadsonlyPath() {
     List<File> downloads = [];
     for (File path in widget.filesV) {
-      if (path.path.contains('Download')) {
+      if (path.path.contains('Downloads')) {
         downloads.add(path);
       }
     }
+
     return downloads;
+  }
+
+  void sortByNameAs() {
+    setState(() {
+      sortedFiles = List<File>.from(getdownloadsonlyPath())
+        ..sort((a, b) {
+          final filenameA = a.path.split(Platform.pathSeparator).last;
+          final filenameB = b.path.split(Platform.pathSeparator).last;
+          return filenameA.compareTo(filenameB);
+        });
+      selectedOption = SortingOption.nameAs; // Update the selected option
+    });
+  }
+
+  void sortByNameDe() {
+    setState(() {
+      sortedFiles = List<File>.from(getdownloadsonlyPath())
+        ..sort((a, b) {
+          final filenameA = a.path.split(Platform.pathSeparator).last;
+          final filenameB = b.path.split(Platform.pathSeparator).last;
+          return filenameB.compareTo(filenameA);
+        });
+      selectedOption = SortingOption.nameDe; // Update the selected option
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final path = getdownloadsonlyPath();
     return Stack(
       children: [
         Positioned(
@@ -112,35 +106,11 @@ class _DownloadTabState extends State<DownloadTab> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 40),
-          child: (path.isEmpty)
-              ? const Center(
-                  child: Text('No video available'),
-                )
-              : GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: path.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  itemBuilder: (context, index) {
-                    final videoPath = path[index];
-
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                        top: 10,
-                        left: 10,
-                        right: 10,
-                      ),
-                      child: VideoTileWidget(
-                        videoFile: videoPath,
-                        index: index,
-                      ),
-                    );
-                  },
-                ),
-        ),
+        (sortedFiles.isEmpty)
+            ? const Center(
+                child: Text('No videos found'),
+              )
+            : GridviewWidget(sortedFiles: sortedFiles),
       ],
     );
   }

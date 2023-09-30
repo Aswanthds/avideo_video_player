@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:video_player_app/Screens/Home/Tabs/widgets/video_tile_widget.dart';
+import 'package:video_player_app/constants.dart';
+import 'package:video_player_app/screens/home/Tabs/widgets/sorting_widget.dart';
 
 class ScreenRecordsTab extends StatefulWidget {
   final List<File> filesV;
@@ -11,58 +12,106 @@ class ScreenRecordsTab extends StatefulWidget {
   State<ScreenRecordsTab> createState() => _ScreenRecordsTabState();
 }
 
+enum SortingOption { nameAs, nameDe }
+
 class _ScreenRecordsTabState extends State<ScreenRecordsTab> {
-  List<File> screenRecords = [];
+  SortingOption selectedOption = SortingOption.nameAs; //
+  List<File> sortedFiles = []; // Maintain a separate sorted list
   @override
   void initState() {
     super.initState();
+    sortedFiles = getdownloadsonlyPath();
+    sortByNameAs(); // Initialize with the default sorting// Initialize with the default sorting
   }
 
-  @override
-  void didUpdateWidget(covariant ScreenRecordsTab oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.filesV != widget.filesV && mounted) {
-      setState(() {});
-    }
-  }
+  List<File> getdownloadsonlyPath() {
+    List<File> screenRecordings = [];
 
-  List<File> separatePaths() {
-    for (final path in widget.filesV) {
-      if (path.path.contains('Screenshots')) {
-        screenRecords.add(path);
+    for (File path in widget.filesV) {
+      if (path.path.contains('Screenrecording')) {
+        screenRecordings.add(path);
       }
     }
-    return screenRecords;
+
+    return screenRecordings;
+  }
+
+  void sortByNameAs() {
+    setState(() {
+      sortedFiles = List<File>.from(getdownloadsonlyPath())
+        ..sort((a, b) {
+          final filenameA = a.path.split(Platform.pathSeparator).last;
+          final filenameB = b.path.split(Platform.pathSeparator).last;
+          return filenameA.compareTo(filenameB);
+        });
+      selectedOption = SortingOption.nameAs; // Update the selected option
+    });
+  }
+
+  void sortByNameDe() {
+    setState(() {
+      sortedFiles = List<File>.from(getdownloadsonlyPath())
+        ..sort((a, b) {
+          final filenameA = a.path.split(Platform.pathSeparator).last;
+          final filenameB = b.path.split(Platform.pathSeparator).last;
+          return filenameB.compareTo(filenameA);
+        });
+      selectedOption = SortingOption.nameDe; // Update the selected option
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final path = separatePaths();
-    return (path.isEmpty)
-        ? const Center(
-            child: Text('No video available'),
-          )
-        : GridView.builder(
-            shrinkWrap: true,
-            itemCount: path.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-            ),
-            itemBuilder: (context, index) {
-              final videoPath = path[index];
+    return Stack(
+      children: [
+        sortingWidget(),
+        (sortedFiles.isEmpty)
+            ? const Center(
+                child: Text('No videos found'),
+              )
+            : GridviewWidget(sortedFiles: sortedFiles),
+      ],
+    );
+  }
 
-              return Padding(
-                padding: const EdgeInsets.only(
-                  top: 10,
-                  left: 10,
-                  right: 10,
-                ),
-                child: VideoTileWidget(
-                  videoFile: videoPath,
-                  index: index,
-                ),
-              );
-            },
-          );
+  Positioned sortingWidget() {
+    return Positioned(
+      top: 0,
+      right: 0,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 5, right: 5),
+        child: DropdownButton<SortingOption>(
+          value: selectedOption,
+          underline: const SizedBox(), //
+          dropdownColor: kColorWhite,
+          iconEnabledColor: kcolorDarkblue,
+          style: const TextStyle(
+              fontSize: 12, fontWeight: FontWeight.bold, color: kcolorblack),
+          borderRadius: BorderRadius.circular(10),
+          onChanged: (SortingOption? newValue) {
+            setState(() {
+              //
+              if (newValue == SortingOption.nameAs) {
+                sortByNameAs();
+              } else if (newValue == SortingOption.nameDe) {
+                sortByNameDe();
+              }
+            });
+          },
+          items: const [
+            DropdownMenuItem(
+              value: SortingOption.nameAs,
+              child: Text(
+                ' (A ➔ Z)',
+              ),
+            ),
+            DropdownMenuItem(
+              value: SortingOption.nameDe,
+              child: Text('(Z ➔ A)'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

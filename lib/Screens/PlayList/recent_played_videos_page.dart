@@ -1,12 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:video_player_app/Screens/playlist/widget/recently_played/recently_played_video_list.dart';
-import 'package:video_player_app/Screens/Home/widgets/home_search_page.dart';
 import 'package:video_player_app/Screens/playlist/widget/playlist_heading_widget.dart';
+import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/database/recently_video_data.dart';
 import 'package:video_player_app/functions/recently_played_functions.dart';
-import 'package:video_player_app/widgets/appbar_common.dart';
 
 class RecentlyPlayedVideosPage extends StatefulWidget {
   const RecentlyPlayedVideosPage({Key? key}) : super(key: key);
@@ -38,13 +36,17 @@ class _RecentlyPlayedVideosPageState extends State<RecentlyPlayedVideosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(75),
-        child: AppbarCommon(
-          isHome: false,
-          title: 'Recently Played Videos',
-          navigation: HomeSearchPaage(
-            text: 'Search Videos here',
-            files: files,
+        preferredSize: const Size.fromHeight(100),
+        child: AppBar(
+          iconTheme: const IconThemeData(color: kColorWhite),
+          backgroundColor: kcolorDarkblue,
+          // ignore: prefer_const_constructors
+          title: Text(
+            'Avideo Video Player',
+            style: const TextStyle(
+              fontFamily: 'Cookie',
+              fontSize: 35,
+            ),
           ),
         ),
       ),

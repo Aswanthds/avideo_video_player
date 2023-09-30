@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:video_player_app/constants.dart';
-import 'package:video_player_app/screens/home/Tabs/widgets/video_tile_widget.dart';
+import 'package:video_player_app/screens/home/Tabs/widgets/sorting_widget.dart';
 
 class WhatsappTab extends StatefulWidget {
   final List<File> filesV;
@@ -15,107 +15,100 @@ class WhatsappTab extends StatefulWidget {
 enum SortingOption { nameAs, nameDe }
 
 class _WhatsappTabState extends State<WhatsappTab> {
-  List<File> displayedFiles = []; //
+  SortingOption selectedOption = SortingOption.nameAs; //
 
+  List<File> sortedFiles = []; // Maintain a separate sorted list
   @override
   void initState() {
     super.initState();
-    sortByNameAs(); //
+    sortedFiles=getdownloadsonlyPath();
+    sortByNameAs(); // Initialize with the default sorting
   }
+List<File> getdownloadsonlyPath() {
+    List<File> downloads = [];
+    for (File path in widget.filesV) {
+      if (path.path.contains('WhatsApp')) {
+        downloads.add(path);
+      }
+    }
 
-  SortingOption selectedOption = SortingOption.nameAs; //
-
-  void sortByNameAs() {
+    return downloads;
+  }
+   void sortByNameAs() {
     setState(() {
-      widget.filesV.sort((a, b) => (a.path).compareTo((b.path)));
+      sortedFiles = List<File>.from(getdownloadsonlyPath())
+        ..sort((a, b) {
+          final filenameA = a.path.split(Platform.pathSeparator).last;
+          final filenameB = b.path.split(Platform.pathSeparator).last;
+          return filenameA.compareTo(filenameB);
+        });
+      selectedOption = SortingOption.nameAs; // Update the selected option
     });
   }
 
   void sortByNameDe() {
     setState(() {
-      widget.filesV.sort((a, b) => (b.path).compareTo((a.path)));
+      sortedFiles = List<File>.from(getdownloadsonlyPath())
+        ..sort((a, b) {
+          final filenameA = a.path.split(Platform.pathSeparator).last;
+          final filenameB = b.path.split(Platform.pathSeparator).last;
+          return filenameB.compareTo(filenameA);
+        });
+      selectedOption = SortingOption.nameDe; // Update the selected option
     });
-  }
-
-  List<File> separatePaths() {
-    for (final path in widget.filesV) {
-      if (path.path.contains('WhatsApp')) {
-        displayedFiles.add(path);
-      }
-    }
-    return displayedFiles;
   }
 
   @override
   Widget build(BuildContext context) {
-    final paths = separatePaths();
+    //final paths = separatePaths();
     return Stack(
       children: [
-        Positioned(
-          top: 0,
-          right: 0,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 5, right: 5),
-            child: DropdownButton<SortingOption>(
-              value: selectedOption,
-              underline: const SizedBox(), //
-              dropdownColor: kColorWhite,
-              iconEnabledColor: kcolorDarkblue,
-              style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: kcolorblack),
-              borderRadius: BorderRadius.circular(10),
-              onChanged: (SortingOption? newValue) {
-                setState(() {
-                  //
-                  if (newValue == SortingOption.nameAs) {
-                    sortByNameAs();
-                  } else if (newValue == SortingOption.nameDe) {
-                    sortByNameDe();
-                  }
-                });
-              },
-              items: const [
-                DropdownMenuItem(
-                  value: SortingOption.nameAs,
-                  child: Text(
-                    ' (A ➔ Z)',
-                  ),
-                ),
-                DropdownMenuItem(
-                  value: SortingOption.nameDe,
-                  child: Text('(Z ➔ A)'),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 40),
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-            ),
-            itemCount: paths.length,
-            itemBuilder: (context, index) {
-              final videoPath = paths[index];
-
-              return Padding(
-                padding: const EdgeInsets.only(
-                  top: 10,
-                  left: 10,
-                  right: 10,
-                ),
-                child: VideoTileWidget(
-                  videoFile: videoPath,
-                  index: index,
-                ),
-              );
-            },
-          ),
-        ),
+        sortingWidget(),
+        GridviewWidget(sortedFiles: sortedFiles),
       ],
     );
+  }
+
+  Positioned sortingWidget() {
+    return Positioned(
+        top: 0,
+        right: 0,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 5, right: 5),
+          child: DropdownButton<SortingOption>(
+            value: selectedOption,
+            underline: const SizedBox(), //
+            dropdownColor: kColorWhite,
+            iconEnabledColor: kcolorDarkblue,
+            style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: kcolorblack),
+            borderRadius: BorderRadius.circular(10),
+            onChanged: (SortingOption? newValue) {
+              setState(() {
+                //
+                if (newValue == SortingOption.nameAs) {
+                  sortByNameAs();
+                } else if (newValue == SortingOption.nameDe) {
+                  sortByNameDe();
+                }
+              });
+            },
+            items: const [
+              DropdownMenuItem(
+                value: SortingOption.nameAs,
+                child: Text(
+                  ' (A ➔ Z)',
+                ),
+              ),
+              DropdownMenuItem(
+                value: SortingOption.nameDe,
+                child: Text('(Z ➔ A)'),
+              ),
+            ],
+          ),
+        ),
+      );
   }
 }

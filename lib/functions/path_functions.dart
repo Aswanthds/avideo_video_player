@@ -21,10 +21,7 @@ class PathFunctions {
   static Future<List<String>> getVideoPathsAsync() async {
     bool isVideoFile(File file) {
       final String extension = file.path.split('.').last.toLowerCase();
-      return extension == 'mp4' ||
-          extension == 'mov' ||
-          extension == 'avi' ||
-          extension == 'mkv';
+      return extension == 'mp4' || extension == 'mov' || extension == 'avi';
     }
 
     //final rootDirectories = await getDevicepath();

@@ -9,8 +9,7 @@ import 'package:video_player_app/widgets/search_widget.dart';
 
 class HomeSearchPaage extends StatefulWidget {
   final List<File>? files;
-  final String text;
-  const HomeSearchPaage({Key? key, this.files, required this.text})
+  const HomeSearchPaage({Key? key, this.files})
       : super(key: key);
 
   @override
@@ -90,7 +89,7 @@ class _HomeSearchPaageState extends State<HomeSearchPaage> {
           ),
           child: SearchWidget(
             controller: _controller,
-            hint: widget.text,
+            hint: 'Search videos',
           ),
         ),
       ),

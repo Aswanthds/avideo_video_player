@@ -73,7 +73,6 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => HomeSearchPaage(
-                        text: 'Search videos..',
                         files: videos.map((e) => File(e.filePath)).toList(),
                       ),
                     ));

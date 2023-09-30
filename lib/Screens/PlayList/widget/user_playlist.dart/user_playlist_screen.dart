@@ -86,7 +86,6 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
               onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => HomeSearchPaage(
                       files: stringtoFile(),
-                      text: 'Search in ${widget.playlist.name ?? ''}',
                     ),
                   )),
               icon: const Icon(Icons.search))
@@ -161,190 +160,207 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 40),
-                  child: ListView.builder(
-                    itemCount: widget.playlist.videos!.length,
-                    itemBuilder: (context, index) {
-                      final videoPath = widget.playlist.videos![index];
-                      final thumbnail = thumbnails[videoPath];
+                widget.playlist.videos!.isEmpty
+                    ? const Center(
+                        child: Text('No Videos'),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.only(top: 40),
+                        child: ListView.builder(
+                          itemCount: widget.playlist.videos!.length,
+                          itemBuilder: (context, index) {
+                            final videoPath = widget.playlist.videos![index];
+                            final thumbnail = thumbnails[videoPath];
 
-                      // Check if the videoPath exists on the device
-                      final videoFile = File(videoPath);
-                      final isValidVideo = videoFile.existsSync();
+                            // Check if the videoPath exists on the device
+                            final videoFile = File(videoPath);
+                            final isValidVideo = videoFile.existsSync();
 
-                      if (!isValidVideo) {
-                        // Skip invalid video paths
-                        return const SizedBox(); // Return an empty SizedBox
-                      }
+                            if (!isValidVideo) {
+                              // Skip invalid video paths
+                              return const SizedBox(); // Return an empty SizedBox
+                            }
 
-                      return Padding(
-                          padding:
-                              const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                          child: (thumbnails.isNotEmpty ||
-                                  widget.playlist.videos != null ||
-                                  thumbnail == null)
-                              ? ListTile(
-                                  leading: (thumbnail != null)
-                                      ? Container(
-                                          width: 100,
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                            color: kcolorDarkblue,
-                                            border: Border.all(
-                                              style: BorderStyle.solid,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: FileImage(thumbnail),
-                                            ),
-                                          ),
-                                        )
-                                      : Container(
-                                          width: 100,
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              style: BorderStyle.solid,
-                                            ),
-                                          ),
-                                          child: const Placeholder(
-                                              strokeWidth: 1.0),
-                                        ),
-                                  title: Text(thumbnail == null
-                                      ? 'video not found'
-                                      : basename(videoPath)),
-                                  onTap: () {
-                                    if (thumbnail != null) {
-                                      MostlyPlayedFunctions.addVideoPlayData(
-                                          videoPath);
-                                      RecentlyPlayed.onVideoClicked(
-                                          videoPath: videoPath);
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              VideoPlaylistScreen(
-                                            videoPaths: widget.playlist,
-                                            currentIndex: index,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  trailing: GestureDetector(
-                                      onTapDown: (details) {
-                                        double left = details.globalPosition.dx;
-                                        double top = details.globalPosition.dy;
-                                        showMenu(
-                                          context: context,
-                                          position: RelativeRect.fromLTRB(
-                                              left, top, 30, 0),
-                                          items: [
-                                            PopupMenuItem<Widget>(
-                                                child: const Row(
-                                                  children: [
-                                                    Icon(
-                                                        Icons.favorite_outline),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsets.all(8.0),
-                                                      child: Text(
-                                                          'Add to favorites'),
-                                                    ),
-                                                  ],
-                                                ),
-                                                onTap: () {
-                                                  FavoriteFunctions
-                                                      .addToFavoritesList(
-                                                          videoPath);
-
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(SnackBar(
-                                                    behavior: SnackBarBehavior
-                                                        .floating,
-                                                    backgroundColor:
-                                                        kcolorblack05,
-                                                    duration: const Duration(
-                                                        seconds: 2),
-                                                    content: const Text(
-                                                        'Video added to favorites'),
-                                                  ));
-                                                }),
-                                            PopupMenuItem<Widget>(
-                                              child: const Row(
-                                                children: [
-                                                  Icon(Icons.playlist_remove),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.all(8.0),
-                                                    child: Text(
-                                                        'Remove from playlist'),
+                            return Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10.0, bottom: 10.0),
+                                child: (thumbnails.isNotEmpty ||
+                                        thumbnail == null)
+                                    ? ListTile(
+                                        leading: (thumbnail != null)
+                                            ? Container(
+                                                width: 100,
+                                                height: 100,
+                                                decoration: BoxDecoration(
+                                                  color: kcolorDarkblue,
+                                                  border: Border.all(
+                                                    style: BorderStyle.solid,
                                                   ),
-                                                ],
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  image: DecorationImage(
+                                                    fit: BoxFit.cover,
+                                                    image: FileImage(thumbnail),
+                                                  ),
+                                                ),
+                                              )
+                                            : Container(
+                                                width: 100,
+                                                height: 100,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    style: BorderStyle.solid,
+                                                  ),
+                                                ),
+                                                child: const Placeholder(
+                                                    strokeWidth: 1.0),
                                               ),
-                                              onTap: () => showDialog(
-                                                context: context,
+                                        title: Text(thumbnail == null
+                                            ? 'video not found'
+                                            : basename(videoPath)),
+                                        onTap: () {
+                                          if (thumbnail != null) {
+                                            MostlyPlayedFunctions
+                                                .addVideoPlayData(videoPath);
+                                            RecentlyPlayed.onVideoClicked(
+                                                videoPath: videoPath);
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
                                                 builder: (context) =>
-                                                    AlertDialog(
-                                                  title: const Text(
-                                                      'Delete video ?'),
-                                                  content: const Text(
-                                                      "Are you sure ? if yes u cant undone"),
-                                                  actions: [
-                                                    TextButton.icon(
-                                                        onPressed: () {
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                        icon: const Icon(
-                                                            Icons.remove),
-                                                        label: const Text(
-                                                            'Cancel')),
-                                                    TextButton.icon(
-                                                      onPressed: () async {
-                                                        CreatePlayListFunctions
-                                                            .deleteVideoFromPlaylist(
-                                                                widget.playlist
-                                                                    .name!,
+                                                    VideoPlaylistScreen(
+                                                  videoPaths: widget.playlist,
+                                                  currentIndex: index,
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                        trailing: GestureDetector(
+                                            onTapDown: (details) {
+                                              double left =
+                                                  details.globalPosition.dx;
+                                              double top =
+                                                  details.globalPosition.dy;
+                                              showMenu(
+                                                context: context,
+                                                position: RelativeRect.fromLTRB(
+                                                    left, top, 30, 0),
+                                                items: [
+                                                  PopupMenuItem<Widget>(
+                                                      child: const Row(
+                                                        children: [
+                                                          Icon(Icons
+                                                              .favorite_outline),
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    8.0),
+                                                            child: Text(
+                                                                'Add to favorites'),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      onTap: () {
+                                                        FavoriteFunctions
+                                                            .addToFavoritesList(
                                                                 videoPath);
-                                                        setState(() {
-                                                          thumbnails.remove(
-                                                              videoPath);
-                                                        });
-                                                        Navigator.of(context)
-                                                            .pop();
+
                                                         ScaffoldMessenger.of(
                                                                 context)
-                                                            .showSnackBar(SnackBar(
-                                                                behavior:
-                                                                    SnackBarBehavior
-                                                                        .floating,
-                                                                backgroundColor:
-                                                                    kcolorblack05,
-                                                                content: const Text(
-                                                                    'Video Deleted Successfully')));
-                                                      },
-                                                      icon: const Icon(Icons
-                                                          .delete_forever_outlined),
-                                                      label:
-                                                          const Text('Delete'),
+                                                            .showSnackBar(
+                                                                SnackBar(
+                                                          behavior:
+                                                              SnackBarBehavior
+                                                                  .floating,
+                                                          backgroundColor:
+                                                              kcolorblack05,
+                                                          duration:
+                                                              const Duration(
+                                                                  seconds: 2),
+                                                          content: const Text(
+                                                              'Video added to favorites'),
+                                                        ));
+                                                      }),
+                                                  PopupMenuItem<Widget>(
+                                                    child: const Row(
+                                                      children: [
+                                                        Icon(Icons
+                                                            .playlist_remove),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  8.0),
+                                                          child: Text(
+                                                              'Remove from playlist'),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                          elevation: 8.0,
-                                        );
-                                      },
-                                      child: const Icon(Icons.more_vert)),
-                                )
-                              : const SizedBox());
-                    },
-                  ),
-                ),
+                                                    onTap: () => showDialog(
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          AlertDialog(
+                                                        title: const Text(
+                                                            'Delete video ?'),
+                                                        content: const Text(
+                                                            "Are you sure ? if yes u cant undone"),
+                                                        actions: [
+                                                          TextButton.icon(
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                              },
+                                                              icon: const Icon(
+                                                                  Icons.remove),
+                                                              label: const Text(
+                                                                  'Cancel')),
+                                                          TextButton.icon(
+                                                            onPressed:
+                                                                () async {
+                                                              CreatePlayListFunctions
+                                                                  .deleteVideoFromPlaylist(
+                                                                      widget
+                                                                          .playlist
+                                                                          .name!,
+                                                                      videoPath);
+                                                              setState(() {
+                                                                thumbnails.remove(
+                                                                    videoPath);
+                                                              });
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                                                  behavior:
+                                                                      SnackBarBehavior
+                                                                          .floating,
+                                                                  backgroundColor:
+                                                                      kcolorblack05,
+                                                                  content:
+                                                                      const Text(
+                                                                          'Video Deleted Successfully')));
+                                                            },
+                                                            icon: const Icon(Icons
+                                                                .delete_forever_outlined),
+                                                            label: const Text(
+                                                                'Delete'),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                                elevation: 8.0,
+                                              );
+                                            },
+                                            child: const Icon(Icons.more_vert)),
+                                      )
+                                    : const Center(
+                                        child: Text('No Playlist Available'),
+                                      ));
+                          },
+                        ),
+                      ),
               ],
             ),
           ),

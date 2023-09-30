@@ -88,7 +88,6 @@ class _MostPlayedVideosState extends State<MostPlayedVideos> {
                   onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => const HomeSearchPaage(
-                            text: 'Search here',
                             files: [],
                           ),
                         ),

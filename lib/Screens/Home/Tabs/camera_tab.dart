@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:video_player_app/constants.dart';
-import 'package:video_player_app/screens/home/Tabs/widgets/video_tile_widget.dart';
+import 'package:video_player_app/screens/home/Tabs/widgets/sorting_widget.dart';
 
 class CameraTab extends StatefulWidget {
   final List<File> filesV;
@@ -19,40 +19,52 @@ class CameraTab extends StatefulWidget {
 enum SortingOption { nameAs, nameDe }
 
 class _CameraTabState extends State<CameraTab> {
-  List<File> camera = [];
+  // List<File> camera = [];
   SortingOption selectedOption = SortingOption.nameAs; //
+  List<File> sortedFiles = []; // Maintain a separate sorted list
+  @override
+  void initState() {
+    super.initState();
+    sortedFiles = getdownloadsonlyPath();
+    sortByNameAs(); // Initialize with the default sorting
+  }
+
+  List<File> getdownloadsonlyPath() {
+    List<File> downloads = [];
+    for (File path in widget.filesV) {
+      if (path.path.contains('Camera')) {
+        downloads.add(path);
+      }
+    }
+    return downloads;
+  }
 
   void sortByNameAs() {
-    List<String> fileNames =
-        widget.filesV.map((path) => path.path.split('/').last).toList();
     setState(() {
-      fileNames.sort();
+      sortedFiles = List<File>.from(getdownloadsonlyPath())
+        ..sort((a, b) {
+          final filenameA = a.path.split(Platform.pathSeparator).last;
+          final filenameB = b.path.split(Platform.pathSeparator).last;
+          return filenameA.compareTo(filenameB);
+        });
+      selectedOption = SortingOption.nameAs; // Update the selected option
     });
-    //
   }
 
   void sortByNameDe() {
-    List<String> fileNames =
-        widget.filesV.map((path) => path.path.split('/').last).toList();
-
     setState(() {
-      fileNames.sort((a, b) => b.compareTo(a));
+      sortedFiles = List<File>.from(getdownloadsonlyPath())
+        ..sort((a, b) {
+          final filenameA = a.path.split(Platform.pathSeparator).last;
+          final filenameB = b.path.split(Platform.pathSeparator).last;
+          return filenameB.compareTo(filenameA);
+        });
+      selectedOption = SortingOption.nameDe; // Update the selected option
     });
-    //
-  }
-
-  List<File> separatePaths() {
-    for (final path in widget.filesV) {
-      if (path.path.contains('Camera')) {
-        camera.add(path);
-      }
-    }
-    return camera;
   }
 
   @override
   Widget build(BuildContext context) {
-    final path = separatePaths();
     return Stack(
       children: [
         Positioned(
@@ -98,35 +110,11 @@ class _CameraTabState extends State<CameraTab> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 40),
-          child: (path.isEmpty)
-              ? const Center(
-                  child: Text('No video available'),
-                )
-              : GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: path.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  itemBuilder: (context, index) {
-                    final videoPath = path[index];
-
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                        top: 10,
-                        left: 10,
-                        right: 10,
-                      ),
-                      child: VideoTileWidget(
-                        videoFile: videoPath,
-                        index: index,
-                      ),
-                    );
-                  },
-                ),
-        ),
+      (sortedFiles.isEmpty)
+            ? const Center(
+                child: Text('No videos found'),
+              )
+            : GridviewWidget(sortedFiles: sortedFiles)
       ],
     );
   }

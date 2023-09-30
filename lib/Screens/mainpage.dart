@@ -10,8 +10,7 @@ import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/functions/path_functions.dart';
 
 class MainPageScreen extends StatefulWidget {
-  final List<File> videoFile;
-  const MainPageScreen({Key? key, required this.videoFile}) : super(key: key);
+  const MainPageScreen({Key? key}) : super(key: key);
 
   @override
   State<MainPageScreen> createState() => _MainPageScreenState();
@@ -22,23 +21,27 @@ class _MainPageScreenState extends State<MainPageScreen>
   int _bottomNavIndex = 0;
   List<File> videoFiles = [];
   List<String> videoData = [];
+ 
+
   @override
   void initState() {
     super.initState();
     fetchAndShowVideos();
+   
   }
 
   void fetchAndShowVideos() async {
-    final fetchedVideos = await PathFunctions.getVideoPathsAsync();
+    try {
+      final fetchedVideos = await PathFunctions.getVideoPathsAsync();
 
-    setState(() {
-      videoData = List<String>.from(fetchedVideos);
-      videoFiles = fetchedVideos.map((path) => File(path)).toList();
-    });
+      setState(() {
+        videoData = List<String>.from(fetchedVideos);
+        videoFiles = fetchedVideos.map((path) => File(path)).toList();
+      });
 
-    debugPrint('All Video Data:');
-    for (String data in videoData) {
-      debugPrint(data);
+      debugPrint('All Video Data fetched sucesss');
+    } catch (e) {
+      debugPrint('Not fetched error $e');
     }
   }
 
@@ -73,7 +76,7 @@ class _MainPageScreenState extends State<MainPageScreen>
                   "Playlist",
                   style: TextStyle(fontFamily: 'Koulen'),
                 ),
-                selectedColor: kcolorblack05,
+                selectedColor: kColorCyan,
                 unselectedColor: kColorWhite),
 
             /// Search

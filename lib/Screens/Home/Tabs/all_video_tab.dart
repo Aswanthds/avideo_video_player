@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:video_player_app/constants.dart';
+import 'package:video_player_app/screens/home/Tabs/widgets/sorting_widget.dart';
 import 'dart:io';
 
-import 'package:video_player_app/screens/home/Tabs/widgets/video_tile_widget.dart';
 
 class AllVideoTab extends StatefulWidget {
   final List<File> video;
@@ -20,26 +19,35 @@ class AllVideoTab extends StatefulWidget {
 enum SortingOption { nameAs, nameDe }
 
 class _AllVideoTabState extends State<AllVideoTab> {
-  final ValueNotifier<File> thumbnailNotifier = ValueNotifier<File>(File(''));
-
   SortingOption selectedOption = SortingOption.nameAs; //
-
+  List<File> sortedFiles = [];
   void sortByNameAs() {
     setState(() {
-      widget.video.sort(
-          (pat1, pat2) => basename(pat1.path).compareTo(basename(pat2.path)));
+      sortedFiles = List<File>.from(widget.video)
+        ..sort((a, b) {
+          final filenameA = a.path.split(Platform.pathSeparator).last;
+          final filenameB = b.path.split(Platform.pathSeparator).last;
+          return filenameA.compareTo(filenameB);
+        });
+      selectedOption = SortingOption.nameAs; // Update the selected option
     });
   }
 
   void sortByNameDe() {
     setState(() {
-      widget.video.sort(
-          (pat1, pat2) => basename(pat2.path).compareTo(basename(pat1.path)));
+      sortedFiles = List<File>.from(widget.video)
+        ..sort((a, b) {
+          final filenameA = a.path.split(Platform.pathSeparator).last;
+          final filenameB = b.path.split(Platform.pathSeparator).last;
+          return filenameB.compareTo(filenameA);
+        });
+      selectedOption = SortingOption.nameDe; // Update the selected option
     });
   }
 
   @override
   void initState() {
+    sortByNameAs();
     super.initState();
   }
 
@@ -90,37 +98,9 @@ class _AllVideoTabState extends State<AllVideoTab> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 40),
-          child: (widget.video.isEmpty)
-              ? const Center(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2.0,
-                  ),
-                )
-              : GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: widget.video.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  itemBuilder: (context, index) {
-                    final videoPath = widget.video[index];
-
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                        top: 10,
-                        left: 10,
-                        right: 10,
-                      ),
-                      child: VideoTileWidget(
-                        videoFile: videoPath,
-                        index: index,
-                      ),
-                    );
-                  },
-                ),
-        ),
+        (widget.video.isEmpty)
+            ? const Center(child:  CircularProgressIndicator(strokeWidth: 2.0,))
+            : GridviewWidget(sortedFiles: widget.video)
       ],
     );
   }
