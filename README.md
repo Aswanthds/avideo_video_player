@@ -30,7 +30,7 @@ A simple Flutter application for playing video files. This application demonstra
 1. Clone the repository:
 
 
-   `git clone https://github.com/yourusername/your-video-app.git`
+   `git clone https://github.com/Aswanthds/avideo_video_player.git`
    `cd avideo_video_player`
 
     `Install dependencies:`
@@ -57,7 +57,7 @@ A simple Flutter application for playing video files. This application demonstra
 
 ## Screenshots
 
-<---Will update Soon -->
+
 
 ### Contributions are welcome! If you'd like to contribute to this project, please follow these guidelines:
 
