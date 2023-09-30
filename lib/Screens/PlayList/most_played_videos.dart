@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:video_compress/video_compress.dart';
-import 'package:video_player_app/Screens/Home/Tabs/widgets/video_info_dialog.dart';
 import 'package:video_player_app/Screens/playlist/widget/mostly_played/mostly_played_list_screen.dart';
 import 'package:video_player_app/Screens/playlist/widget/mostly_played/thumbnail_mostly_played.dart';
 import 'package:video_player_app/constants.dart';
-import 'package:video_player_app/functions/video_functions.dart';
 import 'package:video_player_app/Screens/Home/widgets/home_search_page.dart';
 
 class MostPlayedVideos extends StatefulWidget {
@@ -22,13 +19,16 @@ class _MostPlayedVideosState extends State<MostPlayedVideos> {
       context: context,
       position: RelativeRect.fromLTRB(left, top, 30, 0),
       items: [
-        const PopupMenuItem<Widget>(
-          child: Row(
+         PopupMenuItem<Widget>(
+          child:const  Row(
             children: [
               Icon(Icons.favorite_outline),
               Text('Remove from favourites'),
             ],
           ),
+          onTap: (){
+
+          },
         ),
         const PopupMenuItem<Widget>(
           child: Row(
@@ -38,27 +38,7 @@ class _MostPlayedVideosState extends State<MostPlayedVideos> {
             ],
           ),
         ),
-        PopupMenuItem<Widget>(
-          onTap: () => showDialog(
-            context: context,
-            builder: (context) {
-              return ValueListenableBuilder<List<MediaInfo>>(
-                valueListenable: videoInfoNotifier,
-                builder: (context, info, _) {
-                  return VideoInfoDialog(
-                    info: info,
-                  );
-                },
-              );
-            },
-          ),
-          child: const Row(
-            children: [
-              Icon(Icons.info_sharp),
-              Text('Info'),
-            ],
-          ),
-        ),
+       
       ],
       elevation: 8.0,
     );
