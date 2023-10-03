@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:video_player_app/Screens/playlist/widget/mostly_played/mostly_played_list_screen.dart';
 import 'package:video_player_app/Screens/playlist/widget/mostly_played/thumbnail_mostly_played.dart';
 import 'package:video_player_app/constants.dart';
-import 'package:video_player_app/Screens/Home/widgets/home_search_page.dart';
 
 class MostPlayedVideos extends StatefulWidget {
   const MostPlayedVideos({super.key});
@@ -19,16 +18,14 @@ class _MostPlayedVideosState extends State<MostPlayedVideos> {
       context: context,
       position: RelativeRect.fromLTRB(left, top, 30, 0),
       items: [
-         PopupMenuItem<Widget>(
-          child:const  Row(
+        PopupMenuItem<Widget>(
+          child: const Row(
             children: [
               Icon(Icons.favorite_outline),
               Text('Remove from favourites'),
             ],
           ),
-          onTap: (){
-
-          },
+          onTap: () {},
         ),
         const PopupMenuItem<Widget>(
           child: Row(
@@ -38,7 +35,6 @@ class _MostPlayedVideosState extends State<MostPlayedVideos> {
             ],
           ),
         ),
-       
       ],
       elevation: 8.0,
     );
@@ -63,17 +59,6 @@ class _MostPlayedVideosState extends State<MostPlayedVideos> {
                 fontSize: 35,
               ),
             ),
-            actions: [
-              IconButton(
-                  onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const HomeSearchPaage(
-                            files: [],
-                          ),
-                        ),
-                      ),
-                  icon: const Icon(Icons.search))
-            ],
           ),
         ),
       ),

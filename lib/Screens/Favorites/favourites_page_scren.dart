@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -6,7 +5,6 @@ import 'package:video_compress/video_compress.dart';
 import 'package:video_player_app/Screens/favorites/widgets/playlist_thumbnal_widget.dart';
 import 'package:video_player_app/database/favourite_data.dart';
 import 'package:video_player_app/functions/favorites_functions.dart';
-import 'package:video_player_app/Screens/Home/widgets/home_search_page.dart';
 import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/screens/favorites/widgets/favorites_video_widget.dart';
 
@@ -68,17 +66,7 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
                   fontSize: 40,
                   fontFamily: 'Cookie'),
             ),
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => HomeSearchPaage(
-                        files: videos.map((e) => File(e.filePath)).toList(),
-                      ),
-                    ));
-                  },
-                  icon: const Icon(Icons.search))
-            ],
+            
           ),
         ),
       ),

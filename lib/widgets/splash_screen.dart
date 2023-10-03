@@ -6,6 +6,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player_app/Screens/mainpage.dart';
 import 'package:video_player_app/constants.dart';
+import 'package:video_player_app/widgets/app_intro_logo.dart';
+import 'package:video_player_app/widgets/welcome_screen.dart';
 
 class SplashScreenPage extends StatefulWidget {
   const SplashScreenPage({Key? key}) : super(key: key);
@@ -72,22 +74,22 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage> {
   Future<void> checkPermissionsAndNavigate() async {
-    bool permissionStatus;
+    PermissionStatus permissionStatus;
     final deviceInfo = await DeviceInfoPlugin().androidInfo;
     PermissionStatus result;
 
     if (deviceInfo.version.sdkInt >= 33) {
-      permissionStatus = await Permission.videos.request().isGranted;
+      permissionStatus = await Permission.videos.request();
     } else {
-      permissionStatus = await Permission.storage.request().isGranted;
+      permissionStatus = await Permission.storage.request();
     }
 
-    if (permissionStatus == true) {
+    if (permissionStatus.isGranted) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const MainPageScreen()),
       );
     } else {
-      deviceInfo.version.sdkInt > 32
+      deviceInfo.version.sdkInt >= 33
           ? (result = await Permission.videos.request())
           : (result = await Permission.storage.request());
 
@@ -95,6 +97,8 @@ class _WelcomePageState extends State<WelcomePage> {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => const MainPageScreen()),
         );
+      } else {
+        openAppSettings();
       }
     }
   }
@@ -103,21 +107,7 @@ class _WelcomePageState extends State<WelcomePage> {
   void initState() {
     super.initState();
     if (widget.isFirst) {
-      Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/logo.png',
-              height: 75,
-            ),
-            Image.asset(
-              'assets/images/title2.png',
-              height: 75,
-            ),
-          ],
-        ),
-      );
+      const AppIntroLogo();
       checkPermissionsAndNavigate();
     } else {
       Navigator.of(context).pushReplacement(
@@ -125,77 +115,13 @@ class _WelcomePageState extends State<WelcomePage> {
     }
   }
 
- 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kColorWhite,
       body: widget.isFirst
-          ? Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/images/logo.png',
-                    height: 75,
-                  ),
-                  Image.asset(
-                    'assets/images/title2.png',
-                    height: 75,
-                  ),
-                ],
-              ),
-            )
-          : Padding(
-              padding: const EdgeInsets.only(top: 100),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 30,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/logo.png',
-                          height: 75,
-                        ),
-                        Image.asset(
-                          'assets/images/title2.png',
-                          height: 75,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const Text(
-                        'Welcome to Avideo Video Player App!',
-                        style: TextStyle(
-                            color: kcolorDarkblue, fontFamily: 'OpenSans'),
-                      ),
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: kcolorDarkblue,
-                        ),
-                        onPressed: () {
-                          checkPermissionsAndNavigate();
-                        },
-                        child: const Text(
-                          'Get Started',
-                          style: TextStyle(color: kColorWhite),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+          ?  const AppIntroLogo()
+          :  const WelcomeScreenWidget(),
     );
   }
 }

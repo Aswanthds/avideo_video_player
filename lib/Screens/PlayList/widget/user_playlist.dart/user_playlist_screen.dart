@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:video_compress/video_compress.dart';
-import 'package:video_player_app/Screens/Home/widgets/home_search_page.dart';
 import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/database/create_playlist_data.dart';
 import 'package:video_player_app/functions/create_playlist_functions.dart';
@@ -83,11 +82,13 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
         iconTheme: const IconThemeData(color: kColorWhite),
         actions: [
           IconButton(
-              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => HomeSearchPaage(
-                      files: stringtoFile(),
-                    ),
-                  )),
+            onPressed: () {
+              // Navigator.of(context).push(MaterialPageRoute(
+              //     builder: (context) => HomeSearchPaage(
+              //       files: stringtoFile(),
+              //     ),
+              //   )),
+                },
               icon: const Icon(Icons.search))
         ],
       ),

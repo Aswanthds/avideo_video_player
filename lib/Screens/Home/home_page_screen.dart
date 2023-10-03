@@ -29,62 +29,17 @@ class _HomePageScreenState extends State<HomePageScreen>
     with TickerProviderStateMixin {
   TabController? _controller;
 
-  List<File> cameraFiles = [];
-  List<File> whatsappFiles = [];
-  List<File> screenshotsFiles = [];
-  List<File> downloadFiles = [];
-  List<File> othersFiles = [];
+
   @override
   void initState() {
     super.initState();
-    separatePaths();
+   // separatePaths();
     _controller = TabController(length: 6, vsync: this);
-    _getCurrentTabFiles(_controller!.index);
+    //_getCurrentTabFiles(_controller!.index);
   }
 
-  void separatePaths() {
-    RegExp cameraPattern = RegExp('Camera');
-    RegExp whatsappPattern = RegExp('WhatsApp');
-    RegExp screenPattern = RegExp('Screenre');
-    RegExp downloadsPattern = RegExp('Download');
-    RegExp othersPattern = RegExp('Camera');
-
-    for (final path in widget.filesV) {
-      if (cameraPattern.hasMatch(path.path)) {
-        cameraFiles.add(path);
-      } else if (whatsappPattern.hasMatch(path.path)) {
-        whatsappFiles.add(path);
-      } else if (screenPattern.hasMatch(path.path)) {
-        screenshotsFiles.add(path);
-      } else if (downloadsPattern.hasMatch(path.path)) {
-        downloadFiles.add(path);
-      } else if (othersPattern.hasMatch(path.path)) {
-        othersFiles.add(path);
-      }
-    }
-
-    debugPrint('Camera Files: ${cameraFiles.length}');
-    debugPrint('WhatsApp Files: ${whatsappFiles.length}');
-  }
-
-  List<File> _getCurrentTabFiles(int tabIndex) {
-    switch (tabIndex) {
-      case 0:
-        return widget.filesV;
-      case 1:
-        return cameraFiles;
-      case 2:
-        return downloadFiles;
-      case 3:
-        return screenshotsFiles;
-      case 4:
-        return whatsappFiles;
-      case 5:
-        return othersFiles;
-      default:
-        return [];
-    }
-  }
+ 
+  
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +62,9 @@ class _HomePageScreenState extends State<HomePageScreen>
                   onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => HomeSearchPaage(
-                            files: _getCurrentTabFiles(_controller!.index),
+                            files: widget.filesV,
+                            controller : _controller,
+                            tabIndex : _controller!.index,
                           ),
                         ),
                       ),

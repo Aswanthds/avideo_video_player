@@ -22,9 +22,7 @@ class SettingsPage extends StatelessWidget {
                 'Settings',
                 style: TextStyle(fontFamily: 'Cookie', fontSize: 35,),
               ),
-              actions: [
-                IconButton(onPressed: () {}, icon: const Icon(Icons.search))
-              ],
+              
             ),
           ),
         ),
