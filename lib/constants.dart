@@ -23,7 +23,10 @@ const kColorOrangeAccent = Colors.orangeAccent;
 // No data available Texts
 
 const Widget nodata =
-    Text('No data Available', style: TextStyle(color: kColorBlue));
+    Text('No data available', style: TextStyle(color: kColorBlue));
+
+const Widget dataloading =
+    Text(' Data loading....', style: TextStyle(color: kcolorblack));
 const TextStyle appbar =
     TextStyle(color: kColorWhite, fontSize: 25, fontWeight: FontWeight.bold);
 

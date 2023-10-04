@@ -71,7 +71,10 @@ class _VideoPlayerBodyState extends State<VideoPlayerBody> {
     return Stack(
       alignment: Alignment.center,
       children: [
-        videoPlayerScreen(),
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: videoPlayerScreen(),
+        ),
         rotateButton(),
         if (areControlsVisible)
           VideoPlayerControls(
@@ -82,7 +85,7 @@ class _VideoPlayerBodyState extends State<VideoPlayerBody> {
             onVolumeChanged: widget.onVolumeChanged,
           ),
         if (areControlsVisible)
-          VideoPlayerAppbar(filename: filename, widget: widget,),
+          VideoPlayerAppbar(filename: filename, widget: widget, isRotated: isrotated,),
       ],
     );
   }

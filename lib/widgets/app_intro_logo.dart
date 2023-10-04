@@ -7,20 +7,30 @@ class AppIntroLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            'assets/images/logo.png',
-            height: 75,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/logo.png',
+              height: 75,
+            ),
+            Image.asset(
+              'assets/images/title2.png',
+              height: 75,
+            ),
+          ],
+        ),
+        const Padding(
+          padding: EdgeInsets.all(50),
+          child: LinearProgressIndicator(
+           
           ),
-          Image.asset(
-            'assets/images/title2.png',
-            height: 75,
-          ),
-        ],
-      ),
+        )
+      ],
     );
   }
 }

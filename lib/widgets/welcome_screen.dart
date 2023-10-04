@@ -1,117 +1,66 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:async';
-
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:video_player_app/Screens/mainpage.dart';
 import 'package:video_player_app/constants.dart';
-import 'package:video_player_app/screens/mainpage.dart';
+import 'package:video_player_app/widgets/app_intro_logo.dart';
 
-class WelcomeScreenWidget extends StatefulWidget {
-  const WelcomeScreenWidget({
-    super.key,
-  });
+class WelcomePage extends StatefulWidget {
+  final bool isFirst;
+  const WelcomePage({Key? key, required this.isFirst}) : super(key: key);
 
   @override
-  State<WelcomeScreenWidget> createState() => _WelcomeScreenWidgetState();
+  State<WelcomePage> createState() => _WelcomePageState();
 }
 
-class _WelcomeScreenWidgetState extends State<WelcomeScreenWidget> {
-   @override
-  void initState() {
-    super.initState();
-    startTimer();
-  }
+class _WelcomePageState extends State<WelcomePage> {
+  Future<void> checkPermissionsAndNavigate() async {
+    PermissionStatus permissionStatus;
+    final deviceInfo = await DeviceInfoPlugin().androidInfo;
+    PermissionStatus result;
+    final status = await Permission.videos.status;
+    final statusi = await Permission.storage.status;
 
-  startTimer() async {
-    var duration = const Duration(seconds: 8);
-    return  Timer(duration, route);
-  }
+    if (deviceInfo.version.sdkInt >= 33) {
+      permissionStatus = await Permission.videos.request();
+      debugPrint(status.toString());
+    } else {
+      permissionStatus = await Permission.storage.request();
+      debugPrint(statusi.toString());
+    }
 
-  route() {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const MainPageScreen()));
-  }
-  @override
-  Widget build(BuildContext context) {
-    Future<void> checkPermissionsAndNavigate() async {
-      PermissionStatus permissionStatus;
-      final deviceInfo = await DeviceInfoPlugin().androidInfo;
-      PermissionStatus result;
+    if (permissionStatus.isGranted) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const MainPageScreen()),
+      );
+    } else {
+      deviceInfo.version.sdkInt >= 33
+          ? (result = await Permission.videos.request())
+          : (result = await Permission.storage.request());
 
-      if (deviceInfo.version.sdkInt >= 33) {
-        permissionStatus = await Permission.videos.request();
-      } else {
-        permissionStatus = await Permission.storage.request();
-      }
-
-      if (permissionStatus.isGranted) {
+      if (result.isGranted) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => const MainPageScreen()),
         );
-      } else {
-        deviceInfo.version.sdkInt >= 33
-            ? (result = await Permission.videos.request())
-            : (result = await Permission.storage.request());
-
-        if (result.isGranted) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const MainPageScreen()),
-          );
-        } else {
-          openAppSettings();
-        }
+      } else if (result.isPermanentlyDenied) {
+        openAppSettings();
       }
     }
+  }
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 100),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 30,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/logo.png',
-                  height: 75,
-                ),
-                Image.asset(
-                  'assets/images/title2.png',
-                  height: 75,
-                ),
-              ],
-            ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              const Text(
-                'Welcome to Avideo Video Player App!',
-                style: TextStyle(color: kcolorDarkblue, fontFamily: 'OpenSans'),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: kcolorDarkblue,
-                ),
-                onPressed: () {
-                  checkPermissionsAndNavigate();
-                },
-                child: const Text(
-                  'Get Started',
-                  style: TextStyle(color: kColorWhite),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+  @override
+  void initState() {
+    super.initState();
+    checkPermissionsAndNavigate();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      backgroundColor: kColorWhite,
+      body: AppIntroLogo(),
     );
   }
 }

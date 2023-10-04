@@ -66,7 +66,7 @@ A simple Flutter application for playing video files. This application demonstra
 
 
 #### Favorites Page
-[<img src="https://github.com/Aswanthds/avideo_video_player/blob/master/assets/screenshots/flutter_03.jpg" height="400"/>
+<img src="https://github.com/Aswanthds/avideo_video_player/blob/master/assets/screenshots/flutter_03.jpg" height="400"/>
 
 
 ### Contributions are welcome! If you'd like to contribute to this project, please follow these guidelines:

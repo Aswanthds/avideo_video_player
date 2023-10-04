@@ -1,15 +1,23 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:video_player_app/constants.dart';
-import 'package:video_player_app/screens/PlayList/widget/recently_played/video_tile_recently.dart';
 
-class ThumbnailRecentlyPlayed extends StatelessWidget {
+class ThumbnailRecentlyPlayed extends StatefulWidget {
   const ThumbnailRecentlyPlayed({
     super.key,
-    required this.widget,
+    required this.thumbnail, required this.current, required this.full,
   });
 
-  final RecentlyPlayedVideoTileWidget widget;
+    final File thumbnail;
+     final double current;
+  final double full;
 
+  @override
+  State<ThumbnailRecentlyPlayed> createState() => _ThumbnailRecentlyPlayedState();
+}
+
+class _ThumbnailRecentlyPlayedState extends State<ThumbnailRecentlyPlayed> {
   @override
   Widget build(BuildContext context) {
     double? calculateProgress(double? current, double? full) {

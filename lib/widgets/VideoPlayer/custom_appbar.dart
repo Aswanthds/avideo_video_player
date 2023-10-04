@@ -7,21 +7,21 @@ import 'package:video_player_app/functions/favorites_functions.dart';
 import 'package:video_player_app/widgets/VideoPlayer/video_player_body.dart';
 import 'package:video_player_app/widgets/addtoplaylist.dart';
 
-
 class VideoPlayerAppbar extends StatelessWidget {
   const VideoPlayerAppbar({
     super.key,
     required this.filename,
-    required this.widget,
+    required this.widget, required this.isRotated,
   });
 
   final String filename;
   final VideoPlayerBody widget;
+  final bool isRotated;
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 0,
+      top: isRotated ? 0:25,
       left: 0,
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -79,7 +79,7 @@ class VideoPlayerAppbar extends StatelessWidget {
                               );
                             },
                           );
-                          
+
                           await widget.controller.play();
                           await SystemChrome.setEnabledSystemUIMode(
                               SystemUiMode.immersive);

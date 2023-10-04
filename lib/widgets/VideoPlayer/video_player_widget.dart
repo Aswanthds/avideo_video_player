@@ -87,18 +87,20 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: kcolorblack,
-      body: VideoPlayerBody(
-        controller: _controller,
-        showVolumeSlider: _showVolumeSlider,
-        volumeLevel: _volumeLevel,
-        onVolumeChanged: (newValue) {
-          setState(() {
-            _volumeLevel = newValue;
-            _controller.setVolume(newValue);
-          });
-        },
-        filesV: widget.filesV,
-        fullduration: _fullDuration ?? Duration.zero,
+      body: SafeArea(
+        child: VideoPlayerBody(
+          controller: _controller,
+          showVolumeSlider: _showVolumeSlider,
+          volumeLevel: _volumeLevel,
+          onVolumeChanged: (newValue) {
+            setState(() {
+              _volumeLevel = newValue;
+              _controller.setVolume(newValue);
+            });
+          },
+          filesV: widget.filesV,
+          fullduration: _fullDuration ?? Duration.zero,
+        ),
       ),
     );
   }
