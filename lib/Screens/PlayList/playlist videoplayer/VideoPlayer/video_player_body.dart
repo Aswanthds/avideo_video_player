@@ -9,12 +9,12 @@ import 'package:video_player_app/constants.dart';
 
 class PlayListVideoPlayerBody extends StatefulWidget {
   final VideoPlayerController controller;
+  final String filesV;
   final bool showVolumeSlider;
   final double volumeLevel;
   final ValueChanged<double> onVolumeChanged;
-  final Function? onNext;
-  final String files;
   final Duration fullduration;
+  final double position;
 
   const PlayListVideoPlayerBody({
     super.key,
@@ -22,9 +22,9 @@ class PlayListVideoPlayerBody extends StatefulWidget {
     required this.showVolumeSlider,
     required this.volumeLevel,
     required this.onVolumeChanged,
-    this.onNext,
-    required this.files,
+    required this.filesV,
     required this.fullduration,
+    required this.position,
   });
 
   @override
@@ -102,7 +102,7 @@ class _PlayListVideoPlayerBodyState extends State<PlayListVideoPlayerBody> {
             top: 0,
             left: 0,
             child: VideoPlayerAppBar(
-              filename: widget.files,
+              filename: widget.filesV,
               controller: widget.controller,
             ),
           ),
@@ -113,6 +113,7 @@ class _PlayListVideoPlayerBodyState extends State<PlayListVideoPlayerBody> {
             onVolumeChanged: widget.onVolumeChanged,
             fullDuration: widget.fullduration,
             isRotated: isRotated,
+            current: widget.position,
           ),
       ],
     );

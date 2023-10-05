@@ -17,6 +17,7 @@ class _PlaylistPageScreenState extends State<PlaylistPageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(75),
         child: ClipRRect(

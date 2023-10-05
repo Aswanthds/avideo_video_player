@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/widgets/VideoPlayer/vertical_slider.dart';
+import 'package:video_player_app/widgets/dummy.dart';
 
 class RecentlyVideoPlayerControls extends StatefulWidget {
   final VideoPlayerController controller;
@@ -9,6 +10,7 @@ class RecentlyVideoPlayerControls extends StatefulWidget {
   final ValueChanged<double> onVolumeChanged;
   final Duration fullDuration;
   final bool isRotated;
+    final double current;
 
   const RecentlyVideoPlayerControls(
       {super.key,
@@ -16,7 +18,7 @@ class RecentlyVideoPlayerControls extends StatefulWidget {
       required this.volume,
       required this.onVolumeChanged,
       required this.fullDuration,
-      required this.isRotated});
+      required this.isRotated, required this.current});
 
   @override
   State<RecentlyVideoPlayerControls> createState() =>
@@ -37,37 +39,11 @@ class _RecentlyVideoPlayerControlsState
         ),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 30.0, right: 30, top: 30, bottom: 10),
-              child: VideoProgressIndicator(
-                widget.controller,
-                colors: const VideoProgressColors(
-                  playedColor: Colors.blue,
-                  backgroundColor: Colors.grey,
-                ),
-                allowScrubbing: true,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 20,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    _formatDuration(widget.controller.value.position),
-                    style: const TextStyle(color: kColorWhite),
-                  ),
-                  Text(
-                    _formatDuration(widget.fullDuration),
-                    style: const TextStyle(
-                        color: kColorWhite, fontFamily: 'OpenSans'),
-                  ),
-                ],
-              ),
+            CustomVideoProgressIndicator(
+              widget.controller,
+              allowScrubbing: true,
+              current: widget.current,
+              duration: widget.fullDuration.inMicroseconds.toDouble(),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -142,6 +118,14 @@ class _RecentlyVideoPlayerControlsState
   }
 
   String _formatDuration(Duration duration) {
-    return '${duration.inMinutes.remainder(60).toString().padLeft(2, '0')}:${duration.inSeconds.remainder(60).toString().padLeft(2, '0')}';
+    int hours = duration.inHours;
+    int minutes = duration.inMinutes.remainder(60);
+    int seconds = duration.inSeconds.remainder(60);
+
+    String formattedHours = hours.toString().padLeft(2, '0');
+    String formattedMinutes = minutes.toString().padLeft(2, '0');
+    String formattedSeconds = seconds.toString().padLeft(2, '0');
+
+    return '$formattedHours:$formattedMinutes:$formattedSeconds';
   }
 }

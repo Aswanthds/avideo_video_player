@@ -4,7 +4,8 @@ import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/functions/create_playlist_functions.dart';
 
 class PlaylistForm extends StatefulWidget {
-  const PlaylistForm({super.key});
+  final String files;
+  const PlaylistForm({super.key, required this.files});
 
   @override
   State<PlaylistForm> createState() => _PlaylistFormState();
@@ -31,7 +32,23 @@ class _PlaylistFormState extends State<PlaylistForm> {
             child: TextFormField(
               controller: _playlistNameController,
               decoration: const InputDecoration(
-                  labelText: 'Playlist Name', border: OutlineInputBorder()),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: kcolorblack,
+                      width: 3.0,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: kcolorblack,
+                      width: 1.5,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                labelText: 'Playlist Name',
+                labelStyle:
+                    TextStyle(fontWeight: FontWeight.bold, color: kcolorblack),
+                border: OutlineInputBorder(),
+              ),
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter a playlist name';
@@ -43,23 +60,34 @@ class _PlaylistFormState extends State<PlaylistForm> {
           const SizedBox(height: 20.0),
           const SizedBox(height: 20.0),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: kcolorblack,
+            ),
             onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                String playlistName = _playlistNameController.text;
+              String newPlaylistName = _playlistNameController.text;
+              if (newPlaylistName.isNotEmpty) {
+                CreatePlayListFunctions.createPlaylist(newPlaylistName);
 
-                _formKey.currentState!.reset();
-                CreatePlayListFunctions.createPlaylist(playlistName);
+                CreatePlayListFunctions.addVideoToPlaylist(
+                    newPlaylistName, widget.files);
 
-                Navigator.of(context).pop();
+                Navigator.of(context).popUntil((route) => route.isFirst);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                      behavior: SnackBarBehavior.floating,
-                      backgroundColor: kcolorblack05,
-                      content: Text('Playlist created: $playlistName')),
-                );
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: kcolorblack05,
+                    content: const Text('Video added to playlist'), //
+                    duration: const Duration(seconds: 2), //
+                  ),
+                ); //
               }
             },
-            child: const Text('Create Playlist'),
+            child: const Text(
+              'Create Playlist',
+              style: TextStyle(
+                color: kColorWhite,
+              ),
+            ),
           ),
         ],
       ),

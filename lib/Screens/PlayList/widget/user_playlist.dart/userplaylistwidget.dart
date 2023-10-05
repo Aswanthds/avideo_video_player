@@ -82,13 +82,9 @@ class _PlaylistListWidgetState extends State<PlaylistListWidget> {
                 fontWeight: FontWeight.bold),
           ),
         ),
-        playlistsV.isEmpty
-            ? const Center(
-                child: nodata
-              )
-            : Expanded(
+        Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.only(top: 10, left: 5, right: 5),
                   child: ValueListenableBuilder(
                     valueListenable:
                         Hive.box<VideoPlaylist>('playlists_data').listenable(),
@@ -97,11 +93,8 @@ class _PlaylistListWidgetState extends State<PlaylistListWidget> {
 
                       return playlists.isEmpty
                           ? const Center(
-                            child: Text(
-                                'No playlists created',
-                                style: TextStyle(color: kColorBlue),
-                              ),
-                          )
+                              child: emptyPlaylist
+                            )
                           : ListView.builder(
                               itemCount: playlists.length,
                               itemBuilder: (context, index) {

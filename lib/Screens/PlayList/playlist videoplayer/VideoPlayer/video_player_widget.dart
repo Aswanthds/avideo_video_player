@@ -29,7 +29,7 @@ class _RecentlyPlayedVideoScreenState extends State<RecentlyPlayedVideoScreen> {
   final bool _showVolumeSlider = false;
   int _currentIndex = 0;
   Duration? _fullDuration;
-  Duration? current;
+  Duration current = Duration.zero;
   bool disposed = false;
   @override
   void initState() {
@@ -135,19 +135,21 @@ class _RecentlyPlayedVideoScreenState extends State<RecentlyPlayedVideoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kcolorblack,
-      body: PlayListVideoPlayerBody(
-        controller: _videoController,
-        showVolumeSlider: _showVolumeSlider,
-        volumeLevel: _volumeLevel,
-        onVolumeChanged: (newValue) {
-          setState(() {
-            _volumeLevel = newValue;
-            _videoController.setVolume(newValue);
-          });
-        },
-        files: getname(),
-        onNext: () => _playNextVideo(),
-        fullduration: _fullDuration ?? Duration.zero,
+      body: SafeArea(
+        child: PlayListVideoPlayerBody(
+          controller: _videoController,
+          showVolumeSlider: _showVolumeSlider,
+          volumeLevel: _volumeLevel,
+          onVolumeChanged: (newValue) {
+            setState(() {
+              _volumeLevel = newValue;
+              _videoController.setVolume(newValue);
+            });
+          },
+          filesV: getname(),
+          position : current.inMilliseconds.toDouble(),
+          fullduration: _fullDuration ?? Duration.zero,
+        ),
       ),
     );
   }

@@ -3,7 +3,6 @@ import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/screens/home/Tabs/widgets/sorting_widget.dart';
 import 'dart:io';
 
-
 class AllVideoTab extends StatefulWidget {
   final List<File> video;
   //
@@ -21,34 +20,32 @@ enum SortingOption { nameAs, nameDe }
 class _AllVideoTabState extends State<AllVideoTab> {
   SortingOption selectedOption = SortingOption.nameAs; //
   List<File> sortedFiles = [];
+  @override
+  void initState() {
+    super.initState();
+    sortByNameAs();
+  }
+
   void sortByNameAs() {
     setState(() {
-      sortedFiles = List<File>.from(widget.video)
-        ..sort((a, b) {
-          final filenameA = a.path.split(Platform.pathSeparator).last;
-          final filenameB = b.path.split(Platform.pathSeparator).last;
-          return filenameA.compareTo(filenameB);
-        });
+      List<File>.from(widget.video).sort((a, b) {
+        final filenameA = a.path.split(Platform.pathSeparator).last;
+        final filenameB = b.path.split(Platform.pathSeparator).last;
+        return filenameA.compareTo(filenameB);
+      });
       selectedOption = SortingOption.nameAs; // Update the selected option
     });
   }
 
   void sortByNameDe() {
     setState(() {
-      sortedFiles = List<File>.from(widget.video)
-        ..sort((a, b) {
-          final filenameA = a.path.split(Platform.pathSeparator).last;
-          final filenameB = b.path.split(Platform.pathSeparator).last;
-          return filenameB.compareTo(filenameA);
-        });
+      List<File>.from(widget.video).sort((a, b) {
+        final filenameA = a.path.split(Platform.pathSeparator).last;
+        final filenameB = b.path.split(Platform.pathSeparator).last;
+        return filenameB.compareTo(filenameA);
+      });
       selectedOption = SortingOption.nameDe; // Update the selected option
     });
-  }
-
-  @override
-  void initState() {
-    sortByNameAs();
-    super.initState();
   }
 
   @override
@@ -98,8 +95,12 @@ class _AllVideoTabState extends State<AllVideoTab> {
             ),
           ),
         ),
-        (widget.video.isEmpty )
-            ? const Center(child:  dataloading)
+        (widget.video.isEmpty)
+            ? const Center(
+                child: CircularProgressIndicator(
+                strokeWidth: 2.0,
+                color: kColorIndigo,
+              ))
             : GridviewWidget(sortedFiles: widget.video)
       ],
     );

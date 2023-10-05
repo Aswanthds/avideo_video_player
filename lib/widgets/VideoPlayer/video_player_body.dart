@@ -14,6 +14,7 @@ class VideoPlayerBody extends StatefulWidget {
   final double volumeLevel;
   final ValueChanged<double> onVolumeChanged;
   final Duration fullduration;
+  final double position;
 
   const VideoPlayerBody({
     super.key,
@@ -23,6 +24,7 @@ class VideoPlayerBody extends StatefulWidget {
     required this.onVolumeChanged,
     required this.filesV,
     required this.fullduration,
+    required this.position,
   });
 
   @override
@@ -83,52 +85,60 @@ class _VideoPlayerBodyState extends State<VideoPlayerBody> {
             isrotated: isrotated,
             volume: widget.volumeLevel,
             onVolumeChanged: widget.onVolumeChanged,
+            current: widget.position,
+            file: widget.filesV,
           ),
         if (areControlsVisible)
-          VideoPlayerAppbar(filename: filename, widget: widget, isRotated: isrotated,),
+          VideoPlayerAppbar(
+            filename: filename,
+            widget: widget,
+            isRotated: isrotated,
+          ),
       ],
     );
   }
 
   GestureDetector videoPlayerScreen() {
     return GestureDetector(
-        onDoubleTap: toggleControlsVisibility,
-        child: InteractiveViewer(
-          maxScale: 5,
-          minScale: 1,
-          child: Align(
-            alignment:
-                areControlsVisible ? Alignment.center : Alignment.center,
-            child: AspectRatio(
-              aspectRatio: widget.controller.value.aspectRatio,
-              child: VideoPlayer(widget.controller),
-            ),
+      onDoubleTap: toggleControlsVisibility,
+      child: InteractiveViewer(
+        maxScale: 5,
+        minScale: 1,
+        child: Align(
+          alignment: areControlsVisible ? Alignment.center : Alignment.center,
+          child: AspectRatio(
+            aspectRatio: widget.controller.value.aspectRatio,
+            child: VideoPlayer(widget.controller),
           ),
         ),
-      );
+      ),
+    );
   }
 
   Positioned rotateButton() {
     return Positioned(
-        right: isrotated ? 50 : 0,
-        bottom: isrotated ? 120 : 150,
-        child: Container(
-          height: 45,
-          width: 45,
-          decoration: BoxDecoration(
-              color: Colors.black26, borderRadius: BorderRadius.circular(20)),
-          child: FloatingActionButton(
-            backgroundColor: Colors.transparent,
-            onPressed: () => _toggleRotation(),
-            child: Icon(
-              isrotated
-                  ? Icons.screen_rotation_outlined
-                  : Icons.screen_rotation_outlined,
-              color: kColorWhite,
-            ),
+      right: isrotated ? 50 : 0,
+      bottom: isrotated ? 155 : 155,
+      child: Container(
+        height: 45,
+        width: 45,
+        decoration: BoxDecoration(
+            color: Colors.black26, borderRadius: BorderRadius.circular(20)),
+        child: FloatingActionButton(
+          backgroundColor: Colors.transparent,
+          onPressed: () {
+            _toggleRotation();
+            areControlsVisible = false;
+          },
+          child: Icon(
+            isrotated
+                ? Icons.screen_rotation_outlined
+                : Icons.screen_rotation_outlined,
+            color: kColorWhite,
           ),
         ),
-      );
+      ),
+    );
   }
 
   Future<void> untoggleRotation() async {
@@ -138,4 +148,3 @@ class _VideoPlayerBodyState extends State<VideoPlayerBody> {
         overlays: SystemUiOverlay.values);
   }
 }
-

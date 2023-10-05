@@ -22,9 +22,6 @@ class HomePageScreen extends StatefulWidget {
   State<HomePageScreen> createState() => _HomePageScreenState();
 }
 
-List<File>? searchfiles;
-
-
 class _HomePageScreenState extends State<HomePageScreen>
     with TickerProviderStateMixin {
   TabController? _controller;
@@ -33,9 +30,7 @@ class _HomePageScreenState extends State<HomePageScreen>
   @override
   void initState() {
     super.initState();
-   // separatePaths();
     _controller = TabController(length: 6, vsync: this);
-    //_getCurrentTabFiles(_controller!.index);
   }
 
  

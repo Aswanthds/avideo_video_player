@@ -22,11 +22,25 @@ const kColorOrangeAccent = Colors.orangeAccent;
 
 // No data available Texts
 
-const Widget nodata =
-    Text('No data available', style: TextStyle(color: kColorBlue));
+// const Widget nodata =
+//     Text('No data available', style: TextStyle(color: kColorIndigo));
+const Widget emptyPlaylist = Text('Created playlist appears here',
+    style: TextStyle(color: kColorIndigo));
 
-const Widget dataloading =
-    Text(' Data loading....', style: TextStyle(color: kcolorblack));
+const Widget nodata = Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    Icon(
+      Icons.error_outline,
+      size: 30,
+      color: kColorIndigo,
+    ),
+    SizedBox(
+      width: 10,
+    ),
+    Text('No videos are found !! ', style: TextStyle(color: kColorIndigo))
+  ],
+);
 const TextStyle appbar =
     TextStyle(color: kColorWhite, fontSize: 25, fontWeight: FontWeight.bold);
 

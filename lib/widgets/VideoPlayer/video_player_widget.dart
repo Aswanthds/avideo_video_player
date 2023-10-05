@@ -19,7 +19,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   double _volumeLevel = 1.0;
   bool _showVolumeSlider = false;
   Duration? _fullDuration;
-  Duration? current;
+  Duration current = Duration.zero;
   bool _disposed = false;
   @override
   void initState() {
@@ -99,7 +99,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             });
           },
           filesV: widget.filesV,
-          fullduration: _fullDuration ?? Duration.zero,
+          fullduration: _fullDuration ?? Duration.zero, position: current.inMilliseconds.toDouble(),
         ),
       ),
     );

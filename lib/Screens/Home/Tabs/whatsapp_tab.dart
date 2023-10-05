@@ -21,10 +21,11 @@ class _WhatsappTabState extends State<WhatsappTab> {
   @override
   void initState() {
     super.initState();
-    sortedFiles=getdownloadsonlyPath();
+    sortedFiles = getdownloadsonlyPath();
     sortByNameAs(); // Initialize with the default sorting
   }
-List<File> getdownloadsonlyPath() {
+
+  List<File> getdownloadsonlyPath() {
     List<File> downloads = [];
     for (File path in widget.filesV) {
       if (path.path.contains('WhatsApp')) {
@@ -34,7 +35,8 @@ List<File> getdownloadsonlyPath() {
 
     return downloads;
   }
-   void sortByNameAs() {
+
+  void sortByNameAs() {
     setState(() {
       sortedFiles = List<File>.from(getdownloadsonlyPath())
         ..sort((a, b) {
@@ -64,51 +66,51 @@ List<File> getdownloadsonlyPath() {
     return Stack(
       children: [
         sortingWidget(),
-        GridviewWidget(sortedFiles: sortedFiles),
+        sortedFiles.isEmpty
+            ? const Center(child: nodata)
+            : GridviewWidget(sortedFiles: sortedFiles),
       ],
     );
   }
 
   Positioned sortingWidget() {
     return Positioned(
-        top: 0,
-        right: 0,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 5, right: 5),
-          child: DropdownButton<SortingOption>(
-            value: selectedOption,
-            underline: const SizedBox(), //
-            dropdownColor: kColorWhite,
-            iconEnabledColor: kcolorDarkblue,
-            style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: kcolorblack),
-            borderRadius: BorderRadius.circular(10),
-            onChanged: (SortingOption? newValue) {
-              setState(() {
-                //
-                if (newValue == SortingOption.nameAs) {
-                  sortByNameAs();
-                } else if (newValue == SortingOption.nameDe) {
-                  sortByNameDe();
-                }
-              });
-            },
-            items: const [
-              DropdownMenuItem(
-                value: SortingOption.nameAs,
-                child: Text(
-                  ' (A ➔ Z)',
-                ),
+      top: 0,
+      right: 0,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 5, right: 5),
+        child: DropdownButton<SortingOption>(
+          value: selectedOption,
+          underline: const SizedBox(), //
+          dropdownColor: kColorWhite,
+          iconEnabledColor: kcolorDarkblue,
+          style: const TextStyle(
+              fontSize: 12, fontWeight: FontWeight.bold, color: kcolorblack),
+          borderRadius: BorderRadius.circular(10),
+          onChanged: (SortingOption? newValue) {
+            setState(() {
+              //
+              if (newValue == SortingOption.nameAs) {
+                sortByNameAs();
+              } else if (newValue == SortingOption.nameDe) {
+                sortByNameDe();
+              }
+            });
+          },
+          items: const [
+            DropdownMenuItem(
+              value: SortingOption.nameAs,
+              child: Text(
+                ' (A ➔ Z)',
               ),
-              DropdownMenuItem(
-                value: SortingOption.nameDe,
-                child: Text('(Z ➔ A)'),
-              ),
-            ],
-          ),
+            ),
+            DropdownMenuItem(
+              value: SortingOption.nameDe,
+              child: Text('(Z ➔ A)'),
+            ),
+          ],
         ),
-      );
+      ),
+    );
   }
 }

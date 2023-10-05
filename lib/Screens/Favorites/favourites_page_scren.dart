@@ -66,7 +66,6 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
                   fontSize: 40,
                   fontFamily: 'Cookie'),
             ),
-            
           ),
         ),
       ),
@@ -80,7 +79,26 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
             builder: (context, Box<FavoriteData> box, _) {
               final playlists = box.values.toList();
               if (box.isEmpty) {
-                return const Center(child: nodata);
+                return Padding(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.width / 2 - 10),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.add_box_outlined,
+                        color: kColorIndigo,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Add Video to favorites',
+                        style: TextStyle(color: kColorIndigo),
+                      ),
+                    ],
+                  ),
+                );
               }
               return (playlists.isNotEmpty)
                   ? Expanded(

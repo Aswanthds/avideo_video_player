@@ -18,10 +18,25 @@ class VideoFunctions {
     double durationVideo = info.duration!;
     Duration duration = Duration(milliseconds: durationVideo.toInt());
 
-    String formattedDuration =
-        "${duration.inHours.toString().padLeft(2, '0')}:${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}";
+    String formattedHours = '';
+    String formattedMinutes = '';
+    String formattedSeconds = '';
 
-    return formattedDuration;
+    try {
+      int hours = duration.inHours;
+      int minutes = duration.inMinutes.remainder(60);
+      int seconds = duration.inSeconds.remainder(60);
+
+      if (hours > 0) {
+        formattedHours = '${hours.toString().padLeft(2, '0')}:';
+      }
+
+      formattedMinutes = minutes.toString().padLeft(2, '0');
+      formattedSeconds = seconds.toString().padLeft(2, '0');
+    } catch (e) {
+      debugPrint('Exception $e');
+    }
+
+    return '$formattedHours$formattedMinutes:$formattedSeconds';
   }
-
 }

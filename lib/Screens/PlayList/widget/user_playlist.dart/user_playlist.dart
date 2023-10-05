@@ -144,7 +144,8 @@ class _VideoPlaylistScreenState extends State<VideoPlaylistScreen> {
             _videoController.setVolume(newValue);
           });
         },
-        files: getname(),
+        filesV: getname(),
+        position: current!.inMilliseconds.toDouble() ,
         fullduration: _fullDuration ?? Duration.zero,
       ),
     );

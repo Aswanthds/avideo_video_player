@@ -3,21 +3,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:video_player_app/constants.dart';
 
-class ThumbnailRecentlyPlayed extends StatefulWidget {
+class ThumbnailRecentlyPlayed extends StatelessWidget {
   const ThumbnailRecentlyPlayed({
     super.key,
-    required this.thumbnail, required this.current, required this.full,
+     required this.thumbnail, required this.current, required this.full,
   });
 
-    final File thumbnail;
-     final double current;
+  final File thumbnail;
+    final double current;
   final double full;
 
-  @override
-  State<ThumbnailRecentlyPlayed> createState() => _ThumbnailRecentlyPlayedState();
-}
-
-class _ThumbnailRecentlyPlayedState extends State<ThumbnailRecentlyPlayed> {
   @override
   Widget build(BuildContext context) {
     double? calculateProgress(double? current, double? full) {
@@ -33,7 +28,7 @@ class _ThumbnailRecentlyPlayedState extends State<ThumbnailRecentlyPlayed> {
 
     return Stack(
       children: [
-        (widget.thumbnail.path.isNotEmpty)
+        (thumbnail.path.isNotEmpty)
             ? Container(
                 width: 100,
                 height: 160,
@@ -43,7 +38,7 @@ class _ThumbnailRecentlyPlayedState extends State<ThumbnailRecentlyPlayed> {
                   ),
                   borderRadius: BorderRadius.circular(5),
                   image: DecorationImage(
-                    image: FileImage(widget.thumbnail),
+                    image: FileImage(thumbnail),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -51,7 +46,7 @@ class _ThumbnailRecentlyPlayedState extends State<ThumbnailRecentlyPlayed> {
                   padding: const EdgeInsets.only(top: 50),
                   child: LinearProgressIndicator(
                     minHeight: 2,
-                    value: calculateProgress(widget.current, widget.full),
+                    value: calculateProgress(current, full),
                     valueColor:
                         const AlwaysStoppedAnimation<Color>(kcolorDarkblue),
                     backgroundColor: kColorWhite54,

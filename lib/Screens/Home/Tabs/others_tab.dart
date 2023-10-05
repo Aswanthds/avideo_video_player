@@ -40,7 +40,7 @@ class _OthersTabState extends State<OthersTab> {
     return downloads;
   }
 
-   void sortByNameAs() {
+  void sortByNameAs() {
     setState(() {
       sortedFiles = List<File>.from(getdownloadsonlyPath())
         ..sort((a, b) {
@@ -109,10 +109,8 @@ class _OthersTabState extends State<OthersTab> {
             ),
           ),
         ),
-       (sortedFiles.isEmpty)
-            ? const Center(
-                child: nodata
-              )
+        (sortedFiles.isEmpty)
+            ? const Center(child: nodata)
             : GridviewWidget(sortedFiles: sortedFiles),
       ],
     );
