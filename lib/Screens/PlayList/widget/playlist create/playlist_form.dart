@@ -72,14 +72,7 @@ class _PlaylistFormState extends State<PlaylistForm> {
                     newPlaylistName, widget.files);
 
                 Navigator.of(context).popUntil((route) => route.isFirst);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    behavior: SnackBarBehavior.floating,
-                    backgroundColor: kcolorblack05,
-                    content: const Text('Video added to playlist'), //
-                    duration: const Duration(seconds: 2), //
-                  ),
-                ); //
+                ScaffoldMessenger.of(context).showSnackBar(postiveNewPlaylist); //
               }
             },
             child: const Text(

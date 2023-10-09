@@ -51,7 +51,7 @@ class _MostlyPlayedListScreenState extends State<MostlyPlayedListScreen> {
         valueListenable:
             Hive.box<MostlyPlayedData>('mostly_played_data').listenable(),
         builder: (context, data, child) {
-           if (data.isEmpty) {
+          if (data.isEmpty) {
             return const Center(child: nodata);
           } else {
             final dataItem = data.values.toList();
@@ -68,53 +68,68 @@ class _MostlyPlayedListScreenState extends State<MostlyPlayedListScreen> {
                     itemBuilder: (context, index) {
                       final item = filteredDataItem[index];
                       return (item.videoPath!.isNotEmpty)
-                          ? ListTile(
-                              leading: FutureBuilder<Uint8List?>(
-                                future: generateThumbnail(item.videoPath!),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const CircularProgressIndicator();
-                                  } else if (snapshot.hasError) {
-                                    return const Icon(Icons.error);
-                                  } else if (!snapshot.hasData) {
-                                    return const SizedBox();
-                                  } else {
-                                    return Container(
-                                      width: 80,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        color: kcolorblack54,
-                                        borderRadius: BorderRadius.circular(10),
-                                        image: DecorationImage(
-                                          image: MemoryImage(snapshot.data!),
+                          ? Card(
+                              shape: RoundedRectangleBorder(
+                                side: const BorderSide(
+                                    color: kColorIndigo,
+                                    style: BorderStyle.solid),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              elevation: 5,
+                              color: Colors.grey.shade100,
+                              margin: const EdgeInsets.only(
+                                  left: 10, right: 10, top: 10, bottom: 12),
+                              child: ListTile(
+                                leading: FutureBuilder<Uint8List?>(
+                                  future: generateThumbnail(item.videoPath!),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const CircularProgressIndicator();
+                                    } else if (snapshot.hasError) {
+                                      return const Icon(Icons.error);
+                                    } else if (!snapshot.hasData) {
+                                      return const SizedBox();
+                                    } else {
+                                      return Container(
+                                        width: 80,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: kcolorblack54,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          image: DecorationImage(
+                                              image:
+                                                  MemoryImage(snapshot.data!),
+                                              fit: BoxFit.cover),
                                         ),
-                                      ),
-                                    );
-                                  }
+                                      );
+                                    }
+                                  },
+                                ),
+                                title: Text(
+                                  basename(item.videoPath!),
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                    color: kcolorblack,
+                                  ),
+                                ),
+                                subtitle: Text(
+                                    'This video played ${item.playCount} times'),
+                                onTap: () {
+                                  MostlyPlayedFunctions.addVideoPlayData(
+                                      item.videoPath!);
+                                  RecentlyPlayed.onVideoClicked(
+                                    videoPath: item.videoPath!,
+                                  );
+                                  RecentlyPlayed.checkHiveData();
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => VideoPlayerScreen(
+                                      filesV: item.videoPath!,
+                                    ),
+                                  ));
                                 },
                               ),
-                              title: Text(
-                                basename(item.videoPath!),
-                                maxLines: 1,
-                                style: const TextStyle(
-                                  color: kcolorblack,
-                                ),
-                              ),
-                              subtitle: Text('Play Count: ${item.playCount}'),
-                              onTap: () {
-                                MostlyPlayedFunctions.addVideoPlayData(
-                                    item.videoPath!);
-                                RecentlyPlayed.onVideoClicked(
-                                  videoPath: item.videoPath!,
-                                );
-                                RecentlyPlayed.checkHiveData();
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => VideoPlayerScreen(
-                                    filesV: item.videoPath!,
-                                  ),
-                                ));
-                              },
                             )
                           : const SizedBox();
                     },

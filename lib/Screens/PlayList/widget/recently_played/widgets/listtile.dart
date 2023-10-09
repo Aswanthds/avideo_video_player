@@ -45,251 +45,203 @@ class _ListTileRecentlyPlayedState extends State<ListTileRecentlyPlayed> {
 
   @override
   Widget build(BuildContext context) {
-    void deleteVideo(String videoPath) {
-      RecentlyPlayed.deleteVideo(videoPath);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: kcolorblack05,
-          content: const Text('Video deleted'), //
-          duration: const Duration(seconds: 2), //
-          action: SnackBarAction(
-            label: 'Close',
-            onPressed: () => Navigator.of(context).pop(),
+    return Card(
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(color: kColorIndigo, style: BorderStyle.solid),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      elevation: 5,
+      color: Colors.grey.shade100,
+      margin: const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 12),
+      child: ListTile(
+        onTap: () {
+          MostlyPlayedFunctions.addVideoPlayData(
+              widget.files[widget.index].videoPath);
+          RecentlyPlayed.onVideoClicked(
+              videoPath: widget.files[widget.index].videoPath);
+          RecentlyPlayed.checkHiveData();
+          Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (context) => RecentlyPlayedVideoScreen(
+                      currentIndex: widget.index,
+                      videoPaths: widget.files,
+                    )),
+          );
+        },
+        leading: ThumbnailRecentlyPlayed(
+          thumbnail: widget.thumbnail,
+          current: widget.current,
+          full: widget.full,
+        ),
+        title: Text(
+          basename(widget.files[widget.index].videoPath),
+          maxLines: 1,
+          style: const TextStyle(
+            color: kcolorblack,
           ),
         ),
-      );
-    }
+        subtitle: Text(
+          '${(calculateProgress(widget.current, widget.full)! * 100).round()}%',
+          style: const TextStyle(
+            color: kcolorblack,
+          ),
+        ),
+        trailing: CustomPopupMenu(
+          onAddToPlaylistPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                String newPlaylistName = '';
+                return AlertDialog(
+                  backgroundColor: kColorWhite,
+                  content: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ValueListenableBuilder(
+                        valueListenable:
+                            Hive.box<VideoPlaylist>('playlists_data')
+                                .listenable(),
+                        builder: (context, Box<VideoPlaylist> box, _) {
+                          final playlistNames = box.values
+                              .map((playlist) => playlist.name)
+                              .toList();
+                          selectedPlaylist = selectedPlaylist =
+                              playlistNames.isNotEmpty ? '' : '';
+                          //
 
-    showPopupMenu(Offset offset) async {
-      double left = offset.dx;
-      double top = offset.dy;
-      await showMenu(
-        context: context,
-        position: RelativeRect.fromLTRB(left, top, 30, 0),
-        items: [
-          PopupMenuItem<Widget>(
-              child: const Row(
-                children: [
-                  Icon(Icons.playlist_add),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Add to Playlist'),
-                  ),
-                ],
-              ),
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    String newPlaylistName = '';
-                    return AlertDialog(
-                      backgroundColor: kColorWhite,
-                      content: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ValueListenableBuilder(
-                            valueListenable:
-                                Hive.box<VideoPlaylist>('playlists_data')
-                                    .listenable(),
-                            builder: (context, Box<VideoPlaylist> box, _) {
-                              final playlistNames = box.values
-                                  .map((playlist) => playlist.name)
-                                  .toList();
-                              selectedPlaylist = selectedPlaylist =
-                                  playlistNames.isNotEmpty ? '' : '';
-                              //
-
-                              return (playlistNames.isEmpty ||
-                                      playlistNames[0] == null)
-                                  ? const SizedBox(
-                                      height: 20,
-                                    )
-                                  : Theme(
-                                      data: Theme.of(context).copyWith(
-                                        canvasColor: kColorWhite,
-                                      ),
-                                      child: DropdownButtonFormField<String>(
-                                        decoration: const InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: kcolorblack,
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(20))),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: kcolorblack,
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(20))),
+                          return (playlistNames.isEmpty ||
+                                  playlistNames[0] == null)
+                              ? const SizedBox(
+                                  height: 20,
+                                )
+                              : Theme(
+                                  data: Theme.of(context).copyWith(
+                                    canvasColor: kColorWhite,
+                                  ),
+                                  child: DropdownButtonFormField<String>(
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: kcolorblack,
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20))),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: kcolorblack,
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20))),
+                                    ),
+                                    value: selectedPlaylist,
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        selectedPlaylist = newValue ?? '';
+                                        debugPrint(newValue);
+                                      });
+                                    },
+                                    items: [
+                                      const DropdownMenuItem<String>(
+                                        value: '',
+                                        child: Text(
+                                          "None",
+                                          style:
+                                              TextStyle(color: kcolorDarkblue),
                                         ),
-                                        value: selectedPlaylist,
-                                        onChanged: (String? newValue) {
-                                          setState(() {
-                                            selectedPlaylist = newValue ?? '';
-                                            debugPrint(newValue);
-                                          });
-                                        },
-                                        items: [
-                                          const DropdownMenuItem<String>(
-                                            value: '',
+                                      ),
+                                      if (box.isNotEmpty)
+                                        ...playlistNames
+                                            .map<DropdownMenuItem<String>>(
+                                                (String? value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value!,
                                             child: Text(
-                                              "None",
-                                              style: TextStyle(
+                                              value,
+                                              style: const TextStyle(
                                                   color: kcolorDarkblue),
                                             ),
-                                          ),
-                                          if (box.isNotEmpty)
-                                            ...playlistNames
-                                                .map<DropdownMenuItem<String>>(
-                                                    (String? value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value!,
-                                                child: Text(
-                                                  value,
-                                                  style: const TextStyle(
-                                                      color: kcolorDarkblue),
-                                                ),
-                                              );
-                                            }).toList(),
-                                        ],
-                                      ),
-                                    );
-                            },
-                          ),
-                          const SizedBox(height: 20.0),
-                          TextFormField(
-                            style: const TextStyle(color: kcolorDarkblue),
-                            onChanged: (value) {
-                              newPlaylistName = value;
-                            },
-                            decoration: const InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: kcolorblack,
+                                          );
+                                        }).toList(),
+                                    ],
                                   ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: kcolorblack,
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              hintText: "New Playlist Name",
-                              hintStyle: TextStyle(color: kcolorDarkblue),
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                        ],
+                                );
+                        },
                       ),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context); //
-                          },
-                          child: const Text("Cancel"),
+                      const SizedBox(height: 20.0),
+                      TextFormField(
+                        style: const TextStyle(color: kcolorDarkblue),
+                        onChanged: (value) {
+                          newPlaylistName = value;
+                        },
+                        decoration: const InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: kcolorblack,
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: kcolorblack,
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          hintText: "New Playlist Name",
+                          hintStyle: TextStyle(color: kcolorDarkblue),
+                          border: OutlineInputBorder(),
                         ),
-                        TextButton(
-                          onPressed: () async {
-                            //
-                            if (newPlaylistName.isNotEmpty) {
-                              await CreatePlayListFunctions.createPlaylist(
-                                  newPlaylistName);
+                      ),
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context); //
+                      },
+                      child: const Text("Cancel"),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        //
+                        if (newPlaylistName.isNotEmpty) {
+                          await CreatePlayListFunctions.createPlaylist(
+                              newPlaylistName);
 
-                              await CreatePlayListFunctions.addVideoToPlaylist(
-                                  newPlaylistName,
-                                  widget.files[widget.index].videoPath);
+                          await CreatePlayListFunctions.addVideoToPlaylist(
+                              newPlaylistName,
+                              widget.files[widget.index].videoPath);
 
-                              Navigator.of(context)
-                                  .popUntil((route) => route.isFirst);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  behavior: SnackBarBehavior.floating,
-                                  backgroundColor: kcolorblack05,
-                                  content:
-                                      const Text('Video added to playlist'), //
-                                  duration: const Duration(seconds: 2), //
-                                ),
-                              ); //
-                            }
-                            if (selectedPlaylist!.isNotEmpty) {
-                              await CreatePlayListFunctions.addVideoToPlaylist(
-                                  selectedPlaylist ?? '',
-                                  widget.files[widget.index].videoPath);
-                              Navigator.of(context).pop();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  clipBehavior: Clip.antiAlias,
-                                  behavior: SnackBarBehavior.floating,
-                                  backgroundColor: kColorDeepOrange,
-                                  content: Text('Video added to playlist'), //
-                                  duration: Duration(seconds: 2), //
-                                ),
-                              );
-                            }
-                          },
-                          child: const Text("Add to playlist"),
-                        ),
-                      ],
-                    );
-                  },
+                          Navigator.of(context)
+                              .popUntil((route) => route.isFirst);
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(postiveNewPlaylist); //
+                        }
+                        if (selectedPlaylist!.isNotEmpty) {
+                          await CreatePlayListFunctions.addVideoToPlaylist(
+                              selectedPlaylist ?? '',
+                              widget.files[widget.index].videoPath);
+                          Navigator.of(context).pop();
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(postivePlaylist);
+                        }
+                      },
+                      child: const Text("Add to playlist"),
+                    ),
+                  ],
                 );
-              }),
-          PopupMenuItem<Widget>(
-            onTap: () {
-              deleteVideo(widget.files[widget.index].videoPath);
-              Navigator.of(context).pop();
-              setState(() {});
-            },
-            child: const Row(
-              children: [
-                Icon(Icons.remove),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Remove'),
-                ),
-              ],
-            ),
-          ),
-        ],
-        elevation: 8.0,
-      );
-    }
-
-    return ListTile(
-      onTap: () {
-        MostlyPlayedFunctions.addVideoPlayData(
-            widget.files[widget.index].videoPath);
-        RecentlyPlayed.onVideoClicked(
-            videoPath: widget.files[widget.index].videoPath);
-        RecentlyPlayed.checkHiveData();
-        Navigator.of(context).push(
-          MaterialPageRoute(
-              builder: (context) => RecentlyPlayedVideoScreen(
-                    currentIndex: widget.index,
-                    videoPaths: widget.files,
-                  )),
-        );
-      },
-      leading: ThumbnailRecentlyPlayed(
-        thumbnail: widget.thumbnail,
-        current: widget.current,
-        full: widget.full,
-      ),
-      title: Text(basename(widget.files[widget.index].videoPath),
-          maxLines: 1, overflow: TextOverflow.ellipsis, style: favorites),
-      subtitle: Text(
-        '${(calculateProgress(widget.current, widget.full)! * 100).round()}%',
-        style: const TextStyle(),
-      ),
-      trailing: GestureDetector(
-        onTapDown: (details) => showPopupMenu(details.globalPosition),
-        child: const Icon(Icons.more_vert),
+              },
+            );
+          },
+          onRemovePressed: () {
+            RecentlyPlayed.deleteVideo(
+                widget.files[widget.index].videoPath, widget.index);
+            ScaffoldMessenger.of(context).showSnackBar(deleteMsg);
+            Navigator.of(context).pop();
+            ScaffoldMessenger.of(context).showSnackBar(deleteMsg);
+          },
+        ),
       ),
     );
   }
@@ -303,5 +255,47 @@ class _ListTileRecentlyPlayedState extends State<ListTileRecentlyPlayed> {
       return 0.0; //
     }
     return current / full;
+  }
+}
+
+class CustomPopupMenu extends StatelessWidget {
+  final VoidCallback? onAddToPlaylistPressed;
+  final VoidCallback? onRemovePressed;
+
+  const CustomPopupMenu({
+    Key? key,
+    this.onAddToPlaylistPressed,
+    this.onRemovePressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton<String>(
+      itemBuilder: (BuildContext context) {
+        return const [
+          PopupMenuItem<String>(
+            value: 'addToPlaylist',
+            child: ListTile(
+              leading: Icon(Icons.playlist_add),
+              title: Text('Add to Playlist'),
+            ),
+          ),
+          PopupMenuItem<String>(
+            value: 'remove',
+            child: ListTile(
+              leading: Icon(Icons.remove),
+              title: Text('Remove'),
+            ),
+          ),
+        ];
+      },
+      onSelected: (String choice) {
+        if (choice == 'addToPlaylist') {
+          onAddToPlaylistPressed?.call();
+        } else if (choice == 'remove') {
+          onRemovePressed?.call();
+        }
+      },
+    );
   }
 }

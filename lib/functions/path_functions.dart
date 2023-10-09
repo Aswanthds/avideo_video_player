@@ -47,7 +47,7 @@ class PathFunctions {
       for (final path in paths) {
         Directory root = Directory(path);
         root.listSync(recursive: true).forEach((element) {
-          if (isVideoFile(element.path)) {
+          if (isVideoFile(element.path) && element.existsSync()) {
             videoPaths.add(element.path);
           }
         });
@@ -57,7 +57,8 @@ class PathFunctions {
         Directory root = Directory('/storage/emulated/0/');
         await for (final FileSystemEntity entity
             in root.list(recursive: true)) {
-          if (entity is File && isVideoFile(entity.path)) {
+          if (entity is File && isVideoFile(entity.path) &&
+              entity.existsSync()) {
             videoPaths.add(entity.path);
           }
         }
@@ -67,7 +68,22 @@ class PathFunctions {
       }
     }
     return videoPaths;
-    /*
+  }
+
+  static Future<void> storeVideos() async {
+    final videos =
+        await getVideoPathsAsync(); // Specify the folder you want to search
+
+    if (!Hive.isBoxOpen('videos')) {
+      await Hive.openBox<List<String>>('videos');
+    }
+
+    final box = Hive.box<List<String>>('videos');
+
+    box.put('videos', videos);
+  }
+}
+ /*
     try {
       Directory root = Directory('/storage/emulated/0/');
       await for (final FileSystemEntity entity in root.list(recursive: true)) {
@@ -117,21 +133,6 @@ class PathFunctions {
       return []; // Handle the error gracefully
     }
  */
-  }
-
-  static Future<void> storeVideos() async {
-    final videos =
-        await getVideoPathsAsync(); // Specify the folder you want to search
-
-    if (!Hive.isBoxOpen('videos')) {
-      await Hive.openBox<List<String>>('videos');
-    }
-
-    final box = Hive.box<List<String>>('videos');
-
-    box.put('videos', videos);
-  }
-}
 /*
 static Future<List<String>> getVideoPathsAsync() async {
   bool isVideoFile(File file) {

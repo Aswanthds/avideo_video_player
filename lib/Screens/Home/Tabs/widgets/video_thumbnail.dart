@@ -30,16 +30,20 @@ class _VideoThumbnailCommonState extends State<VideoThumbnailCommon> {
   }
 
   Future<void> updateThumbnail() async {
-    try {
-      final thumbnailFile = await VideoCompress.getFileThumbnail(
-        widget.videoFile.path,
-        quality: 30,
-        position: 0,
-      );
+    if (widget.videoFile.existsSync()) {
+      try {
+        final thumbnailFile = await VideoCompress.getFileThumbnail(
+          widget.videoFile.path,
+          quality: 30,
+          position: 0,
+        );
 
-      thumbnailNotifier.value = thumbnailFile;
-    } catch (e) {
-      debugPrint('Error generating thumbnail: $e');
+        thumbnailNotifier.value = thumbnailFile;
+      } catch (e) {
+        debugPrint('Error generating thumbnail: $e');
+      }
+    } else {
+      return;
     }
   }
 
@@ -63,83 +67,87 @@ class _VideoThumbnailCommonState extends State<VideoThumbnailCommon> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ValueListenableBuilder<File?>(
-          valueListenable: thumbnailNotifier,
-          builder: (context, thumbnail, child) {
-            if (thumbnail == null) {
-              return Container(
-                width: 160,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: kcolorDarkblue,
-                  border: Border.all(
-                    style: BorderStyle.solid,
+    return Card(
+      elevation: 10.0,
+      color: Colors.white.withOpacity(0.8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ValueListenableBuilder<File?>(
+            valueListenable: thumbnailNotifier,
+            builder: (context, thumbnail, child) {
+              if (thumbnail == null) {
+                return Container(
+                  width: 160,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: kcolorDarkblue,
+                    border: Border.all(
+                      style: BorderStyle.solid,
+                    ),
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: const Center(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2.0,
-                  ),
-                ),
-              );
-            } else {
-              return Stack(
-                children: [
-                  Container(
-                    width: 160,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        style: BorderStyle.solid,
-                      ),
-                      borderRadius: BorderRadius.circular(5),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: FileImage(thumbnail),
-                      ),
+                  child: const Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2.0,
                     ),
                   ),
-                  if (duration != null)
-                    Positioned(
-                      bottom: 5,
-                      right: 5,
+                );
+              } else {
+                return Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(3.0),
                       child: Container(
-                        padding: const EdgeInsets.all(4),
+                        width: 160,
+                        height: 100,
                         decoration: BoxDecoration(
-                          color: Colors.black54,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          duration!,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: FileImage(thumbnail),
                           ),
                         ),
                       ),
                     ),
-                ],
-              );
-            }
-          },
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            basename(widget.videoFile.path).toUpperCase(),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 13.5,
-                fontFamily: 'OpenSans'),
+                    if (duration != null)
+                      Positioned(
+                        bottom: 5,
+                        right: 5,
+                        child: Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            color: Colors.black54,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Text(
+                            duration!,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                );
+              }
+            },
           ),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              basename(widget.videoFile.path).toUpperCase(),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13.5,
+                  fontFamily: 'OpenSans'),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

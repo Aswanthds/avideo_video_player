@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:video_compress/video_compress.dart';
@@ -19,19 +21,24 @@ class RecentlyPlayed {
     Duration? current,
     Duration? full,
   }) async {
-    final box = Hive.box<RecentlyPlayedData>(_boxName);
+    final videoFile = File(videoPath).existsSync();
+    if (videoFile) {
+      final box = Hive.box<RecentlyPlayedData>(_boxName);
 
-    final videoData = RecentlyPlayedData(
-      videoPath: videoPath,
-      timestamp: DateTime.now(),
-      current: current,
-      full: full,
-    );
+      final videoData = RecentlyPlayedData(
+        videoPath: videoPath,
+        timestamp: DateTime.now(),
+        current: current,
+        full: full,
+      );
 
-    await box.put(videoPath, videoData);
+      await box.put(videoPath, videoData);
 
-    debugPrint(
-        'onVideo: ${videoData.videoPath}, ${videoData.current}, ${videoData.full}, ${videoData.timestamp}');
+      debugPrint(
+          'onVideo: ${videoData.videoPath}, ${videoData.current}, ${videoData.full}, ${videoData.timestamp}');
+    } else {
+      return;
+    }
   }
 
   static List<RecentlyPlayedData> getRecentlyPlayedVideos() {
@@ -58,8 +65,6 @@ class RecentlyPlayed {
     final uniqueVideos = uniqueVideosMap.values.toList();
     uniqueVideos.sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
-    //
-
     return uniqueVideos;
   }
 
@@ -67,35 +72,39 @@ class RecentlyPlayed {
     final recentlyPlayedVideos = RecentlyPlayed.getRecentlyPlayedVideos();
     for (final videoData in recentlyPlayedVideos) {
       debugPrint('Video Path: ${videoData.videoPath}');
-      //
     }
   }
 
-  static Future<void> deleteVideo(String videoPath) async {
-    final box = await Hive.openBox<RecentlyPlayedData>(_boxName);
+  static Future<void> deleteVideo(String videoPath, int indexToDelete) async {
+    final box = Hive.box<RecentlyPlayedData>(_boxName);
 
-    final videoToDeleteKey = box.keys.firstWhere(
-      (key) {
-        final videoData = box.get(key);
-        return videoData != null && videoData.videoPath == videoPath;
-      },
-      orElse: () => null,
-    );
-
-    if (videoToDeleteKey != null) {
-      await box.delete(videoToDeleteKey);
-      //
-
-      //
-      final updatedList = recentlyPlayedVideos.value.toList();
-      updatedList.removeWhere((videoData) => videoData.videoPath == videoPath);
-
-      //
-      recentlyPlayedVideos.value = updatedList;
+    if (indexToDelete != -1) {
+      await box.deleteAt(indexToDelete);
+      debugPrint('Deleted video: $videoPath');
+    } else {
+      debugPrint('Video not found: $videoPath');
     }
   }
 
-  //
+  // final box = await Hive.openBox<RecentlyPlayedData>(_boxName);
+
+  // final videoToDeleteKey = box.keys.firstWhere(
+  //   (key) {
+  //     final videoData = box.get(key);
+  //     return videoData != null && videoData.videoPath == videoPath;
+  //   },
+  //   orElse: () => null,
+  // );
+
+  // if (videoToDeleteKey != null) {
+  //   await box.delete(videoToDeleteKey);
+
+  //   final updatedList = recentlyPlayedVideos.value.toList();
+  //   updatedList.removeWhere((videoData) => videoData.videoPath == videoPath);
+
+  //   recentlyPlayedVideos.value = updatedList;
+  // }
+
   static updateRecentlyPlayed(List<RecentlyPlayedData> videos) {
     recentlyPlayedVideos.value = videos;
   }

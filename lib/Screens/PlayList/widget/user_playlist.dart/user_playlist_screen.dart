@@ -38,19 +38,21 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
     final list = widget.playlist.videos;
 
     for (final video in list!) {
-      try {
-        final thumbnail = await VideoCompress.getFileThumbnail(
-          video,
-          quality: 30,
-          position: -1,
-        );
-        setState(() {
-          thumbnails[video] = thumbnail; //
-        });
-      } on PlatformException catch (f) {
-        debugPrint('PlatformExceptin occured $f');
-      } catch (e) {
-        debugPrint('Error generating thumbnail for $video: $e');
+      if (File(video).existsSync()) {
+        try {
+          final thumbnail = await VideoCompress.getFileThumbnail(
+            video,
+            quality: 30,
+            position: -1,
+          );
+          setState(() {
+            thumbnails[video] = thumbnail; //
+          });
+        } on PlatformException catch (f) {
+          debugPrint('PlatformExceptin occured $f');
+        } catch (e) {
+          debugPrint('Error generating thumbnail for $video: $e');
+        }
       }
     }
   }
@@ -101,14 +103,18 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
               //
               height: 120, //
               decoration: BoxDecoration(
-                  color: kColorAmber,
+                  color: Colors.accents[4],
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(style: BorderStyle.solid)),
               child: Center(
                 child: Text(
                   widget.playlist.name ?? '',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontSize: 70,
+                      fontSize: 75,
+                      color: kColorWhite,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Cookie'),
                 ),
@@ -184,7 +190,7 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                                 padding: const EdgeInsets.only(
                                     top: 10.0, bottom: 10.0),
                                 child: (thumbnails.isNotEmpty ||
-                                        thumbnail == null)
+                                        thumbnail == null && isValidVideo)
                                     ? ListTile(
                                         leading: (thumbnail != null)
                                             ? Container(
@@ -218,7 +224,13 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                                           thumbnail == null
                                               ? 'video not found'
                                               : basename(videoPath),
-                                          style: favorites,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            color: kcolorblack,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                         onTap: () {
                                           if (thumbnail != null) {
@@ -270,18 +282,7 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                                                         ScaffoldMessenger.of(
                                                                 context)
                                                             .showSnackBar(
-                                                                SnackBar(
-                                                          behavior:
-                                                              SnackBarBehavior
-                                                                  .floating,
-                                                          backgroundColor:
-                                                              kcolorblack05,
-                                                          duration:
-                                                              const Duration(
-                                                                  seconds: 2),
-                                                          content: const Text(
-                                                              'Video added to favorites'),
-                                                        ));
+                                                                positiveFavorites);
                                                       }),
                                                   PopupMenuItem<Widget>(
                                                     child: const Row(
@@ -332,15 +333,11 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                                                               Navigator.of(
                                                                       context)
                                                                   .pop();
-                                                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                                                  behavior:
-                                                                      SnackBarBehavior
-                                                                          .floating,
-                                                                  backgroundColor:
-                                                                      kcolorblack05,
-                                                                  content:
-                                                                      const Text(
-                                                                          'Video Deleted Successfully')));
+                                                              ScaffoldMessenger
+                                                                      .of(
+                                                                          context)
+                                                                  .showSnackBar(
+                                                                      deleteMsg);
                                                             },
                                                             icon: const Icon(Icons
                                                                 .delete_forever_outlined),

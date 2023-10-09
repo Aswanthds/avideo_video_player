@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:video_player_app/Screens/mainpage.dart';
+import 'package:video_player_app/constants.dart';
 
 class SplashScreenPage extends StatefulWidget {
   const SplashScreenPage({Key? key}) : super(key: key);
@@ -57,8 +58,16 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Image.asset('assets/images/logo_full.png'),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset('assets/images/logo_full.png'),
+          const CircularProgressIndicator.adaptive(
+            valueColor: AlwaysStoppedAnimation(kColorIndigo),
+            backgroundColor: kcolorDarkblue,
+          )
+        ],
       ),
     );
   }

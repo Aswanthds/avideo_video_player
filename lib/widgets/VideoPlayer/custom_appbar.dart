@@ -237,19 +237,10 @@ class _VideoPlayerAppbarState extends State<VideoPlayerAppbar> {
                                             .addVideoToPlaylist(newPlaylistName,
                                                 widget.widget.filesV);
 
-                                        Navigator.of(context)
-                                            .pop();
+                                        Navigator.of(context).pop();
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
-                                          SnackBar(
-                                            behavior: SnackBarBehavior.floating,
-                                            backgroundColor: kcolorblack05,
-                                            content: const Text(
-                                                'Video added to playlist'), //
-                                            duration:
-                                                const Duration(seconds: 2), //
-                                          ),
-                                        ); //
+                                                postiveNewPlaylist); //
                                       }
                                       if (selectedPlaylist!.isNotEmpty) {
                                         await CreatePlayListFunctions
@@ -258,16 +249,7 @@ class _VideoPlayerAppbarState extends State<VideoPlayerAppbar> {
                                                 widget.widget.filesV);
                                         Navigator.of(context).pop();
                                         ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            clipBehavior: Clip.antiAlias,
-                                            behavior: SnackBarBehavior.floating,
-                                            backgroundColor: kColorDeepOrange,
-                                            content: Text(
-                                                'Video added to playlist'), //
-                                            duration: Duration(seconds: 2), //
-                                          ),
-                                        );
+                                            .showSnackBar(postivePlaylist);
                                       }
                                     },
                                     child: const Text("Add to playlist"),

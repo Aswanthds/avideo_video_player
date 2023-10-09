@@ -41,13 +41,59 @@ const Widget nodata = Row(
     Text('No videos are found !! ', style: TextStyle(color: kColorIndigo))
   ],
 );
+const Widget nodatarecently = Text(
+  'Recently played videos are listed here',
+  style: TextStyle(color: kcolorblack54),
+);
+
 const TextStyle appbar =
     TextStyle(color: kColorWhite, fontSize: 25, fontWeight: FontWeight.bold);
 
 const TextStyle bottomNav = TextStyle(fontFamily: 'Koulen');
 
 const TextStyle favorites = TextStyle(
-    fontSize: 15,
-    color: kcolorDarkblue,
-    fontWeight: FontWeight.bold,
-    fontFamily: 'NixieOne');
+  fontSize: 15,
+  color: kColorWhite,
+  fontWeight: FontWeight.bold,
+);
+
+const SnackBar deleteMsg = SnackBar(
+  behavior: SnackBarBehavior.floating,
+  backgroundColor: Color.fromARGB(255, 175, 78, 71),
+  content: Text('Video removed sucesfully'), //
+  duration: Duration(seconds: 2), //
+);
+
+const SnackBar deletePlaylistMsg = SnackBar(
+  behavior: SnackBarBehavior.floating,
+  backgroundColor: Color.fromARGB(255, 175, 78, 71),
+  content: Text('Playlist Deleted'), //
+  duration: Duration(seconds: 2), //
+);
+
+const SnackBar postivePlaylist = SnackBar(
+  behavior: SnackBarBehavior.floating,
+  backgroundColor: kColorIndigo,
+  content: Text('Video added to playlist'), //
+  duration: Duration(seconds: 2), //
+);
+const SnackBar postiveNewPlaylist = SnackBar(
+  behavior: SnackBarBehavior.floating,
+  backgroundColor: kColorIndigo,
+  content: Text('Playlist ready !!!'), //
+  duration: Duration(seconds: 2), //
+);
+
+const SnackBar positiveFavorites = SnackBar(
+  behavior: SnackBarBehavior.floating,
+  backgroundColor: kColorIndigo,
+  content: Text('Video added to favorites'), //
+  duration: Duration(seconds: 2), //
+);
+
+const SnackBar negativeFavorites = SnackBar(
+  behavior: SnackBarBehavior.floating,
+  backgroundColor: Color.fromARGB(255, 175, 78, 71),
+  content: Text('Video removed from favorites'), //
+  duration: Duration(seconds: 2), //
+);

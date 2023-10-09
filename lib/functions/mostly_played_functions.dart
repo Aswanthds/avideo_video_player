@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:video_player_app/database/most_played_data.dart';
 
@@ -10,38 +12,49 @@ class MostlyPlayedFunctions {
   }
 
   static Future<void> addVideoPlayData(String videoPath) async {
-    final box = await Hive.openBox<MostlyPlayedData>(_boxName);
+    final videoFile = File(videoPath).existsSync();
+    if (videoFile) {
+      // Video file doesn't exist, so don't add it
+      // Optionally, you can display a message or handle it as needed
+      // debugPrint('Video file does not exist: $videoPath');
+      // return;
+      final box = await Hive.openBox<MostlyPlayedData>(_boxName);
 
-    //
-    int existingDataIndex = -1;
-    for (int i = 0; i < box.length; i++) {
-      final data = box.getAt(i) as MostlyPlayedData;
-      if (data.videoPath == videoPath) {
-        existingDataIndex = i;
-        break;
+      //
+      int existingDataIndex = -1;
+      for (int i = 0; i < box.length; i++) {
+        final data = box.getAt(i) as MostlyPlayedData;
+        if (data.videoPath == videoPath) {
+          existingDataIndex = i;
+          break;
+        }
       }
-    }
 
-    if (existingDataIndex != -1) {
-      //
-      final existingData = box.getAt(existingDataIndex) as MostlyPlayedData;
-      existingData.playCount++;
-      await box.putAt(existingDataIndex, existingData); //
-    } else {
-      //
-      final newVideoData = MostlyPlayedData(videoPath: videoPath, playCount: 1);
-      await box.add(newVideoData);
-    }
-
-    //
-    if (existingDataIndex == -1) {
-      final newVideoData = MostlyPlayedData(videoPath: videoPath, playCount: 1);
-      if (newVideoData.playCount >= 4) {
+      if (existingDataIndex != -1) {
         //
-        final mostlyPlayedBox =
-            await Hive.openBox<MostlyPlayedData>('mostly_played_data');
-        await mostlyPlayedBox.add(newVideoData);
+        final existingData = box.getAt(existingDataIndex) as MostlyPlayedData;
+        existingData.playCount++;
+        await box.putAt(existingDataIndex, existingData); //
+      } else {
+        //
+        final newVideoData =
+            MostlyPlayedData(videoPath: videoPath, playCount: 1);
+        await box.add(newVideoData);
       }
+
+      //
+      if (existingDataIndex == -1) {
+        final newVideoData =
+            MostlyPlayedData(videoPath: videoPath, playCount: 1);
+        if (newVideoData.playCount >= 4) {
+          //
+          final mostlyPlayedBox =
+              await Hive.openBox<MostlyPlayedData>('mostly_played_data');
+          await mostlyPlayedBox.add(newVideoData);
+        }
+      }
+    } else {
+      return;
     }
 
     //

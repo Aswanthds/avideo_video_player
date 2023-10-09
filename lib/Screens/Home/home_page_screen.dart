@@ -26,49 +26,50 @@ class _HomePageScreenState extends State<HomePageScreen>
     with TickerProviderStateMixin {
   TabController? _controller;
 
-
   @override
   void initState() {
     super.initState();
     _controller = TabController(length: 6, vsync: this);
   }
 
- 
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(100),
-          child: AppBar(
-            iconTheme: const IconThemeData(color: kColorWhite),
-            backgroundColor: kcolorDarkblue,
-            // ignore: prefer_const_constructors
-            title: Text(
-              'Avideo Video Player',
-              style: const TextStyle(
-                fontFamily: 'Cookie',
-                fontSize: 35,
-              ),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.elliptical(20, 20),
             ),
-            actions: [
-              IconButton(
-                  onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => HomeSearchPaage(
-                            files: widget.filesV,
-                            controller : _controller,
-                            tabIndex : _controller!.index,
+            child: AppBar(
+              iconTheme: const IconThemeData(color: kColorWhite),
+              backgroundColor: kcolorDarkblue,
+              // ignore: prefer_const_constructors
+              title: Text(
+                'Avideo Video Player',
+                style: const TextStyle(
+                  fontFamily: 'Cookie',
+                  fontSize: 35,
+                ),
+              ),
+              actions: [
+                IconButton(
+                    onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => HomeSearchPaage(
+                              files: widget.filesV,
+                              controller: _controller,
+                              tabIndex: _controller!.index,
+                            ),
                           ),
                         ),
-                      ),
-                  icon: const Icon(Icons.search))
-            ],
-            bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(50),
-              child: HomeTabBar(
-                controller: _controller!,
+                    icon: const Icon(Icons.search))
+              ],
+              bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(50),
+                child: HomeTabBar(
+                  controller: _controller!,
+                ),
               ),
             ),
           ),

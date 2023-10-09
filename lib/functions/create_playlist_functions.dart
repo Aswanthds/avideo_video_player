@@ -17,24 +17,31 @@ class CreatePlayListFunctions {
       String playlistName, String videoPath) async {
     final Box<VideoPlaylist> playlistBox =
         await Hive.openBox<VideoPlaylist>('playlists_data');
-
     final playlist = playlistBox.get(playlistName);
 
     if (playlist != null) {
       playlist.videos ??= [];
 
-      // Check if the video file exists before adding it
-      final videoFile = File(videoPath);
-      if (videoFile.existsSync()) {
-        playlist.videos!.add(videoPath);
+      // Check if the video path already exists in the playlist
+      if (!playlist.videos!.contains(videoPath)) {
+        // Check if the video file exists before adding it
+        final videoFile = File(videoPath);
+        if (videoFile.existsSync()) {
+          playlist.videos!.add(videoPath);
+          await playlistBox.put(playlistName, playlist);
+        } else {
+          // Video file doesn't exist, so don't add it
+          // Optionally, you can display a message or handle it as needed
+          debugPrint('Video file does not exist: $videoPath');
+        }
       } else {
-        // Video file doesn't exist, so don't add it
+        // Video path already exists in the playlist, handle it as needed
+        debugPrint('Video already exists in the playlist: $videoPath');
         // Optionally, you can display a message or handle it as needed
       }
-
-      await playlistBox.put(playlistName, playlist);
     }
   }
+
 
   static Future<void> deleteVideoFromPlaylist(
       String playlistName, String videoPath) async {

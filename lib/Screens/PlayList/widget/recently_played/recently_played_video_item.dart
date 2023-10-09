@@ -63,7 +63,8 @@ class RecentlyPlayedVideoItem extends StatelessWidget {
             videoPath: videoPath,
             timestamp: timestamp,
           );
-        } else if (snapshot.hasError) {
+        }
+         else if (snapshot.hasError) {
           return RecentlyPlayedErrorVideListTile(videoPath: videoPath);
         } else if (!snapshot.hasData) {
           return RecentlyPlayedThumbNotVideListTile(videoPath: videoPath);

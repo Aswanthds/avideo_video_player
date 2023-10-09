@@ -83,186 +83,156 @@ class _PlaylistListWidgetState extends State<PlaylistListWidget> {
           ),
         ),
         Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 5, right: 5),
-                  child: ValueListenableBuilder(
-                    valueListenable:
-                        Hive.box<VideoPlaylist>('playlists_data').listenable(),
-                    builder: (context, Box<VideoPlaylist> box, _) {
-                      final playlists = box.values.toList();
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10, left: 5, right: 5),
+            child: ValueListenableBuilder(
+              valueListenable:
+                  Hive.box<VideoPlaylist>('playlists_data').listenable(),
+              builder: (context, Box<VideoPlaylist> box, _) {
+                final playlists = box.values.toList();
 
-                      return playlists.isEmpty
-                          ? const Center(
-                              child: emptyPlaylist
-                            )
-                          : ListView.builder(
-                              itemCount: playlists.length,
-                              itemBuilder: (context, index) {
-                                if (playlists.isNotEmpty && index >= 0) {
-                                  final playlist = playlists[index];
-                                  return Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Container(
+                return playlists.isEmpty
+                    ? const Center(child: emptyPlaylist)
+                    : ListView.builder(
+                        itemCount: playlists.length,
+                        itemBuilder: (context, index) {
+                          if (playlists.isNotEmpty && index >= 0) {
+                            final playlist = playlists[index];
+                            return Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border:
+                                        Border.all(style: BorderStyle.solid),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ListTile(
+                                      leading: Container(
                                         decoration: BoxDecoration(
-                                          border: Border.all(
-                                              style: BorderStyle.solid),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: ListTile(
-                                            leading: Container(
-                                              decoration: BoxDecoration(
-                                                  color: kcolorDarkblue,
-                                                  border: Border.all(
-                                                    style: BorderStyle.solid,
-                                                    color: kcolorDarkblue,
-                                                    width: 2,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20)),
-                                              child: const Padding(
-                                                padding: EdgeInsets.all(10.0),
-                                                child: Icon(
-                                                  Icons.playlist_play,
-                                                  color: kColorWhite,
-                                                  size: 35,
-                                                ),
-                                              ),
+                                            color: kcolorDarkblue,
+                                            border: Border.all(
+                                              style: BorderStyle.solid,
+                                              color: kcolorDarkblue,
+                                              width: 2,
                                             ),
-                                            title: Text(
-                                              playlist.name ?? '',
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                            onTap: () {
-                                              Navigator.of(context)
-                                                  .push(MaterialPageRoute(
-                                                builder: (context) =>
-                                                    PlaylistDetailPage(
-                                                  playlist: playlist,
-                                                ),
-                                              ));
-                                            },
-                                            trailing: GestureDetector(
-                                                onTapDown: (details) {
-                                                  showMenu(
-                                                    context: context,
-                                                    position:
-                                                        RelativeRect.fromLTRB(
-                                                            details
-                                                                .globalPosition
-                                                                .dx,
-                                                            details
-                                                                .globalPosition
-                                                                .dy,
-                                                            30,
-                                                            0),
-                                                    items: [
-                                                      PopupMenuItem<Widget>(
-                                                        child: const Row(
-                                                          children: [
-                                                            Icon(Icons
-                                                                .playlist_remove),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .all(8.0),
-                                                              child: Text(
-                                                                  'Delete Playlist'),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        onTap: () {
-                                                          showDialog(
-                                                            context: context,
-                                                            builder:
-                                                                (context) =>
-                                                                    AlertDialog(
-                                                              content: const Text(
-                                                                  'Are you sure ?'),
-                                                              actions: [
-                                                                TextButton.icon(
-                                                                  onPressed:
-                                                                      () {
-                                                                    CreatePlayListFunctions.deletePlaylist(
-                                                                        playlist
-                                                                            .name!);
-                                                                    Navigator.of(
-                                                                            context)
-                                                                        .pop();
-                                                                  },
-                                                                  label: const Text(
-                                                                      'Delete'),
-                                                                  icon: const Icon(
-                                                                      Icons
-                                                                          .delete_forever_outlined),
-                                                                )
-                                                              ],
-                                                            ),
-                                                          ).then((value) =>
-                                                              ScaffoldMessenger
-                                                                      .of(context)
-                                                                  .showSnackBar(
-                                                                SnackBar(
-                                                                  clipBehavior:
-                                                                      Clip.antiAlias,
-                                                                  behavior:
-                                                                      SnackBarBehavior
-                                                                          .floating,
-                                                                  backgroundColor:
-                                                                      kcolorblack05,
-                                                                  content:
-                                                                      const Text(
-                                                                          'Playlist deleted'), //
-                                                                  duration: const Duration(
-                                                                      seconds:
-                                                                          2), //
-                                                                ),
-                                                              ));
-                                                        },
-                                                      ),
-                                                      PopupMenuItem<Widget>(
-                                                        child: const Row(
-                                                          children: [
-                                                            Icon(Icons
-                                                                .playlist_remove),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .all(8.0),
-                                                              child: Text(
-                                                                  'Rename Playlist'),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        onTap: () {
-                                                          showRenamePlaylistDialog(
-                                                              context,
-                                                              playlist.name ??
-                                                                  '');
-                                                        },
-                                                      )
-                                                    ],
-                                                  );
-                                                },
-                                                child: const Icon(
-                                                    Icons.more_vert)),
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        child: const Padding(
+                                          padding: EdgeInsets.all(10.0),
+                                          child: Icon(
+                                            Icons.playlist_play,
+                                            color: kColorWhite,
+                                            size: 35,
                                           ),
                                         ),
-                                      ));
-                                }
-                                return null;
-                              },
-                            );
-                    },
-                  ),
-                ),
-              ),
+                                      ),
+                                      title: Text(
+                                        playlist.name ?? '',
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                          builder: (context) =>
+                                              PlaylistDetailPage(
+                                            playlist: playlist,
+                                          ),
+                                        ));
+                                      },
+                                      trailing: GestureDetector(
+                                          onTapDown: (details) {
+                                            showMenu(
+                                              context: context,
+                                              position: RelativeRect.fromLTRB(
+                                                  details.globalPosition.dx,
+                                                  details.globalPosition.dy,
+                                                  30,
+                                                  0),
+                                              items: [
+                                                PopupMenuItem<Widget>(
+                                                  child: const Row(
+                                                    children: [
+                                                      Icon(Icons
+                                                          .playlist_remove),
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsets.all(8.0),
+                                                        child: Text(
+                                                            'Delete Playlist'),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  onTap: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          AlertDialog(
+                                                        content: const Text(
+                                                            'Are you sure ?'),
+                                                        actions: [
+                                                          TextButton.icon(
+                                                            onPressed: () {
+                                                              CreatePlayListFunctions
+                                                                  .deletePlaylist(
+                                                                      playlist
+                                                                          .name!);
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            },
+                                                            label: const Text(
+                                                                'Delete'),
+                                                            icon: const Icon(Icons
+                                                                .delete_forever_outlined),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ).then((value) =>
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                                deletePlaylistMsg));
+                                                  },
+                                                ),
+                                                PopupMenuItem<Widget>(
+                                                  child: const Row(
+                                                    children: [
+                                                      Icon(Icons
+                                                          .playlist_remove),
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsets.all(8.0),
+                                                        child: Text(
+                                                            'Rename Playlist'),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  onTap: () {
+                                                    showRenamePlaylistDialog(
+                                                        context,
+                                                        playlist.name ?? '');
+                                                  },
+                                                )
+                                              ],
+                                            );
+                                          },
+                                          child: const Icon(Icons.more_vert)),
+                                    ),
+                                  ),
+                                ));
+                          }
+                          return null;
+                        },
+                      );
+              },
+            ),
+          ),
+        ),
       ],
     );
   }

@@ -204,29 +204,15 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
 
                             Navigator.of(context)
                                 .popUntil((route) => route.isFirst);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                behavior: SnackBarBehavior.floating,
-                                backgroundColor: kcolorblack05,
-                                content:
-                                    const Text('Video added to playlist'), //
-                                duration: const Duration(seconds: 2), //
-                              ),
-                            ); //
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(postiveNewPlaylist); //
                           }
                           if (selectedPlaylist!.isNotEmpty) {
                             await CreatePlayListFunctions.addVideoToPlaylist(
                                 selectedPlaylist ?? '', widget.video.filePath);
                             Navigator.of(context).pop();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                clipBehavior: Clip.antiAlias,
-                                behavior: SnackBarBehavior.floating,
-                                backgroundColor: kColorDeepOrange,
-                                content: Text('Video added to playlist'), //
-                                duration: Duration(seconds: 2), //
-                              ),
-                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(postivePlaylist);
                           }
                         },
                         child: const Text("Add to playlist"),
@@ -248,12 +234,8 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
                 ],
               ),
               onTap: () {
-                if (mounted) {
-                  setState(() {
-                    FavoriteFunctions.deleteVideo(
-                        widget.video.filePath, widget.index);
-                  });
-                }
+                FavoriteFunctions.deleteVideo(widget.video.filePath);
+                ScaffoldMessenger.of(context).showSnackBar(negativeFavorites);
               }),
         ],
         elevation: 8.0,
@@ -302,7 +284,9 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
                   ),
                 )),
         title: Text(basename(videoFilePath),
-            maxLines: 2, overflow: TextOverflow.ellipsis, style: favorites),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(color: kcolorblack)),
         trailing: GestureDetector(
           onTapDown: (TapDownDetails details) {
             showPopupMenu(details.globalPosition);

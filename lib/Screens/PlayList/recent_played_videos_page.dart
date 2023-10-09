@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:video_player_app/Screens/playlist/widget/recently_played/recently_played_video_list.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:video_player_app/Screens/PlayList/widget/recently_played/recently_played_video_item.dart';
 import 'package:video_player_app/Screens/playlist/widget/playlist_heading_widget.dart';
 import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/database/recently_video_data.dart';
@@ -38,7 +39,7 @@ class _RecentlyPlayedVideosPageState extends State<RecentlyPlayedVideosPage> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(75),
         child: ClipRRect(
-            borderRadius: const BorderRadius.only(
+          borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(24),
           ),
           child: AppBar(
@@ -56,6 +57,7 @@ class _RecentlyPlayedVideosPageState extends State<RecentlyPlayedVideosPage> {
         ),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(10.0),
@@ -67,7 +69,37 @@ class _RecentlyPlayedVideosPageState extends State<RecentlyPlayedVideosPage> {
               child: const ThumbnailRecentlyHeadingWidget(),
             ),
           ),
-           RecenPlayedVideoList(files: recentlyPlayedVideos) 
+          recentlyPlayedVideos.isEmpty
+              ? const Center(child: nodatarecently)
+              : ValueListenableBuilder(
+                  valueListenable:
+                      Hive.box<RecentlyPlayedData>('recently_played')
+                          .listenable(),
+                  builder: (context, value, child) {
+                    if (value.isEmpty) {
+                      return nodatarecently;
+                    } else {
+                      return Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: recentlyPlayedVideos.length,
+                          itemBuilder: (context, index) {
+                            final file =
+                                File(recentlyPlayedVideos[index].videoPath)
+                                    .existsSync();
+                            if (file) {
+                              return RecentlyPlayedVideoItem(
+                                videoData: recentlyPlayedVideos,
+                                index: index,
+                              );
+                            }
+                            return const SizedBox();
+                          },
+                        ),
+                      );
+                    }
+                  },
+                )
         ],
       ),
     );
