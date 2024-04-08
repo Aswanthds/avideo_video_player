@@ -13,8 +13,8 @@ class HomeTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return TabBar(
       controller: controller,
-      labelColor: kColorWhite,
-      unselectedLabelColor: Colors.grey,
+      labelColor: kcolorblack,
+      unselectedLabelColor: kColorWhite,
       isScrollable: true,
       labelStyle: const TextStyle(color: kColorWhite),
       indicatorColor: Colors.lightBlue,
@@ -36,9 +36,12 @@ class HomeTabBar extends StatelessWidget {
           icon: Icon(Icons.radio_button_checked_rounded),
         ),
         FolderTab(
-          foldername: 'Whatsapp',
-          icon: Image(image: AssetImage('assets/images/bg.png'),height: 24,color: kColorWhite,)
-        ),
+            foldername: 'Whatsapp',
+            icon: Image(
+              image: AssetImage('assets/images/bg.png'),
+              height: 24,
+              color: kColorWhite,
+            )),
         FolderTab(
           foldername: 'Others',
           icon: Icon(Icons.video_label),

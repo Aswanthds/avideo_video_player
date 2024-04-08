@@ -14,7 +14,7 @@ class PrivacyScreen extends StatelessWidget {
         automaticallyImplyLeading: true,
         iconTheme: const IconThemeData(color: kColorWhite),
         title: const Text('Privacy Statement'),
-        backgroundColor: kcolorDarkblue,
+        backgroundColor: kcolorMintGreen,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

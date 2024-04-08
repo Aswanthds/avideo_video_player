@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:video_compress/video_compress.dart';
 
@@ -27,40 +28,65 @@ class _VideoInfoDialogState extends State<VideoInfoDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(
-        widget.info.isNotEmpty ? basename(widget.info[0].path!) : 'No Title',
-        style: const TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.bold,
+    return Dialog(
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadiusDirectional.zero),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            FittedBox(
+              fit: BoxFit.contain,
+              child: Text(
+                widget.info.isNotEmpty
+                    ? basename(widget.info[0].path!)
+                    : 'No Title',
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            buildRichText(
+                'Size', '${formatBytesToMB(widget.info[0].filesize!)} MB'),
+            buildRichText('Length', formatDuration(widget.info[0].duration!)),
+            buildRichText('Location', widget.info[0].path!),
+            buildRichText('Orientation',
+                '${widget.info[0].width}x ${widget.info[0].height}'),
+          ],
         ),
       ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+    );
+  }
+
+  Widget buildRichText(String title, String content) {
+    String formattedPath = content;
+    // Replace specific paths with custom labels
+    if (content.contains('/storage/emulated/0')) {
+      formattedPath =
+          content.replaceAll('/storage/emulated/0', 'Device storage');
+    } else if (content.contains('/storage/emulated/sdcard')) {
+      formattedPath = content.replaceAll('/storage/emulated/sdcard', 'SD Card');
+    }
+
+    return RichText(
+      textAlign: TextAlign.start,
+      text: TextSpan(
+        style: const TextStyle(fontSize: 15),
         children: [
-          Text(
-            'Size :  ${formatBytesToMB(widget.info[0].filesize!)} MB',
+          TextSpan(
+              text: '$title : ',
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold, color: Colors.black)),
+          TextSpan(
+            text: formattedPath,
             style: const TextStyle(
-              fontSize: 15,
-            ),
-          ),
-          Text(
-            'Length : ${formatDuration(widget.info[0].duration!)}',
-            style: const TextStyle(
-              fontSize: 15,
-            ),
-          ),
-          Text(
-            'Location :  ${widget.info[0].path}',
-            style: const TextStyle(
-              fontSize: 15,
-            ),
-          ),
-          Text(
-            'Orientation : ${widget.info[0].width}x ${widget.info[0].height} ',
-            style: const TextStyle(
-              fontSize: 15,
+              color: Colors.black,
             ),
           ),
         ],

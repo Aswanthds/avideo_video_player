@@ -30,7 +30,6 @@ class FavoriteFunctions {
     } catch (e) {
       debugPrint('Error occured on $path');
     }
-    //
   }
 
   static Future<List<FavoriteData>> getFavoritesList() async {
@@ -59,9 +58,6 @@ class FavoriteFunctions {
       final uniqueVideos = uniqueVideosMap.values.toList();
       uniqueVideos.sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
-      //
-      //
-
       return uniqueVideos;
     } catch (e) {
       debugPrint('Error retrieving favorites: $e');
@@ -69,8 +65,7 @@ class FavoriteFunctions {
     }
   }
 
-  static List<FavoriteData> removeDuplicateVideos(
-      List<FavoriteData> list)  {
+  static List<FavoriteData> removeDuplicateVideos(List<FavoriteData> list) {
     final Set<String> uniqueVideoPaths = <String>{};
 
     final List<FavoriteData> data = [];
@@ -84,21 +79,6 @@ class FavoriteFunctions {
         }
       }
     }
-    // final videos = await getFavoritesList();
-    // List<FavoriteData> uniqueVideos = [];
-
-    // for (int i = 0; i < videos.length; i++) {
-    //   bool isDuplicate = false;
-    //   for (int j = i + 1; j < videos.length; j++) {
-    //     if (videos[i].filePath == videos[j].filePath) {
-    //       isDuplicate = true;
-    //       break;
-    //     }
-    //   }
-    //   if (!isDuplicate) {
-    //     uniqueVideos.add(videos[i]);
-    //   }
-    // }
 
     return data;
   }
@@ -107,10 +87,10 @@ class FavoriteFunctions {
     final recentlyPlayedVideos = await getFavoritesList();
     for (final video in recentlyPlayedVideos) {
       debugPrint('Video Path: ${video.filePath}');
-      //
     }
   }
-static Future<void> deleteVideo(String videoPath) async {
+
+  static Future<void> deleteVideo(String videoPath) async {
     final box = Hive.box<FavoriteData>(_boxName);
 
     final List<int> indexesToDelete = [];
@@ -129,5 +109,4 @@ static Future<void> deleteVideo(String videoPath) async {
 
     debugPrint('Deleted all occurrences of video: $videoPath');
   }
- 
 }

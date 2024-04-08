@@ -51,7 +51,7 @@ class _MostPlayedVideosState extends State<MostPlayedVideos> {
           ),
           child: AppBar(
             iconTheme: const IconThemeData(color: kColorWhite),
-            backgroundColor: kcolorDarkblue,
+            backgroundColor: kcolorMintGreen,
             title: const Text(
               'Mostly Played ',
               style: TextStyle(

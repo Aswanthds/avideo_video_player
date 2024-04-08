@@ -144,5 +144,4 @@ class _CustomVideoProgressIndicatorState
 
     return '$formattedHours$formattedMinutes:$formattedSeconds';
   }
-
 }

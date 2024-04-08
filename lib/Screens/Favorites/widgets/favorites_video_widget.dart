@@ -138,7 +138,7 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
                                           child: Text(
                                             "None",
                                             style: TextStyle(
-                                                color: kcolorDarkblue),
+                                                color: kcolorMintGreen),
                                           ),
                                         ),
                                         if (box.isNotEmpty)
@@ -150,7 +150,7 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
                                               child: Text(
                                                 value,
                                                 style: const TextStyle(
-                                                    color: kcolorDarkblue),
+                                                    color: kcolorMintGreen),
                                               ),
                                             );
                                           }).toList(),
@@ -161,7 +161,7 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
                         ),
                         const SizedBox(height: 20.0),
                         TextFormField(
-                          style: const TextStyle(color: kcolorDarkblue),
+                          style: const TextStyle(color: kcolorMintGreen),
                           onChanged: (value) {
                             newPlaylistName = value;
                           },
@@ -179,7 +179,7 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
                             hintText: "New Playlist Name",
-                            hintStyle: TextStyle(color: kcolorDarkblue),
+                            hintStyle: TextStyle(color: kcolorMintGreen),
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -258,7 +258,7 @@ class _VideoListTileWidgetState extends State<VideoListTileWidget> {
                 width: 100,
                 height: 100,
                 decoration: BoxDecoration(
-                  color: kcolorDarkblue,
+                  color: kcolorMintGreen,
                   border: Border.all(
                     style: BorderStyle.solid,
                   ),

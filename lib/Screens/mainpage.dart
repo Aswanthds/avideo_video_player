@@ -21,13 +21,11 @@ class _MainPageScreenState extends State<MainPageScreen>
   int _bottomNavIndex = 0;
   List<File> videoFiles = [];
   List<String> videoData = [];
- 
 
   @override
   void initState() {
     super.initState();
     fetchAndShowVideos();
-   
   }
 
   void fetchAndShowVideos() async {
@@ -50,23 +48,16 @@ class _MainPageScreenState extends State<MainPageScreen>
     return Scaffold(
       body: _buildPage(),
       bottomNavigationBar: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
-        ),
         child: SalomonBottomBar(
-          backgroundColor: kcolorDarkblue,
+          backgroundColor: kcolorMintGreen,
           currentIndex: _bottomNavIndex,
           onTap: (i) => setState(() => _bottomNavIndex = i),
           items: [
             /// Home
             SalomonBottomBarItem(
                 icon: const Icon(Icons.home),
-                title: const Text(
-                  "Home",
-                  style: bottomNav
-                ),
-                selectedColor: kColorAmber,
+                title: const Text("Home", style: bottomNav),
+                selectedColor: kcolorblack,
                 unselectedColor: kColorWhite),
 
             /// Likes
@@ -76,17 +67,14 @@ class _MainPageScreenState extends State<MainPageScreen>
                   "Playlist",
                   style: bottomNav,
                 ),
-                selectedColor: kColorCyan,
+                selectedColor: kcolorblack,
                 unselectedColor: kColorWhite),
 
             /// Search
             SalomonBottomBarItem(
                 icon: const Icon(Icons.favorite_outline),
-                title: const Text(
-                  "Favourites",
-                  style: bottomNav
-                ),
-                selectedColor: kColorOrange,
+                title: const Text("Favourites", style: bottomNav),
+                selectedColor: kcolorblack,
                 unselectedColor: kColorWhite),
 
             /// Profile
@@ -96,7 +84,7 @@ class _MainPageScreenState extends State<MainPageScreen>
                   "Settings",
                   style: bottomNav,
                 ),
-                selectedColor: kColorDeepOrange,
+                selectedColor: kcolorblack,
                 unselectedColor: kColorWhite),
           ],
         ),

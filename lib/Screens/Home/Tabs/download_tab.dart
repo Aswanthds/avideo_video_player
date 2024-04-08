@@ -74,7 +74,7 @@ class _DownloadTabState extends State<DownloadTab> {
               underline: const SizedBox(), //
 
               dropdownColor: kColorWhite,
-              iconEnabledColor: kcolorDarkblue,
+              iconEnabledColor: kcolorMintGreen,
               style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
@@ -107,9 +107,7 @@ class _DownloadTabState extends State<DownloadTab> {
           ),
         ),
         (sortedFiles.isEmpty)
-            ? const Center(
-                child: nodata
-              )
+            ? const Center(child: nodata)
             : GridviewWidget(sortedFiles: sortedFiles),
       ],
     );

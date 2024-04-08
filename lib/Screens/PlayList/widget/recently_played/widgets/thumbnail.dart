@@ -6,11 +6,13 @@ import 'package:video_player_app/constants.dart';
 class ThumbnailRecentlyPlayed extends StatelessWidget {
   const ThumbnailRecentlyPlayed({
     super.key,
-     required this.thumbnail, required this.current, required this.full,
+    required this.thumbnail,
+    required this.current,
+    required this.full,
   });
 
   final File thumbnail;
-    final double current;
+  final double current;
   final double full;
 
   @override
@@ -48,8 +50,8 @@ class ThumbnailRecentlyPlayed extends StatelessWidget {
                     minHeight: 2,
                     value: calculateProgress(current, full),
                     valueColor:
-                        const AlwaysStoppedAnimation<Color>(kcolorDarkblue),
-                    backgroundColor: kColorWhite54,
+                        const AlwaysStoppedAnimation<Color>(kcolorMintGreen),
+                    backgroundColor: kColorWhite ,
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),

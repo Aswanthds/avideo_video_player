@@ -17,7 +17,7 @@ class RecentlyPlayedLoadingVideListTile extends StatelessWidget {
     return ListTile(
       leading: const CircularProgressIndicator(
         strokeWidth: 2,
-        color: kcolorDarkblue,
+        color: kcolorMintGreen,
       ),
       title: Text(basename(videoPath)),
       subtitle: Text('Timestamp: $timestamp'),

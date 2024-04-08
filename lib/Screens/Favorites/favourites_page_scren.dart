@@ -1,4 +1,4 @@
-import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:video_player_app/Screens/favorites/widgets/playlist_thumbnal_widget.dart';
@@ -15,9 +15,6 @@ class FavouritesPageScreen extends StatefulWidget {
 }
 
 class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
-  final ValueNotifier<Uint8List?> thumbnailNotifier =
-      ValueNotifier<Uint8List>(Uint8List(0));
-
   List<FavoriteData> videos = [];
 
   @override
@@ -35,7 +32,7 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
             bottomLeft: Radius.circular(24),
           ),
           child: AppBar(
-            backgroundColor: kcolorDarkblue,
+            backgroundColor: kcolorMintGreen,
             title: const Text(
               'Favourites',
               style: TextStyle(
@@ -100,50 +97,6 @@ class _FavouritesPageScreenState extends State<FavouritesPageScreen> {
               );
             },
           )
-
-          // ValueListenableBuilder(
-          //   valueListenable:
-          //       Hive.box<FavoriteData>('favorite_videos').listenable(),
-          //   builder: (context, Box<FavoriteData> box, _) {
-          //     final playlists = box.values.toList();
-          //     if (videos.isEmpty) {
-          //       return Padding(
-          //         padding: EdgeInsets.only(
-          //             top: MediaQuery.of(context).size.width / 2 - 10),
-          //         child: const Row(
-          //           mainAxisAlignment: MainAxisAlignment.center,
-          //           children: [
-          //             Icon(
-          //               Icons.add_box_outlined,
-          //               color: kColorIndigo,
-          //             ),
-          //             SizedBox(
-          //               width: 10,
-          //             ),
-          //             Text(
-          //               'Add Video to favorites',
-          //               style: TextStyle(color: kColorIndigo),
-          //             ),
-          //           ],
-          //         ),
-          //       );
-          //     }
-          //     return Expanded(
-          //       child: ListView.builder(
-          //         itemCount: videos.length,
-          //         itemBuilder: (context, index) {
-          //           if (index < videos.length) {
-          //             return VideoListTileWidget(
-          //               index: index,
-          //               video: videos[index],
-          //             );
-          //           }
-          //           return const SizedBox();
-          //         },
-          //       ),
-          //     );
-          //   },
-          // )
         ],
       ),
     );

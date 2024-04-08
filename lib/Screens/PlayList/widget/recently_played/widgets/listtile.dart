@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path/path.dart';
 import 'package:video_player_app/Screens/PlayList/playlist%20videoplayer/VideoPlayer/video_player_widget.dart';
+import 'package:video_player_app/Screens/PlayList/recent_played_videos_page.dart';
 import 'package:video_player_app/Screens/PlayList/widget/recently_played/widgets/thumbnail.dart';
 import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/database/create_playlist_data.dart';
@@ -148,7 +149,7 @@ class _ListTileRecentlyPlayedState extends State<ListTileRecentlyPlayed> {
                                         child: Text(
                                           "None",
                                           style:
-                                              TextStyle(color: kcolorDarkblue),
+                                              TextStyle(color: kcolorMintGreen),
                                         ),
                                       ),
                                       if (box.isNotEmpty)
@@ -160,7 +161,7 @@ class _ListTileRecentlyPlayedState extends State<ListTileRecentlyPlayed> {
                                             child: Text(
                                               value,
                                               style: const TextStyle(
-                                                  color: kcolorDarkblue),
+                                                  color: kcolorMintGreen),
                                             ),
                                           );
                                         }).toList(),
@@ -171,7 +172,7 @@ class _ListTileRecentlyPlayedState extends State<ListTileRecentlyPlayed> {
                       ),
                       const SizedBox(height: 20.0),
                       TextFormField(
-                        style: const TextStyle(color: kcolorDarkblue),
+                        style: const TextStyle(color: kcolorMintGreen),
                         onChanged: (value) {
                           newPlaylistName = value;
                         },
@@ -189,7 +190,7 @@ class _ListTileRecentlyPlayedState extends State<ListTileRecentlyPlayed> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
                           hintText: "New Playlist Name",
-                          hintStyle: TextStyle(color: kcolorDarkblue),
+                          hintStyle: TextStyle(color: kcolorMintGreen),
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -237,8 +238,11 @@ class _ListTileRecentlyPlayedState extends State<ListTileRecentlyPlayed> {
           onRemovePressed: () {
             RecentlyPlayed.deleteVideo(
                 widget.files[widget.index].videoPath, widget.index);
-            ScaffoldMessenger.of(context).showSnackBar(deleteMsg);
+
             Navigator.of(context).pop();
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const RecentlyPlayedVideosPage(),
+            ));
             ScaffoldMessenger.of(context).showSnackBar(deleteMsg);
           },
         ),

@@ -14,8 +14,7 @@ class ThumbnailMostlyHeadingWidget extends StatelessWidget {
           height: 150,
           width: double.infinity,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.blue.withOpacity(0.4)),
+              borderRadius: BorderRadius.circular(20), color: kColorSandal),
           child: const Center(
             child: Text(
               'Most Played ',

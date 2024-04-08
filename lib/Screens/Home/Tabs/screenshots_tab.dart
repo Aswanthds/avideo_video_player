@@ -66,9 +66,7 @@ class _ScreenRecordsTabState extends State<ScreenRecordsTab> {
       children: [
         sortingWidget(),
         (sortedFiles.isEmpty)
-            ? const Center(
-                child: nodata
-              )
+            ? const Center(child: nodata)
             : GridviewWidget(sortedFiles: sortedFiles),
       ],
     );
@@ -84,7 +82,7 @@ class _ScreenRecordsTabState extends State<ScreenRecordsTab> {
           value: selectedOption,
           underline: const SizedBox(), //
           dropdownColor: kColorWhite,
-          iconEnabledColor: kcolorDarkblue,
+          iconEnabledColor: kcolorMintGreen,
           style: const TextStyle(
               fontSize: 12, fontWeight: FontWeight.bold, color: kcolorblack),
           borderRadius: BorderRadius.circular(10),

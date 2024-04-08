@@ -22,7 +22,7 @@ class PlayListThumbnailWidget extends StatelessWidget {
               blurRadius: 10,
             )
           ],
-          color: Colors.blue.withOpacity(0.4),
+          color: kColorSandal,
           borderRadius: BorderRadius.circular(20),
         ),
         child: const Center(

@@ -80,7 +80,7 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kcolorDarkblue,
+        backgroundColor: kcolorMintGreen,
         title: Text(widget.playlist.name ?? ''),
         iconTheme: const IconThemeData(color: kColorWhite),
         actions: [
@@ -135,7 +135,7 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                       underline: const SizedBox(), //
 
                       dropdownColor: kColorWhite,
-                      iconEnabledColor: kcolorDarkblue,
+                      iconEnabledColor: kcolorMintGreen,
                       style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -183,7 +183,7 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
 
                             if (!isValidVideo) {
                               // Skip invalid video paths
-                              return const SizedBox(); // Return an empty SizedBox
+                              return null; // Return an empty SizedBox
                             }
 
                             return Padding(
@@ -197,7 +197,7 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                                                 width: 100,
                                                 height: 100,
                                                 decoration: BoxDecoration(
-                                                  color: kcolorDarkblue,
+                                                  color: kcolorMintGreen,
                                                   border: Border.all(
                                                     style: BorderStyle.solid,
                                                   ),

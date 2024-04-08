@@ -1,5 +1,3 @@
-// ignore_for_file: depend_on_referenced_packages
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:video_player_app/constants.dart';
@@ -14,13 +12,10 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Get the application documents directory (you can choose another location)
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
 
-  // Initialize Hive and provide the path to store the box
   Hive.init(appDocumentDir.path);
 
-  // Register adapters and open boxes
   registerAdapters();
   await callDatabseFunctions();
 

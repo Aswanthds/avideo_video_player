@@ -44,7 +44,7 @@ class _RecentlyPlayedVideosPageState extends State<RecentlyPlayedVideosPage> {
           ),
           child: AppBar(
             iconTheme: const IconThemeData(color: kColorWhite),
-            backgroundColor: kcolorDarkblue,
+            backgroundColor: kcolorMintGreen,
             // ignore: prefer_const_constructors
             title: Text(
               'Avideo Video Player',
@@ -93,7 +93,7 @@ class _RecentlyPlayedVideosPageState extends State<RecentlyPlayedVideosPage> {
                                 index: index,
                               );
                             }
-                            return const SizedBox();
+                            return null;
                           },
                         ),
                       );

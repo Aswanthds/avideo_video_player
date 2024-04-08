@@ -111,10 +111,10 @@ class _PlaylistListWidgetState extends State<PlaylistListWidget> {
                                     child: ListTile(
                                       leading: Container(
                                         decoration: BoxDecoration(
-                                            color: kcolorDarkblue,
+                                            color: kcolorMintGreen,
                                             border: Border.all(
                                               style: BorderStyle.solid,
-                                              color: kcolorDarkblue,
+                                              color: kcolorMintGreen,
                                               width: 2,
                                             ),
                                             borderRadius:

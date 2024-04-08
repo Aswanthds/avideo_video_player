@@ -10,7 +10,7 @@ class RecentlyVideoPlayerControls extends StatefulWidget {
   final ValueChanged<double> onVolumeChanged;
   final Duration fullDuration;
   final bool isRotated;
-    final double current;
+  final double current;
 
   const RecentlyVideoPlayerControls(
       {super.key,
@@ -18,7 +18,8 @@ class RecentlyVideoPlayerControls extends StatefulWidget {
       required this.volume,
       required this.onVolumeChanged,
       required this.fullDuration,
-      required this.isRotated, required this.current});
+      required this.isRotated,
+      required this.current});
 
   @override
   State<RecentlyVideoPlayerControls> createState() =>
@@ -115,17 +116,5 @@ class _RecentlyVideoPlayerControlsState
       ),
     );
     //
-  }
-
-  String _formatDuration(Duration duration) {
-    int hours = duration.inHours;
-    int minutes = duration.inMinutes.remainder(60);
-    int seconds = duration.inSeconds.remainder(60);
-
-    String formattedHours = hours.toString().padLeft(2, '0');
-    String formattedMinutes = minutes.toString().padLeft(2, '0');
-    String formattedSeconds = seconds.toString().padLeft(2, '0');
-
-    return '$formattedHours:$formattedMinutes:$formattedSeconds';
   }
 }

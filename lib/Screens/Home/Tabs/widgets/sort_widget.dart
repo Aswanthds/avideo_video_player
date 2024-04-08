@@ -44,7 +44,7 @@ class _SortWidgetState extends State<SortWidget> {
           underline: Container(), //
 
           dropdownColor: kColorWhite,
-          iconEnabledColor: kcolorDarkblue,
+          iconEnabledColor: kcolorMintGreen,
           style: const TextStyle(
               fontSize: 12, fontWeight: FontWeight.bold, color: kcolorblack),
           borderRadius: BorderRadius.circular(10),

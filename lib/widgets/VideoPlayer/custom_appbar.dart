@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path/path.dart';
 import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/database/create_playlist_data.dart';
 import 'package:video_player_app/functions/create_playlist_functions.dart';
@@ -55,7 +56,7 @@ class _VideoPlayerAppbarState extends State<VideoPlayerAppbar> {
                   )),
               Expanded(
                 child: Text(
-                  widget.filename,
+                  basename(widget.filename),
                   style: const TextStyle(
                     color: kColorWhite,
                     overflow: TextOverflow.ellipsis,
@@ -167,7 +168,7 @@ class _VideoPlayerAppbarState extends State<VideoPlayerAppbar> {
                                                         "None",
                                                         style: TextStyle(
                                                             color:
-                                                                kcolorDarkblue),
+                                                                kcolorMintGreen),
                                                       ),
                                                     ),
                                                     if (box.isNotEmpty)
@@ -182,7 +183,7 @@ class _VideoPlayerAppbarState extends State<VideoPlayerAppbar> {
                                                             value,
                                                             style: const TextStyle(
                                                                 color:
-                                                                    kcolorDarkblue),
+                                                                    kcolorMintGreen),
                                                           ),
                                                         );
                                                       }).toList(),
@@ -194,7 +195,7 @@ class _VideoPlayerAppbarState extends State<VideoPlayerAppbar> {
                                     const SizedBox(height: 20.0),
                                     TextFormField(
                                       style: const TextStyle(
-                                          color: kcolorDarkblue),
+                                          color: kcolorMintGreen),
                                       onChanged: (value) {
                                         newPlaylistName = value;
                                       },
@@ -213,7 +214,7 @@ class _VideoPlayerAppbarState extends State<VideoPlayerAppbar> {
                                                 Radius.circular(20))),
                                         hintText: "New Playlist Name",
                                         hintStyle:
-                                            TextStyle(color: kcolorDarkblue),
+                                            TextStyle(color: kcolorMintGreen),
                                         border: OutlineInputBorder(),
                                       ),
                                     ),
@@ -281,6 +282,31 @@ class _VideoPlayerAppbarState extends State<VideoPlayerAppbar> {
                             FavoriteFunctions.addToFavoritesList(
                                 widget.widget.filesV);
                           }),
+                      // PopupMenuItem<Widget>(
+                      //     child: const Row(
+                      //       children: [
+                      //         Icon(Icons.favorite, color: kColorWhite ),
+                      //         Padding(
+                      //           padding: EdgeInsets.all(8.0),
+                      //           child: Text(
+                      //             'Add to favorites',
+                      //             style: TextStyle(color: kColorWhite ),
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //     onTap: ()  {
+                      //       final share = await  Share.shareXFiles(
+                      //         [
+                      //           XFile(
+                      //             '/storage/emulated/0/DCIM/Camera/VID-20230930-WA0002.mp4',
+                      //             mimeType: 'video/mp4',
+                      //           )
+                      //         ],
+                      //       );
+
+                      //       // Share the video file using the SharePlus.share() method.
+                      //     })
                     ],
                     elevation: 8.0,
                   );
@@ -295,3 +321,20 @@ class _VideoPlayerAppbarState extends State<VideoPlayerAppbar> {
     );
   }
 }
+
+
+//  GestureDetector(
+//             onTap: ()  {
+//                Uri videoUri = FileProvider.getUriForFile(
+//                   context,
+//                   getApplicationContext().getPackageName(),
+//                   File(widget.videoPath));
+
+//                Share.shareXFiles([XFile(widget.path.path)],
+//                   text: 'Check out this video!');
+//             },
+//             child: MenuIconWidget(
+//               icon: Icons.share,
+//               title: "Share ",
+//             ),
+//           ),

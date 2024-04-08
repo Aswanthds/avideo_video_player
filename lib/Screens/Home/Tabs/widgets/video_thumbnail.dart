@@ -81,7 +81,7 @@ class _VideoThumbnailCommonState extends State<VideoThumbnailCommon> {
                   width: 160,
                   height: 100,
                   decoration: BoxDecoration(
-                    color: kcolorDarkblue,
+                    color: kcolorMintGreen,
                     border: Border.all(
                       style: BorderStyle.solid,
                     ),

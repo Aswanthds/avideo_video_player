@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:video_compress/video_compress.dart';
@@ -12,7 +14,7 @@ import 'package:video_player_app/functions/favorites_functions.dart';
 import 'package:video_player_app/functions/video_functions.dart';
 
 class VideoMenuRow extends StatefulWidget {
-  final String path;
+  final File path;
 
   const VideoMenuRow(
     this.path, {
@@ -26,7 +28,7 @@ class VideoMenuRow extends StatefulWidget {
 class _VideoMenuRowState extends State<VideoMenuRow> {
   Future<void> loadVideoInfo() async {
     try {
-      final info = await VideoFunctions.getVideoInfo(widget.path);
+      final info = await VideoFunctions.getVideoInfo(widget.path.path);
       videoInfoNotifier.value = info;
     } catch (e) {
       videoInfoNotifier.value = [];
@@ -115,7 +117,7 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
                                           child: Text(
                                             "None",
                                             style: TextStyle(
-                                                color: kcolorDarkblue),
+                                                color: kcolorMintGreen),
                                           ),
                                         ),
                                         if (box.isNotEmpty)
@@ -127,7 +129,7 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
                                               child: Text(
                                                 value,
                                                 style: const TextStyle(
-                                                    color: kcolorDarkblue),
+                                                    color: kcolorMintGreen),
                                               ),
                                             );
                                           }).toList(),
@@ -138,7 +140,7 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
                         ),
                         const SizedBox(height: 20.0),
                         TextFormField(
-                          style: const TextStyle(color: kcolorDarkblue),
+                          style: const TextStyle(color: kcolorMintGreen),
                           onChanged: (value) {
                             newPlaylistName = value;
                           },
@@ -156,7 +158,7 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
                             hintText: "New Playlist Name",
-                            hintStyle: TextStyle(color: kcolorDarkblue),
+                            hintStyle: TextStyle(color: kcolorMintGreen),
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -177,7 +179,7 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
                                 newPlaylistName);
 
                             await CreatePlayListFunctions.addVideoToPlaylist(
-                                newPlaylistName, widget.path);
+                                newPlaylistName, widget.path.path);
 
                             Navigator.of(context).pop();
                             ScaffoldMessenger.of(context)
@@ -185,7 +187,7 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
                           }
                           if (selectedPlaylist!.isNotEmpty) {
                             await CreatePlayListFunctions.addVideoToPlaylist(
-                                selectedPlaylist ?? '', widget.path);
+                                selectedPlaylist ?? '', widget.path.path);
                             Navigator.of(context).pop();
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(postivePlaylist);
@@ -206,7 +208,7 @@ class _VideoMenuRowState extends State<VideoMenuRow> {
           ),
           GestureDetector(
             onTap: () {
-              FavoriteFunctions.addToFavoritesList(widget.path);
+              FavoriteFunctions.addToFavoritesList(widget.path.path);
               Navigator.of(context).popUntil(
                 (route) => route.isFirst,
               );

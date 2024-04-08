@@ -8,6 +8,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:video_player_app/Screens/mainpage.dart';
 import 'package:video_player_app/constants.dart';
 
+
 class SplashScreenPage extends StatefulWidget {
   const SplashScreenPage({Key? key}) : super(key: key);
 
@@ -65,7 +66,8 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
           Image.asset('assets/images/logo_full.png'),
           const CircularProgressIndicator.adaptive(
             valueColor: AlwaysStoppedAnimation(kColorIndigo),
-            backgroundColor: kcolorDarkblue,
+            backgroundColor: kcolorMintGreen,
+            strokeWidth: 1.5,
           )
         ],
       ),

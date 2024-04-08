@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path/path.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/widgets/VideoPlayer/custom_appbar.dart';
@@ -69,7 +68,6 @@ class _VideoPlayerBodyState extends State<VideoPlayerBody> {
 
   @override
   Widget build(BuildContext context) {
-    final filename = basename(widget.filesV);
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -90,7 +88,7 @@ class _VideoPlayerBodyState extends State<VideoPlayerBody> {
           ),
         if (areControlsVisible)
           VideoPlayerAppbar(
-            filename: filename,
+            filename: widget.filesV,
             widget: widget,
             isRotated: isrotated,
           ),

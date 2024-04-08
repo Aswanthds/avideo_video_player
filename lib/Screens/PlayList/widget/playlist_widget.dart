@@ -21,10 +21,10 @@ class PlayListWidget extends StatelessWidget {
         child: ListTile(
           leading: Container(
             decoration: BoxDecoration(
-                color: kcolorDarkblue,
+                color: kColorSandal,
                 border: Border.all(
                   style: BorderStyle.solid,
-                  color: kcolorDarkblue,
+                  color: kcolorMintGreen,
                   width: 2,
                 ),
                 borderRadius: BorderRadius.circular(20)),
@@ -45,7 +45,7 @@ class PlayListWidget extends StatelessWidget {
           ),
           trailing: const Icon(
             Icons.arrow_forward_ios,
-            color: kcolorDarkblue,
+            color: kcolorMintGreen,
             fill: 0,
           ),
         ),

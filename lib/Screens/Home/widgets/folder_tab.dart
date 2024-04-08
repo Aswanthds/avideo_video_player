@@ -7,7 +7,7 @@ class FolderTab extends StatelessWidget {
   const FolderTab({
     super.key,
     required this.foldername,
-     required this.icon,
+    required this.icon,
   });
 
   @override

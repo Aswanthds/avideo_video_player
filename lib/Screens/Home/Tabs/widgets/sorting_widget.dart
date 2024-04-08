@@ -45,7 +45,7 @@ class _GridviewWidgetState extends State<GridviewWidget> {
                     index: index,
                   ),
                 )
-              : const SizedBox();
+              : const SizedBox(child: Center(child: Text("Video has been removed")));
         },
       ),
     );

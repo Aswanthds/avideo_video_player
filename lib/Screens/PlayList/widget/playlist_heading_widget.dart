@@ -10,13 +10,12 @@ class ThumbnailRecentlyHeadingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: kColorWhite30, borderRadius: BorderRadius.circular(20)),
+          color: kColorWhite, borderRadius: BorderRadius.circular(20)),
       child: Container(
         height: 150,
         width: double.infinity,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.blue.withOpacity(0.4)),
+            borderRadius: BorderRadius.circular(20), color: kColorSandal),
         child: const Center(
           child: Text(
             'RecentlyPlayed',

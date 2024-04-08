@@ -15,7 +15,7 @@ class SettingsAppBar extends StatelessWidget {
       child: AppBar(
         automaticallyImplyLeading: true,
         iconTheme: const IconThemeData(color: kColorWhite),
-        backgroundColor: kcolorDarkblue,
+        backgroundColor: kcolorMintGreen,
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

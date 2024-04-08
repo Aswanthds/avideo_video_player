@@ -72,7 +72,8 @@ class _PlaylistFormState extends State<PlaylistForm> {
                     newPlaylistName, widget.files);
 
                 Navigator.of(context).popUntil((route) => route.isFirst);
-                ScaffoldMessenger.of(context).showSnackBar(postiveNewPlaylist); //
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(postiveNewPlaylist); //
               }
             },
             child: const Text(

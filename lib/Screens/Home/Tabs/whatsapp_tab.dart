@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:video_player_app/constants.dart';
+
 import 'package:video_player_app/screens/home/Tabs/widgets/sorting_widget.dart';
 
 class WhatsappTab extends StatefulWidget {
@@ -83,7 +84,7 @@ class _WhatsappTabState extends State<WhatsappTab> {
           value: selectedOption,
           underline: const SizedBox(), //
           dropdownColor: kColorWhite,
-          iconEnabledColor: kcolorDarkblue,
+          iconEnabledColor: kcolorMintGreen,
           style: const TextStyle(
               fontSize: 12, fontWeight: FontWeight.bold, color: kcolorblack),
           borderRadius: BorderRadius.circular(10),

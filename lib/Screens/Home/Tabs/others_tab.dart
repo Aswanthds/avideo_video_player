@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:video_player_app/constants.dart';
 import 'package:video_player_app/screens/home/Tabs/widgets/sorting_widget.dart';
@@ -77,7 +76,7 @@ class _OthersTabState extends State<OthersTab> {
               value: selectedOption,
               underline: const SizedBox(), //
               dropdownColor: kColorWhite,
-              iconEnabledColor: kcolorDarkblue,
+              iconEnabledColor: kcolorMintGreen,
               style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,

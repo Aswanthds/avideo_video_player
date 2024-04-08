@@ -154,7 +154,7 @@ class _VideoPlayerAppBarState extends State<VideoPlayerAppBar> {
                                                       "None",
                                                       style: TextStyle(
                                                           color:
-                                                              kcolorDarkblue),
+                                                              kcolorMintGreen),
                                                     ),
                                                   ),
                                                   if (box.isNotEmpty)
@@ -169,7 +169,7 @@ class _VideoPlayerAppBarState extends State<VideoPlayerAppBar> {
                                                           value,
                                                           style: const TextStyle(
                                                               color:
-                                                                  kcolorDarkblue),
+                                                                  kcolorMintGreen),
                                                         ),
                                                       );
                                                     }).toList(),
@@ -181,7 +181,7 @@ class _VideoPlayerAppBarState extends State<VideoPlayerAppBar> {
                                   const SizedBox(height: 20.0),
                                   TextFormField(
                                     style:
-                                        const TextStyle(color: kcolorDarkblue),
+                                        const TextStyle(color: kcolorMintGreen),
                                     onChanged: (value) {
                                       newPlaylistName = value;
                                     },
@@ -200,7 +200,7 @@ class _VideoPlayerAppBarState extends State<VideoPlayerAppBar> {
                                               Radius.circular(20))),
                                       hintText: "New Playlist Name",
                                       hintStyle:
-                                          TextStyle(color: kcolorDarkblue),
+                                          TextStyle(color: kcolorMintGreen),
                                       border: OutlineInputBorder(),
                                     ),
                                   ),

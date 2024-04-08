@@ -38,7 +38,7 @@ class _VideoTileWidgetState extends State<VideoTileWidget> {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: VideoMenuRow(
-                    widget.videoFile.path,
+                    widget.videoFile,
                   ),
                 ),
               ),

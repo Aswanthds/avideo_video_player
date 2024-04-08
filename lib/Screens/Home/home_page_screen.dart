@@ -43,7 +43,7 @@ class _HomePageScreenState extends State<HomePageScreen>
             ),
             child: AppBar(
               iconTheme: const IconThemeData(color: kColorWhite),
-              backgroundColor: kcolorDarkblue,
+              backgroundColor: kcolorMintGreen,
               // ignore: prefer_const_constructors
               title: Text(
                 'Avideo Video Player',

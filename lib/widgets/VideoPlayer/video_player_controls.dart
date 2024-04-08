@@ -95,33 +95,6 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
                 IconButton(
                   onPressed: () {
                     setState(() {
-                      ismute = !ismute;
-                      if (ismute) {
-                        widget.controller.setVolume(0.0);
-                      } else {
-                        widget.controller.setVolume(widget.volume);
-                      }
-                    });
-                  },
-                  icon: ismute
-                      ? const Icon(
-                          Icons.volume_off,
-                          size: 25,
-                          color: kColorWhite,
-                        )
-                      : const Icon(
-                          Icons.volume_up,
-                          size: 25,
-                          color: kColorWhite,
-                        ),
-                ),
-                VerticalSlider(
-                  value: widget.volume,
-                  onChanged: widget.onVolumeChanged,
-                ),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
                       if (widget.controller.value.isPlaying) {
                         widget.controller.seekTo(
                             widget.controller.value.position -
@@ -168,6 +141,33 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
                     size: 30,
                     color: kColorWhite,
                   ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      ismute = !ismute;
+                      if (ismute) {
+                        widget.controller.setVolume(0.0);
+                      } else {
+                        widget.controller.setVolume(widget.volume);
+                      }
+                    });
+                  },
+                  icon: ismute
+                      ? const Icon(
+                          Icons.volume_off,
+                          size: 25,
+                          color: kColorWhite,
+                        )
+                      : const Icon(
+                          Icons.volume_up,
+                          size: 25,
+                          color: kColorWhite,
+                        ),
+                ),
+                VerticalSlider(
+                  value: widget.volume,
+                  onChanged: widget.onVolumeChanged,
                 ),
               ],
             )

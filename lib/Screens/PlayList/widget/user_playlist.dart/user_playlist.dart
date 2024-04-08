@@ -28,8 +28,8 @@ class _VideoPlaylistScreenState extends State<VideoPlaylistScreen> {
   double _volumeLevel = 1.0;
   final bool _showVolumeSlider = false;
   int _currentIndex = 0;
-  Duration? _fullDuration;
-  Duration? current;
+  Duration _fullDuration = Duration.zero;
+  Duration current = Duration.zero;
   bool disposed = false;
 
   @override
@@ -125,7 +125,7 @@ class _VideoPlaylistScreenState extends State<VideoPlaylistScreen> {
       RecentlyPlayed.onVideoClicked(
         videoPath: videoPath,
         current: currentPosition,
-        full: _fullDuration ?? Duration.zero,
+        full: _fullDuration,
       );
     }
   }
@@ -145,8 +145,8 @@ class _VideoPlaylistScreenState extends State<VideoPlaylistScreen> {
           });
         },
         filesV: getname(),
-        position: current!.inMilliseconds.toDouble() ,
-        fullduration: _fullDuration ?? Duration.zero,
+        position: current.inMilliseconds.toDouble(),
+        fullduration: _fullDuration,
       ),
     );
   }

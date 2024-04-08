@@ -26,8 +26,8 @@ class _PlaylistPageScreenState extends State<PlaylistPageScreen> {
           ),
           child: AppBar(
             automaticallyImplyLeading: false,
-            iconTheme: const IconThemeData(color: kColorWhite),
-            backgroundColor: kcolorDarkblue,
+            iconTheme: const IconThemeData(color: kColorWhite ),
+            backgroundColor: kcolorMintGreen,
             title: const Text(
               'Playlists',
               style: TextStyle(
@@ -73,7 +73,7 @@ class _PlaylistPageScreenState extends State<PlaylistPageScreen> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: kColorWhite12,
+                color: kColorWhite ,
               ),
               child: const PlaylistListWidget(),
             ),

@@ -78,7 +78,7 @@ class _CameraTabState extends State<CameraTab> {
               underline: const SizedBox(), //
 
               dropdownColor: kColorWhite,
-              iconEnabledColor: kcolorDarkblue,
+              iconEnabledColor: kcolorMintGreen,
               style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
@@ -110,10 +110,8 @@ class _CameraTabState extends State<CameraTab> {
             ),
           ),
         ),
-      (sortedFiles.isEmpty)
-            ? const Center(
-                child: nodata
-              )
+        (sortedFiles.isEmpty)
+            ? const Center(child: nodata)
             : GridviewWidget(sortedFiles: sortedFiles)
       ],
     );
